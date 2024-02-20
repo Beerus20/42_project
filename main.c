@@ -6,7 +6,7 @@
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/20 13:36:00 by ballain          ###   ########.fr       */
+/*   Updated: 2024/02/20 14:09:28 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@
 
 int	main(int argc, char *argv[])
 {
-	char	str_1[7] = "makes ";
+	char	str_1[50] = "makes ";
 	char	*str_2 = "the world easy";
+	char	str_3[50] = "makes ";
+	char	*str_4 = "the world easy";
 	char	*result;
+	size_t	size = 0;
 
-	//strlcat(str_1, str_2, 4);
-	printf("lenght : %zu %zu\n", ft_strlen(str_1), ft_strlen(str_2));
-	printf("SOURCE : \n %s\n %zu\n", str_1, strlcat(str_1, str_2, 1));
-	printf("lenght result : %zu\n", ft_strlen(str_1));
-	//printf("COPY   : %d\n", ft_atoi("-4e567"));
+	printf("SOURCE L : %zu\n", strlcpy(str_1, str_2, size));
+	printf("RESULT S : %s\n\n", str_1);
+	printf("SORTIE L : %zu\n", ft_strlcpy(str_3, str_4, size));
+	printf("RESULT S : %s\n", str_3);
 	return (0);
 }
