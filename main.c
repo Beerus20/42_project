@@ -6,22 +6,24 @@
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/19 18:41:30 by ballain          ###   ########.fr       */
+/*   Updated: 2024/02/20 13:36:00 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include <bsd/string.h>
+#include <ctype.h>
 #include "libft.h"
 
 int	main(int argc, char *argv[])
 {
-	char	str[] = "makes";
-	char	dest[] = "";
-	char	dest_0[] = "";
+	char	str_1[7] = "makes ";
+	char	*str_2 = "the world easy";
+	char	*result;
 
-	//strlcpy(dest, str, sizeof(str));
-	ft_strlcpy(dest_0, str, 4);
-	//printf("CPY : %s\n", dest);
-	printf("FT_CPY : %s\n", dest_0);
+	//strlcat(str_1, str_2, 4);
+	printf("lenght : %zu %zu\n", ft_strlen(str_1), ft_strlen(str_2));
+	printf("SOURCE : \n %s\n %zu\n", str_1, strlcat(str_1, str_2, 1));
+	printf("lenght result : %zu\n", ft_strlen(str_1));
+	//printf("COPY   : %d\n", ft_atoi("-4e567"));
 	return (0);
 }

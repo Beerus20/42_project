@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 08:17:20 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/20 08:18:00 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/20 10:39:23 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/20 10:39:26 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	int	i;
-	int	len;
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	len_little;
 
 	i = 0;
-	len = ft_strlen(src);
-	if (size < 1)
-		return (len);
-	while (src[i] != '\0' && i < size - 1)
+	len_little = ft_strlen(little);
+	if (len_little == 0)
+		return ((char *)big);
+	while (len-- && *big != '\0' && big++)
 	{
-		dst[i] = src[i];
-		i++;
+		j = 0;
+		if (*big == *little)
+		{
+			while (big[j] == little[j])
+				j++;
+			if (little[j] == '\0')
+				return ((char *)big);
+		}
 	}
-	dst[i] = '\0';
-	return (size);
+	return (0);
 }
