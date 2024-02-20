@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/20 16:35:48 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/20 16:16:46 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/20 16:16:47 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <bsd/string.h>
-#include <ctype.h>
 #include "libft.h"
 
-int	main(void)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	char	*str_1;
-	char	*str_2;
+	char	*r_value;
 	int		i;
 
 	i = 0;
-	str_1 = strdup("Hello");
-	str_2 = ft_strdup(" world");
-	printf("ORIGINAL : %s\n", str_1);
-	printf("COPY     : %s\n", str_2);
-	free(str_1);
-	free(str_2);
-	return (0);
+	if (nmemb == 0 || size == 0)
+		return (0);
+	r_value = (char *)malloc(nmemb * size);
+	if (r_value == 0)
+		return (0);
+	while (i < nmemb)
+		r_value[i++] = 0;
+	return ((void *)r_value);
 }
