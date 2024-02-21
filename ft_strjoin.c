@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/21 19:55:07 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/21 13:38:53 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/21 13:41:00 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	main(void)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*hello;
-	char	*str;
-	int		fd;
+	int		i;
+	char	*r_value;
 
-	hello = "hello world!";
-	str = " How are you stud?";
-	fd = open("text.txt", O_RDWR);
-	write(fd, hello, ft_strlen(hello));
-	write(fd, str, ft_strlen(str));
-	close(fd);
-	return (0);
+	i = 0;
+	r_value = (char *)malloc(ft_strlen(s1) + ft_strlen(s2));
+	if (!r_value)
+		return (0);
+	while (*s1 != '\0')
+	{
+		r_value[i++] = *s1;
+		s1++;
+	}
+	while (*s2 != '\0')
+	{
+		r_value[i++] = *s2;
+		s2++;
+	}
+	return (r_value);
 }

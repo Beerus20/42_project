@@ -1,29 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 13:28:19 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/21 19:52:16 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/21 17:31:41 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/21 17:31:44 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_nbint(int n)
 {
-	size_t		i;
-	char		*r_value;
+	int	count;
+
+	count = 0;
+	while (n)
+	{
+		count++;
+		n /= 10;
+	}
+	if (n == 0)
+		return (1);
+	return (count);
+}
+
+char	*ft_itoa(int n)
+{
+	int		i;
+	int		len;
+	char	*r_value;
 
 	i = 0;
-	r_value = (char *)malloc(len);
+	len = ft_nbint(n);
+	if (n < 0)
+	{
+		r_value = (char *)malloc(len + 1);
+		r_value[0] = '-';
+		n *= -1;
+		i++;
+	}
+	else
+		r_value = (char *)malloc(len);
 	if (!r_value)
 		return (0);
-	while (i < len || s[start + i] == '\0')
+	while (--len >= 0)
 	{
-		r_value[i] = s[start + i];
+		r_value[i] = (n / ft_pow(10, len)) + 48;
+		n -= (n / ft_pow(10, len)) * ft_pow(10, len);
 		i++;
 	}
 	return (r_value);

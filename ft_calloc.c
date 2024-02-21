@@ -6,7 +6,7 @@
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:16:46 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/20 16:16:47 by ballain          ###   ########.fr       */
+/*   Updated: 2024/02/21 19:42:41 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	char	*r_value;
-	int		i;
+	char		*r_value;
+	size_t		i;
 
 	i = 0;
 	if (nmemb == 0 || size == 0)

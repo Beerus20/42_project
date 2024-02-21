@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/21 19:55:07 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/21 14:14:42 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/21 14:14:57 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	main(void)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*hello;
-	char	*str;
-	int		fd;
+	int		i;
+	char	*r_value;
 
-	hello = "hello world!";
-	str = " How are you stud?";
-	fd = open("text.txt", O_RDWR);
-	write(fd, hello, ft_strlen(hello));
-	write(fd, str, ft_strlen(str));
-	close(fd);
-	return (0);
+	i = 0;
+	r_value = (char *)malloc((int)ft_strlen(s1) - ft_count_chars(s1, set));
+	if (!r_value)
+		return (0);
+	while (*s1 != '\0')
+	{
+		if (!ft_strchr(set, *s1))
+		{
+			*(r_value + i) = *s1;
+			i++;
+		}
+		s1++;
+	}
+	return (r_value);
 }
