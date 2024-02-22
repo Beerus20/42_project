@@ -1,4 +1,3 @@
-# variable
 NAME		= libft
 LIBNAME		= libft.a
 SRCS		= \
