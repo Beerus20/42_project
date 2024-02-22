@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/22 16:44:20 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/19 11:00:31 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/19 16:14:58 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
-#include <string.h>
+#include "../includes/libft.h"
 
-int	main(void)
+int	ft_isdigit(int c)
 {
-	char	str [50] = "hello world";
-
-	printf("%s\n", (char *)ft_memmove(str + 4, str, 14));
+	if (c >= 0 && c <= 9)
+		return (2048);
 	return (0);
 }

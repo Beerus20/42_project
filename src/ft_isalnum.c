@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/22 16:44:20 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/19 11:04:53 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/19 11:05:11 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
-#include <string.h>
+#include "../includes/libft.h"
 
-int	main(void)
+int	ft_isalnum(int c)
 {
-	char	str [50] = "hello world";
-
-	printf("%s\n", (char *)ft_memmove(str + 4, str, 14));
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= 0 && c <= 9))
+		return (1);
 	return (0);
 }

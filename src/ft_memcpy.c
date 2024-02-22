@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/22 16:44:20 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/19 16:22:30 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/22 08:57:43 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
-#include <string.h>
+#include "../includes/libft.h"
 
-int	main(void)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char	str [50] = "hello world";
+	unsigned char	*str;
 
-	printf("%s\n", (char *)ft_memmove(str + 4, str, 14));
-	return (0);
+	str = (unsigned char *)dest;
+	while (n-- > 0)
+		*str++ = *(unsigned char *)src++;
+	return (dest);
 }

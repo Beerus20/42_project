@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/22 16:44:20 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/20 08:17:20 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/21 19:51:05 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
-#include <string.h>
+#include "../includes/libft.h"
 
-int	main(void)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	char	str [50] = "hello world";
+	size_t	i;
+	size_t	len;
 
-	printf("%s\n", (char *)ft_memmove(str + 4, str, 14));
-	return (0);
+	i = 0;
+	len = ft_strlen(src);
+	if (size < 1)
+		return (len);
+	while (src[i] != '\0' && i < size - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (ft_strlen(src));
 }

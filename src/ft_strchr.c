@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/22 16:44:20 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/20 08:14:44 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/20 08:45:23 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
-#include <string.h>
+#include "../includes/libft.h"
 
-int	main(void)
+char	*ft_strchr(const char *s, int c)
 {
-	char	str [50] = "hello world";
-
-	printf("%s\n", (char *)ft_memmove(str + 4, str, 14));
+	while (*s != '\0')
+	{
+		if (*s == c)
+			return ((char *)s);
+		s++;
+	}
 	return (0);
 }

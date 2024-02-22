@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/22 16:44:20 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/20 16:33:14 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/20 16:33:15 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
-#include <string.h>
+#include "../includes/libft.h"
 
-int	main(void)
+char	*ft_strdup(const char *s)
 {
-	char	str [50] = "hello world";
+	char	*r_value;
+	int		i;
+	int		size;
 
-	printf("%s\n", (char *)ft_memmove(str + 4, str, 14));
-	return (0);
+	i = 0;
+	size = ft_strlen(s);
+	r_value = (char *)malloc(size);
+	if (!r_value)
+		return (0);
+	while (i < size)
+	{
+		r_value[i] = s[i];
+		i++;
+	}
+	return (r_value);
 }

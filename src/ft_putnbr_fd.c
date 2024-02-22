@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/22 16:44:20 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/21 18:44:06 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/21 18:44:08 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
-#include <string.h>
+#include "../includes/libft.h"
 
-int	main(void)
+void	ft_putnbr_fd(int n, int fd)
 {
-	char	str [50] = "hello world";
+	char	*s_value;
 
-	printf("%s\n", (char *)ft_memmove(str + 4, str, 14));
-	return (0);
+	s_value = ft_itoa(n);
+	write(fd, s_value, ft_strlen(s_value));
 }

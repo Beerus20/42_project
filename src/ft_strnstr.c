@@ -1,22 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/22 16:44:20 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/20 10:39:23 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/20 10:39:26 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
-#include <string.h>
+#include "../includes/libft.h"
 
-int	main(void)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	char	str [50] = "hello world";
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	len_little;
 
-	printf("%s\n", (char *)ft_memmove(str + 4, str, 14));
+	i = 0;
+	len_little = ft_strlen(little);
+	if (len_little == 0)
+		return ((char *)big);
+	while (len-- && *big != '\0' && big++)
+	{
+		j = 0;
+		if (*big == *little)
+		{
+			while (big[j] == little[j])
+				j++;
+			if (little[j] == '\0')
+				return ((char *)big);
+		}
+	}
 	return (0);
 }

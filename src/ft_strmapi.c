@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/22 16:44:20 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/21 17:50:42 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/21 17:50:43 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
-#include <string.h>
+#include "../includes/libft.h"
 
-int	main(void)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	str [50] = "hello world";
+	unsigned int	i;
+	char			*r_value;
 
-	printf("%s\n", (char *)ft_memmove(str + 4, str, 14));
-	return (0);
+	i = 0;
+	r_value = (char *)malloc(ft_strlen(s));
+	if (!r_value)
+		return (0);
+	while (s[i] != '\0')
+	{
+		r_value[i] = (*f)(i, s[i]);
+		i++;
+	}
+	return (r_value);
 }
