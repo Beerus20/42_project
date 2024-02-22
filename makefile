@@ -9,33 +9,33 @@ SRCS		= \
 OBJS		= $(SRCS:.c=.o)
 VIMFILES	= ./.*.swp
 CFLAGS		= -Wall -Wextra -Werror
-RM			= rm -rf
-CC			= cc
+RM		= rm -rf
+CC		= cc
 
 all 		: norme $(NAME) lib
 
-run			: norme
-				$(CC) $(CFLAGS) -c main.c -L. -lft
+run		: norme
+			$(CC) $(CFLAGS) -c main.c -L. -lft
 
 $(NAME)		: $(OBJS)
 
 outputs/%.o	: src/%.c
-				${CC} $(CFLAGS) -o $@ -c $<
+			${CC} $(CFLAGS) -o $@ -c $<
 
 norme		:
-				norminette
+			norminette
 
-lib			:
-				ar rc $(LIBNAME) $(OBJS)
+lib		:
+			ar rc $(LIBNAME) $(OBJS)
 
 clean 		: 
-				$(RM) $(OBJS)
+			$(RM) $(OBJS)
 
 vimclean	:
-				$(RM) $(VIMFILE)
+			$(RM) $(VIMFILE)
 
 fclean		: clean
-				$(RM) $(NAME)
+			$(RM) $(NAME)
 
 cleanall	: fclean vimclean
 re			: fclean all
