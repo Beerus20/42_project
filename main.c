@@ -6,17 +6,17 @@
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:59:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/22 16:44:20 by ballain          ###   ########.fr       */
+/*   Updated: 2024/02/24 16:07:17 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "libft.h"
 #include <string.h>
 
 int	main(void)
 {
 	char	str [50] = "hello world";
 
-	printf("%s\n", (char *)ft_memmove(str + 4, str, 14));
+	printf("%s\n", ft_substr(str, 3, 50));
 	return (0);
 }
