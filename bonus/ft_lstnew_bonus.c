@@ -23,10 +23,9 @@ int	ft_lstsize(t_list *lst)
 	t_list	*list;
 
 	count = 0;
-	list = lst;
-	while (list)
+	while (lst)
 	{
-		list = list -> next;
+		lst = lst -> next;
 		count++;
 	}
 	return (count);
@@ -43,13 +42,14 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	int	last_id;
 
-	last_id = ft_lstsize(*lst) - 1;
-	lst[last_id] -> content = new -> content;
+	while ((*lst) -> next)
+		(*lst) = (*lst) -> next;
+	(*lst) -> content = new -> content;
 }
 
 void	ft_del(void *element)
 {
-		free(element);
+	free(element);
 }
 
 void	ft_lstdelone(t_list *lst, void (*del)(void*))
@@ -101,8 +101,23 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	while (i < len_list)
 	{
 		r_value[i] = *(t_list *)(*f)(lst);
+		printf("POINTEUR : %p\n", r_value);
+		(*del)(r_value + i);
 		lst = lst -> next;
 		i++;
 	}
 	return (r_value);
 }
+
+void	ft_show(t_list *e)
+{
+	int	len_e;
+
+	while(e)
+	{
+		printf("content : %s - pointeur : %p\n", (char *)e -> content, e -> next);
+		e = e -> next;
+	}	
+}
+
+
