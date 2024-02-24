@@ -12,12 +12,12 @@ CFLAGS		= -Wall -Wextra -Werror
 RM		= rm -rf
 CC		= cc
 
-all 		: norme $(NAME) lib
+all 		: norme $(NAME) lib run
+
+$(NAME)		: $(OBJS)
 
 run		: norme
 			$(CC) $(CFLAGS) -c main.c -L. -lft
-
-$(NAME)		: $(OBJS)
 
 outputs/%.o	: src/%.c
 			${CC} $(CFLAGS) -o $@ -c $<
