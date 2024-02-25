@@ -49,6 +49,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 
 void	ft_del(void *element)
 {
+	printf("DELETE : %p\n", element);
 	free(element);
 }
 
@@ -93,17 +94,20 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	int		i;
 	int		len_list;
+	t_list	*next;
 	t_list	*r_value;
 
 	i = 0;
 	len_list = ft_lstsize(lst);
+	next = malloc(sizeof(t_list));
+	*next = *lst;
 	r_value = (t_list *)malloc(sizeof(t_list) * len_list);;
 	while (i < len_list)
 	{
-		r_value[i] = *(t_list *)(*f)(lst);
-		printf("POINTEUR : %p\n", r_value);
-		(*del)(r_value + i);
-		lst = lst -> next;
+		r_value[i] = *(t_list *)(*f)(next);
+		next = lst -> next;
+		(*del)(lst);
+		lst = next;
 		i++;
 	}
 	return (r_value);
