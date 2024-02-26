@@ -40,6 +40,23 @@ static int	ft_nbint(int n)
 	return (count);
 }
 
+static	char	*ft_allocstr(int *n, int len)
+{
+	char	*r_value;
+
+	if (*n < 0)
+	{
+		r_value = (char *)malloc(len + 2);
+		r_value[0] = '-';
+		*n *= -1;
+	}
+	else
+		r_value = (char *)malloc(len + 1);
+	if (!r_value)
+		return (0);
+	return (r_value);
+}
+
 char	*ft_itoa(int n)
 {
 	int		i;
@@ -49,14 +66,8 @@ char	*ft_itoa(int n)
 	i = 0;
 	len = ft_nbint(n);
 	if (n < 0)
-	{
-		r_value = (char *)malloc(len + 2);
-		r_value[0] = '-';
-		n *= -1;
 		i++;
-	}
-	else
-		r_value = (char *)malloc(len + 1);
+	r_value = ft_allocstr(&n, len);
 	if (!r_value)
 		return (0);
 	while (--len >= 0)
@@ -67,9 +78,4 @@ char	*ft_itoa(int n)
 	}
 	r_value[i] = '\0';
 	return (r_value);
-}
-
-int	main(void)
-{
-	printf("[%s]\n", ft_itoa(1234));
 }

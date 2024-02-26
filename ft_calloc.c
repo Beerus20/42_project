@@ -11,18 +11,20 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <string.h>
+#include <stdio.h>
+#include <bsd/string.h>
+#include <stdlib.h>
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	char		*r_value;
-	size_t		i;
+	int		*r_value;
+	size_t	i;
 
 	i = 0;
-	if (nmemb == 0 || size == 0)
-		return (0);
-	r_value = (char *)malloc(nmemb * size);
-	if (r_value == 0)
-		return (0);
+	r_value = malloc(nmemb * size);
+	if (!r_value)
+		return ((void *)0);
 	while (i < nmemb)
 		r_value[i++] = 0;
 	return ((void *)r_value);

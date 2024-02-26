@@ -14,27 +14,21 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	size_t			i;
-	unsigned int	j;
-	unsigned int	len_little;
+	size_t	i;
+	int		len_little;
 
 	i = 0;
 	len_little = ft_strlen(little);
 	if (len_little == 0)
 		return ((char *)big);
-	while (*big && len)
+	while (big[i] != '\0' && i < len)
 	{
-		j = 0;
-		if (*big == *little)
+		if (ft_strncmp(&big[i], little, len_little) == 0)
 		{
-			i = len;
-			while (big[j] == little[j] && i--)
-				j++;
-			if (little[j] == '\0')
-				return ((char *)big);
+			if ((i + len_little) <= len)
+				return ((char *)(&big[i]));
 		}
-		big++;
-		len--;
+		i++;
 	}
 	return (0);
 }
