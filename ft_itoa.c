@@ -30,13 +30,13 @@ static int	ft_nbint(int n)
 	int	count;
 
 	count = 0;
+	if (n == 0)
+		return (1);
 	while (n)
 	{
 		count++;
 		n /= 10;
 	}
-	if (n == 0)
-		return (1);
 	return (count);
 }
 
@@ -50,13 +50,13 @@ char	*ft_itoa(int n)
 	len = ft_nbint(n);
 	if (n < 0)
 	{
-		r_value = (char *)malloc(len + 1);
+		r_value = (char *)malloc(len + 2);
 		r_value[0] = '-';
 		n *= -1;
 		i++;
 	}
 	else
-		r_value = (char *)malloc(len);
+		r_value = (char *)malloc(len + 1);
 	if (!r_value)
 		return (0);
 	while (--len >= 0)
@@ -65,5 +65,11 @@ char	*ft_itoa(int n)
 		n -= (n / ft_pow(10, len)) * ft_pow(10, len);
 		i++;
 	}
+	r_value[i] = '\0';
 	return (r_value);
+}
+
+int	main(void)
+{
+	printf("[%s]\n", ft_itoa(1234));
 }

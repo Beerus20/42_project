@@ -18,7 +18,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*r_value;
 
 	i = 0;
-	r_value = (char *)malloc(ft_strlen(s1) + ft_strlen(s2));
+	r_value = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!r_value)
 		return (0);
 	while (*s1 != '\0')
@@ -31,5 +31,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		r_value[i++] = *s2;
 		s2++;
 	}
+	r_value[i] = '\0';
 	return (r_value);
 }

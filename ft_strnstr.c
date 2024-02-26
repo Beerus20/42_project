@@ -14,7 +14,7 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	unsigned int	i;
+	size_t			i;
 	unsigned int	j;
 	unsigned int	len_little;
 
@@ -22,16 +22,19 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	len_little = ft_strlen(little);
 	if (len_little == 0)
 		return ((char *)big);
-	while (len-- && *big != '\0' && big++)
+	while (*big && len)
 	{
 		j = 0;
 		if (*big == *little)
 		{
-			while (big[j] == little[j])
+			i = len;
+			while (big[j] == little[j] && i--)
 				j++;
 			if (little[j] == '\0')
 				return ((char *)big);
 		}
+		big++;
+		len--;
 	}
 	return (0);
 }

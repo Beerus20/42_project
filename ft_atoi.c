@@ -21,25 +21,22 @@ static int	ft_isspace(const int c)
 
 int	ft_atoi(const char *nptr)
 {
-	unsigned int	counter_sign;
-	int				sign;
-	int				result;
+	int	sign;
+	int	result;
 
-	sign = -1;
-	counter_sign = 0;
+	sign = 1;
 	result = 0;
 	while (ft_isspace(*nptr))
 		nptr++;
-	while ((*nptr == '-' || *nptr == '+') && nptr++ && counter_sign++)
+	if (*nptr == '-' || *nptr == '+')
 	{
-		if (*nptr == '+')
-			sign *= sign;
-		if (counter_sign > 1)
-			return (0);
+		if (*nptr == '-')
+			sign = -1;
+		nptr++;
 	}
 	while (*nptr != '\0')
 	{
-		if (ft_isalpha(*nptr))
+		if (!ft_isdigit(*nptr))
 			break ;
 		result = result * 10 + (*nptr - 48);
 		nptr++;
