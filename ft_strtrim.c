@@ -12,55 +12,33 @@
 
 #include "libft.h"
 
-static int	ft_count_chars(char const *s1, char const *set)
+static char	*ft_init_count_rvalue(char const *s1, char const *set)
 {
-	int		count;
-	size_t	i;
-	size_t	len_set;
-	size_t	len_str;
-
-	count = 0;
-	i = 0;
-	len_set = ft_strlen(set);
-	len_str = ft_strlen(s1);
-	if (!len_set)
-		return (0);
-	while (s1[i])
-	{
-		if (!ft_strncmp(&s1[i], set, len_set))
-			count++;
-		i++;
-	}
-	return (int)len_str - (count * len_set) + 1);
+	
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	int		i;
-	int		t_len;
 	char	*r_value;
-	size_t	len_set;
-	size_t	len_s1;
+	char	*str;
+	size_t	len_src;
 
 	i = 0;
-	len_set = ft_strlen(set);
-	len_s1 = ft_strlen(s1);
-	t_len = (int)len_s1 - (ft_count_chars(s1, set) * len_set) + 1;
-	r_value = (char *)malloc(t_len);
-	if (!r_value)
+	len_src = ft_strlen(s1);
+	str = ft_strdup(s1);
+	if (!str)
 		return (0);
-	if (!len_set)
+	while (1)
 	{
-		ft_strlcpy(r_value, s1, len_s1 + 1);
-		return (r_value);
+		if (ft_str)
 	}
-	while (*s1 != '\0')
-	{
-		if (!ft_strncmp(s1, set, len_set))
-			s1 += len_set;
-		else
-			*(r_value + (i++)) = *(s1++);
-	}
-	r_value[i] = '\0';
 	return (r_value);
+}
+
+int	main(void)
+{
+	char	*str = "lorem \n ipsum \t dolor \n sit \t amet";
+	printf("RETURN VALUE : [%s]\n", str);
+	return (0);
 }
