@@ -12,33 +12,28 @@
 
 #include "libft.h"
 
-static char	*ft_init_count_rvalue(char const *s1, char const *set)
-{
-	
-}
-
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	int		i;
+	int		i_start;
+	int		i_end;
 	char	*r_value;
-	char	*str;
-	size_t	len_src;
 
 	i = 0;
-	len_src = ft_strlen(s1);
-	str = ft_strdup(s1);
-	if (!str)
+	i_start = 0;
+	i_end = ft_strlen(s1) - 1;
+	r_value = NULL;
+	while (ft_strchr(set, s1[i_start]))
+		i_start++;
+	while (ft_strchr(set, s1[i_end]))
+		i_end--;
+	if (i_start > i_end)
+		return (ft_strdup(""));
+	r_value = (char *)malloc(i_end - i_start + 2);
+	if (!r_value)
 		return (0);
-	while (1)
-	{
-		if (ft_str)
-	}
+	while (i_start <= i_end)
+		r_value[i++] = s1[i_start++];
+	r_value[i] = '\0';
 	return (r_value);
-}
-
-int	main(void)
-{
-	char	*str = "lorem \n ipsum \t dolor \n sit \t amet";
-	printf("RETURN VALUE : [%s]\n", str);
-	return (0);
 }

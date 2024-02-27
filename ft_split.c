@@ -12,72 +12,95 @@
 
 #include "libft.h"
 
-static int	ft_count_char(const char *s, const char c)
+char	**ft_alloc_rvalue(char const *s, char c, int *nb_w)
 {
-	int	count;
-	int	i;
+	int		i;
+	int		can_count_word;
+	char	**r_value;
 
-	count = 0;
 	i = 0;
+	can_count_word = 1;
+	r_value = NULL;
 	while (s[i] != '\0')
 	{
+		if (s[i] != c && can_count_word)
+		{
+			can_count_word = 0;
+			*nb_w += 1;
+		}
 		if (s[i] == c)
-			count++;
+			can_count_word = 1;
 		i++;
 	}
-	return (count);
+	r_value = (char **)malloc(sizeof(char *) * (*nb_w + 1));
+	if (!r_value)
+		return (0);
+	return (r_value);
 }
 
-static int	*ft_splited_len(char const *s, const char c)
+int	ft_alloc_content(char **r_value, char const *s, char c)
 {
-	int		count;
-	int		*r_value;
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
+	int		id_word;
+	int		nb_c;
+	int		can_write;
 
 	i = 0;
 	j = 0;
-	count = 0;
-	r_value = (int *)malloc(ft_count_char(s, c) + 1);
-	while (i < ft_strlen(s))
+	id_word = 0;
+	nb_c = 0;
+	can_write = 0;
+	while (s[i] != '\0')
 	{
-		if (s[i] == c || i == ft_strlen(s) - 1)
+		if (s[i] == c)
 		{
-			r_value[j] = count;
-			count = 0;
-			j++;
+			can_write = 1;
+			if (s[i - 1] != c)
+				r_value[j] = ft_substr(s, id_word, nb_c);
 		}
-		else
-			count++;
+		if (s[i] != c)
+		{
+			if (can_write)
+			{
+				printf("ATO ...\n");
+				id_word = i;
+				j++;
+				nb_c = 0;
+			}
+			can_write = 0;
+			nb_c++;
+		}
 		i++;
 	}
-	return (r_value);
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	int		i;
-	int		j;
-	int		split_nb;
-	int		*split_len;
+	int		nb_w;
 	char	**r_value;
 
-	i = 0;
-	split_nb = ft_count_char(s, c) + 1;
-	split_len = ft_splited_len(s, c);
-	r_value = (char **)malloc(split_nb);
-	while (i < split_nb)
+	nb_w = 0;
+	r_value = ft_alloc_rvalue(s, c, &nb_w);
+	if (nb_w == 0)
 	{
-		j = 0;
-		r_value[i] = (char *)malloc(split_len[i]);
-		while (*s != c && *s != '\0')
-		{
-			r_value[i][j] = *s;
-			j++;
-			s++;
-		}
-		s++;
-		i++;
+		r_value[0] = NULL;
+		return (r_value);
 	}
+	ft_alloc_content(r_value, s, c);
 	return (r_value);
+}
+
+int	main(void)
+{
+	char	*str = " lorem    ipsum    dolor     sit    met    ";
+	char	**result = ft_split(str, ' ');
+
+	while (*result)
+	{
+		printf("result : [%s]\n", *result);
+		result++;
+	}
+	return (0);
 }
