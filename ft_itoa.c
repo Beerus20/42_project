@@ -44,16 +44,28 @@ static	char	*ft_allocstr(int *n, int len)
 {
 	char	*r_value;
 
+	r_value = NULL;
+	if (*n == -2147483648)
+	{
+		r_value = ft_strdup("-2147483648");
+		if (!r_value)
+			return (0);
+		return (r_value);
+	}
 	if (*n < 0)
 	{
 		r_value = (char *)malloc(len + 2);
+		if (!r_value)
+			return (0);
 		r_value[0] = '-';
 		*n *= -1;
 	}
 	else
+	{
 		r_value = (char *)malloc(len + 1);
-	if (!r_value)
-		return (0);
+		if (!r_value)
+			return (0);
+	}
 	return (r_value);
 }
 
@@ -68,6 +80,8 @@ char	*ft_itoa(int n)
 	if (n < 0)
 		i++;
 	r_value = ft_allocstr(&n, len);
+	if (n == -2147483648)
+		return (r_value);
 	if (!r_value)
 		return (0);
 	while (--len >= 0)

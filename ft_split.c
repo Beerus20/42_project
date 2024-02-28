@@ -38,42 +38,51 @@ char	**ft_alloc_rvalue(char const *s, char c, int *nb_w)
 	return (r_value);
 }
 
-int	ft_alloc_content(char **r_value, char const *s, char c)
+int	ft_iandl(const char *s, char c, int *i, int *len)
 {
-	int		i;
-	int		j;
-	int		id_word;
-	int		nb_c;
-	int		can_write;
+	int	tmp;
+
+	tmp = 0;
+	while (s[*i] == c)
+		*i += 1;
+	tmp = *i;
+	while (s[*i] != c)
+	{
+		if (s[*i] == '\0')
+			break ;
+		*i += 1;
+		*len += 1;
+	}
+	return (tmp);
+}
+
+int	ft_fill_content(char **r_value, char const *s, char c)
+{
+	int	i;
+	int	id;
+	int	tmp;
+	int	len;
 
 	i = 0;
-	j = 0;
-	id_word = 0;
-	nb_c = 0;
-	can_write = 0;
+	id = 0;
+	tmp = 0;
+	len = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == c)
+		len = 0;
+		tmp = ft_iandl(s, c, &i, &len);
+		if (len != 0)
 		{
-			can_write = 1;
-			if (s[i - 1] != c)
-				r_value[j] = ft_substr(s, id_word, nb_c);
+			r_value[id] = ft_substr(s, tmp, len);
+			if (!r_value[id])
+				return (0);
+			id++;
 		}
-		if (s[i] != c)
-		{
-			if (can_write)
-			{
-				printf("ATO ...\n");
-				id_word = i;
-				j++;
-				nb_c = 0;
-			}
-			can_write = 0;
-			nb_c++;
-		}
-		i++;
 	}
-	return (1);
+	free(r_value[id]);
+	r_value[id] = (void *)malloc(sizeof(char));
+	r_value[id] = NULL;
+	return (0);
 }
 
 char	**ft_split(char const *s, char c)
@@ -83,24 +92,13 @@ char	**ft_split(char const *s, char c)
 
 	nb_w = 0;
 	r_value = ft_alloc_rvalue(s, c, &nb_w);
+	if (!r_value)
+		return (0);
 	if (nb_w == 0)
 	{
 		r_value[0] = NULL;
 		return (r_value);
 	}
-	ft_alloc_content(r_value, s, c);
+	ft_fill_content(r_value, s, c);
 	return (r_value);
-}
-
-int	main(void)
-{
-	char	*str = " lorem    ipsum    dolor     sit    met    ";
-	char	**result = ft_split(str, ' ');
-
-	while (*result)
-	{
-		printf("result : [%s]\n", *result);
-		result++;
-	}
-	return (0);
 }
