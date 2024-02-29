@@ -6,7 +6,7 @@
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:45:38 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/21 19:49:33 by ballain          ###   ########.fr       */
+/*   Updated: 2024/02/29 18:27:52 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ char	**ft_alloc_rvalue(char const *s, char c, int *nb_w)
 			can_count_word = 1;
 		i++;
 	}
-	r_value = (char **)malloc(sizeof(char *) * (*nb_w + 1));
+	*nb_w += 1;
+	r_value = (char **)malloc(sizeof(char *) * (*nb_w));
 	if (!r_value)
 		return (0);
 	return (r_value);
@@ -79,10 +80,8 @@ int	ft_fill_content(char **r_value, char const *s, char c)
 			id++;
 		}
 	}
-	free(r_value[id]);
-	r_value[id] = (void *)malloc(sizeof(char));
 	r_value[id] = NULL;
-	return (0);
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
