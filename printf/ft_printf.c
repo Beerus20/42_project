@@ -6,64 +6,81 @@
 /*   By: bruce <bruce@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:34:40 by bruce             #+#    #+#             */
-/*   Updated: 2024/03/04 21:29:17 by bruce            ###   ########.fr       */
+/*   Updated: 2024/03/05 17:11:16 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/printf.h"
 
-int	ft_count_words(char *str)
+int	ft_cspdiuxX(char c)
 {
-	char	*tmp;
-	int		count_words;
+	char	*check_list;
 
-	tmp = (char *)str;
-	count_words = 0;
-	while (1)
+	check_list = "cspdiuxX%";
+	while (*check_list)
 	{
-		while (*tmp != '%' && *tmp)
-			tmp++;
-		if (*tmp == '\0' && count_words++)
-			return (count_words);
-		str = tmp;
-		count_words++;
-		while (ft_strchr("cspdiuxX%", *tmp) && *tmp)
-			tmp++;
-		if (*tmp == '\0' && count_words++)
-			return (count_words);
-		str = tmp;
-		count_words++;
+		if (c == *check_list)
+			return (1);
+		check_list++;
 	}
 	return (0);
 }
 
-int	ft_analyse(const char *str)
+char	*ft_check_type(char *str, t_action *action)
 {
-	const char	*tmp;
+	int	i;
+	int	count;
 
-	tmp = ft_strchr(str, '%');
-	printf("LENGHT : [%ld] [%p] [%p]\n", (tmp - str), str, tmp);
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (ft_cspdiuxX(str[i]))
+		{
+			action->type = str[i];
+			action->flags = ft_substr(str, 0, count);
+			return (&str[i]);
+		}
+		i++;
+		count++;
+	}
 	return (0);
 }
 
-int	ft_printf(const char *str, ...)
+int	ft_printf(const char *format, ...)
 {
-	int			nb_word;
-	t_in_value	**value;
+	va_list		args;
+	void		*in_value;
+	char		*tmp;
+	t_action	action;
 
-	nb_word = ft_count_words((char *)str) + 1;
-	value = (t_in_value **)malloc(sizeof(t_in_value *) * nb_word);
-	ft_analyse(str);
-	printf("words : [%d]\n", ft_count_words((char *)str));
-	free(value);
+	action = ft_init_action();
+	tmp = (char *)format;
+	va_start(args, format);
+	while (*tmp)
+	{
+		while (*tmp != '%' && *tmp)
+			ft_putchar_fd(*(tmp++), 1);
+		if (*(tmp++) == '\0')
+			return (0);
+		tmp = ft_check_type(tmp, &action);
+		ft_show_value(&action);
+		if (*(tmp++) == 's')
+		{
+			in_value = (char *)va_arg(args, char *);
+			ft_putstr_fd((char *)in_value, 1);
+		}
+	}
+	va_end(args);
 	return (0);
 }
 
 int	main(void)
 {
-	int i;
+	int	i;
 
-	i = 0;
-	printf("%s\n", TYPE(i));
+	i = 2;
+	printf("ORG	: [%s]\n", "HELLO");
+	ft_printf("CPY	: [%0.12s] [%#.45d]\n", "HELLO");
 	return (0);
 }

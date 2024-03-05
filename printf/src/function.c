@@ -6,7 +6,7 @@
 /*   By: bruce <bruce@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:41:25 by bruce             #+#    #+#             */
-/*   Updated: 2024/03/04 19:59:54 by bruce            ###   ########.fr       */
+/*   Updated: 2024/03/05 17:10:00 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@ int	ft_count_char(const char *str, const char c)
 	return (count);
 }
 
-void	ft_show_value(t_in_value *lst)
+t_action	ft_init_action(void)
 {
-	while (lst)
-	{
-		if (lst->type == INT)
-			printf("VALUE : [%d]\n", *(int *)lst->content);
-		if (lst->type == TEXT)
-			printf("VALUE : [%s]\n", (char *)lst->content);
-		lst = (t_in_value *)lst->next;
-	}
+	t_action	r_value;
+
+	r_value.type = 0;
+	r_value.flags = (void *)0;
+	return (r_value);
+}
+
+void	ft_show_value(t_action *action)
+{
+	printf("\nAction : \n\t--type : [%c]\n\t--flags : [%s]\n\n", action->type, action->flags);
 }

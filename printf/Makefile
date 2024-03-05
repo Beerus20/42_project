@@ -21,6 +21,9 @@ CFLAGS		= -Wall -Wextra -Werror
 RM		= rm -rf
 CC		= cc
 
+watch				:
+						 watchexec -d 1900 -c -w . make run
+
 run					: all
 						$(CC) ft_printf.c -L. -lftprintf && ./a.out
 
@@ -38,8 +41,8 @@ $(NAME)				: $(LOBJS) $(OBJS)
 norme				:
 						norminette
 
-save				: clean
-						git commit -am $(COMMIT) && git push
+save				: fclean
+						git commit -am "$(COMMIT)" && git push
 
 clean 				: 
 						$(RM) $(OBJS) $(LOBJS) a.out

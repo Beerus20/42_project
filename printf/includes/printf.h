@@ -6,7 +6,7 @@
 /*   By: bruce <bruce@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:37:41 by bruce             #+#    #+#             */
-/*   Updated: 2024/03/04 21:36:00 by bruce            ###   ########.fr       */
+/*   Updated: 2024/03/05 17:08:37 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,6 @@
 # define PRINTF_H
 
 # include "libft.h"
-
-# define TYPE(x) _Generic((x),\
-	int: "int",\
-	int*: "Pointer int",\
-	short: "short",\
-	long: "long",\
-	char: "char",\
-	float: "float",\
-	double: "double",\
-	default: "unknown"\
-)(x)
 
 typedef enum e_in_type
 {
@@ -38,20 +27,19 @@ typedef enum e_in_type
 	TEXT
 }	t_in_type;
 
-typedef struct s_in_value
+typedef struct s_action
 {
-	t_in_type			type;
-	char				flag;
-	void				*content;
-	struct s_in_value	*next;
-}	t_in_value;
+	char	type;
+	char	*flags;
+}	t_action;
 
-int		ft_count_char(const char *str, const char c);
+int			ft_count_char(const char *str, const char c);
+t_action	ft_init_action(void);
 
 /** --------------------------------------
  ** TMP function
 */
-void	ft_show_value(t_in_value *lst);
+void		ft_show_value(t_action *action);
 // ---------------------------------------
 
 #endif
