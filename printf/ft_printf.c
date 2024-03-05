@@ -1,35 +1,69 @@
-#include "printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bruce <bruce@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/04 13:34:40 by bruce             #+#    #+#             */
+/*   Updated: 2024/03/04 21:29:17 by bruce            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	test(int nb, va_list list)
+#include "./includes/printf.h"
+
+int	ft_count_words(char *str)
 {
-	int	tmp;
-	va_list	args;
+	char	*tmp;
+	int		count_words;
 
-	args = list;
-	va_start(args, nb);
-	while (nb)
+	tmp = (char *)str;
+	count_words = 0;
+	while (1)
 	{
-		tmp = va_arg(args, int);
-		printf("value : [%d]\n", tmp);
-		nb--;
+		while (*tmp != '%' && *tmp)
+			tmp++;
+		if (*tmp == '\0' && count_words++)
+			return (count_words);
+		str = tmp;
+		count_words++;
+		while (ft_strchr("cspdiuxX%", *tmp) && *tmp)
+			tmp++;
+		if (*tmp == '\0' && count_words++)
+			return (count_words);
+		str = tmp;
+		count_words++;
 	}
-	va_end(args);
+	return (0);
 }
 
-int	ft_printf(const char *str, int test, ...)
+int	ft_analyse(const char *str)
 {
-	va_list	arg;
-	int	nb_descriptor;
-	int	tmp;
-	int	i;
+	const char	*tmp;
 
-	nb_descriptor = ft_count_char(str, '%');
-	test(nb_descriptor, arg);
+	tmp = ft_strchr(str, '%');
+	printf("LENGHT : [%ld] [%p] [%p]\n", (tmp - str), str, tmp);
+	return (0);
+}
+
+int	ft_printf(const char *str, ...)
+{
+	int			nb_word;
+	t_in_value	**value;
+
+	nb_word = ft_count_words((char *)str) + 1;
+	value = (t_in_value **)malloc(sizeof(t_in_value *) * nb_word);
+	ft_analyse(str);
+	printf("words : [%d]\n", ft_count_words((char *)str));
+	free(value);
 	return (0);
 }
 
 int	main(void)
 {
-	ft_printf("simple \ntest %[i][s] % % % %", 5, 12, 35, 65, 78, 45);
+	int i;
+
+	i = 0;
+	printf("%s\n", TYPE(i));
 	return (0);
 }
