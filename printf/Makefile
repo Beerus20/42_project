@@ -8,27 +8,21 @@ LNAMESRCS		= \
 	ft_lstnew_bonus.c	ft_lstadd_front_bonus.c	ft_lstsize_bonus.c	ft_lstlast_bonus.c \
 	ft_lstadd_back_bonus.c	ft_lstdelone_bonus.c	ft_lstclear_bonus.c	ft_lstiter_bonus.c \
 	ft_lstmap_bonus.c
-SRCS		= \
-	function.c
 LSRCS		= $(LNAMESRCS:%.c=./libft/%.c)	
 LOBJS		= $(subst ./libft/,./output/,$(LSRCS:%.c=%.o))
-OBJS		= $(SRCS:%.c=./output/%.o)
 
-COMMIT?		= ""
+SRCS		= \
+	function.c		utils.c		ft_printf.c		ft_number.c
+OBJS		= $(SRCS:%.c=./output/%.o)
 
 VIMFILES	= ./.*.swp
 CFLAGS		= -Wall -Wextra -Werror
-RM		= rm -rf
-CC		= cc
-
-watch				:
-						 watchexec -d 1900 -c -w . make run
-
-run					: all
-						$(CC) ft_printf.c -L. -lftprintf && ./a.out
+RM			= rm -rf
+CC			= cc
+TESTER		= $(shell ls)
 
 ./output/%.o		: ./libft/%.c
-						@$(CC) $(CFLAGS) -o $@ -c $< 
+						@$(CC) $(CFLAGS) -o $@ -c $<
 
 ./output/%.o		: ./src/%.c
 						$(CC) $(CFLAGS) -o $@ -c $<
@@ -39,10 +33,7 @@ $(NAME)				: $(LOBJS) $(OBJS)
 						ar rc $(NAME) $^
 
 norme				:
-						norminette
-
-save				: fclean
-						git commit -am "$(COMMIT)" && git push
+						norminette					
 
 clean 				: 
 						$(RM) $(OBJS) $(LOBJS) a.out
@@ -55,4 +46,4 @@ fclean				: clean
 
 cleanall			: fclean vimclean
 re					: fclean all
-.PHONY				: fclean clean all bonus
+.PHONY				: fclean clean all bonus re
