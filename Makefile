@@ -18,7 +18,7 @@ all			: build-lib
 				$(CC) $(FLAGS) main.c -L$(LIBPATH) $(LIBNAME) && ./a.out
 
 test		:
-				$(CD) && ~/francinette/tester.sh
+				$(CD) && ~/francinette/tester.sh || ~/francinette-image/run.sh
 
 build-lib	:
 				@$(CD) && make all

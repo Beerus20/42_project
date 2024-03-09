@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "./printf/ft_printf.h"
+#include "./printf/includes/ft_printf.h"
 
 int	main(void)
 {
-	ft_printf("%c \n", 'e');
+	ft_printf("another one :  %c too %s test\n", 'e');
 	return (0);
 }
