@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/29 11:30:28 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/29 11:39:27 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/21 18:31:54 by ballain           #+#    #+#             */
+/*   Updated: 2024/03/09 09:34:55 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "libft.h"
 
-t_list	*ft_lstlast(t_list *lst)
+void	ft_putstr_fd(char *s, int fd)
 {
-	if (lst)
-		while (lst -> next)
-			lst = lst -> next;
-	return (lst);
+	write(fd, s, ft_strlen(s));
 }

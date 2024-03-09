@@ -6,11 +6,11 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:39:38 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/08 19:48:16 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/09 09:34:31 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 int	ft_nblen(unsigned long nb, int base)
 {
@@ -39,4 +39,11 @@ char	*ft_rev_str(char *str)
 		r_value[i++] = *(str--);
 	r_value[i] = '\0';
 	return (r_value);
+}
+
+int	ft_as_decimal_value(float nb)
+{
+	if ((nb - (int)nb) == 0)
+		return (0);
+	return (1);
 }

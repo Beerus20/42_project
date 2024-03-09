@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 18:44:06 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/21 18:44:08 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/09 09:34:55 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "libft.h"
 
 static int	ft_pow(int nb, int pow)
 {
@@ -43,7 +43,7 @@ static int	ft_nbint(int n)
 void	ft_putnbr_fd(int n, int fd)
 {
 	char	r_value;
-	int		exp;	
+	int		exp;
 
 	r_value = 0;
 	exp = ft_nbint(n) - 1;

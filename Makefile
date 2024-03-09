@@ -11,17 +11,17 @@ FLAGS		= -Wall -Wextra -Werror
 CD			= cd $(LIBPATH)
 COMMIT		?= ""
 
-watch		: build-lib
-				watch -n 0.2 make all
+watch		:
+				@watch -n 0.2 -t make all
 
-all			:
+all			: build-lib
 				$(CC) $(FLAGS) main.c -L$(LIBPATH) $(LIBNAME) && ./a.out
 
 test		:
 				$(CD) && ~/francinette/tester.sh
 
 build-lib	:
-				$(CD) && make all
+				@$(CD) && make all
 
 norme		:
 				$(CD) && make norme
