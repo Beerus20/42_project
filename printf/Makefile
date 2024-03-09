@@ -50,7 +50,7 @@ norme				:
 						norminette
 
 clean 				:
-						$(RM) $(OBJS) $(LOBJS) a.out
+						$(RM) $(LIBFT_OBJS) $(FTPRINTF_OBJS) a.out
 
 fclean				: clean
 						$(RM) $(NAME)
