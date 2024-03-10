@@ -1,8 +1,8 @@
+.SILENT :
 NAME		= libftprintf.a
 LIBFT_FILES	= \
 	ft_itoa.c				\
 	ft_substr.c				\
-	ft_calloc.c				\
 	ft_strlen.c				\
 	ft_strjoin.c			\
 	ft_strmapi.c			\
@@ -27,7 +27,9 @@ LIBFT_FILES	= \
 LIBFT_OBJS		= $(LIBFT_FILES:%.c=./output/%.o)
 
 FTPRINTF_FILES	= \
-	ft_printf.c
+	ft_printf.c				\
+	ft_utils.c				\
+	ft_check.c
 
 FTPRINTF_OBJS	= $(FTPRINTF_FILES:%.c=./output/%.o)
 

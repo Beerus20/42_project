@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 08:14:44 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/09 15:30:21 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/10 07:38:33 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ char	*ft_strchr(const char *s, int c)
 			return ((char *)(s));
 		s++;
 	}
-	return ((char *)s);
+	return ((char *)0);
 }

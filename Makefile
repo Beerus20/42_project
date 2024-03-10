@@ -1,3 +1,4 @@
+.SILENT :
 #	GLOBAL	variable
 NAME		= test
 LIBPATH		?= ./printf

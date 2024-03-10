@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_utils.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 11:32:04 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/10 10:24:44 by beerus           ###   ########.fr       */
+/*   Created: 2024/03/10 20:21:57 by beerus            #+#    #+#             */
+/*   Updated: 2024/03/10 22:05:35 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#ifndef FT_UTILS_H
+# define FT_UTILS_H
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	count;
+# include "libft.h"
 
-	count = 0;
-	while (s[count] != '\0')
-		count++;
-	return (count);
-}
+int		ft_uitos(char type, unsigned int nb);
+#endif

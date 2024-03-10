@@ -3,6 +3,14 @@
 
 int	main(void)
 {
-	ft_printf("another one :  %c too %s test\n", 'e');
+	int	nb;
+	int	test;
+
+	test = -100;
+	nb = 0;
+	nb = ft_printf(" [%x]", test);
+	printf("\nNB	: [%d]\n", nb);
+	nb = printf(" [%x]", test);
+	printf("\nNB	: [%d]\n", nb);
 	return (0);
 }

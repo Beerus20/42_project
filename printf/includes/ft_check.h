@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_check.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 11:32:04 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/10 10:24:44 by beerus           ###   ########.fr       */
+/*   Created: 2024/03/10 08:21:25 by beerus            #+#    #+#             */
+/*   Updated: 2024/03/10 08:28:22 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#ifndef FT_CHECK_H
+# define FT_CHECK_H
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	count;
+# include "libft.h"
 
-	count = 0;
-	while (s[count] != '\0')
-		count++;
-	return (count);
-}
+int	ft_isint(char type);
+int	ft_isuint(char type);
+#endif
