@@ -34,6 +34,6 @@ fclean		:
 				$(CD) && make fclean
 
 save		: fclean
-				git add . && git commit -m "$(COMMIT)" && git push
+				rm -rf a.out && git add . && git commit -m "$(COMMIT)" && git push
 
 .PHONY		: save fclean clean build-lib test all watch
