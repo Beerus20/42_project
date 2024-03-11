@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check.c                                         :+:      :+:    :+:   */
+/*   ft_flags.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 08:23:10 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/11 16:09:32 by ballain          ###   ########.fr       */
+/*   Created: 2024/03/11 15:55:02 by ballain           #+#    #+#             */
+/*   Updated: 2024/03/11 17:28:16 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_check.h"
+#include "../includes/ft_utils.h"
 
-int	ft_check_type(char c)
+int	ft_len_flags(char *str)
 {
-	if (ft_strchr("cspdiuxX%", c))
-		return (1);
-	return (0);
+	int	count;
+
+	count = 0;
+	while (ft_check_type(*(str++)) != 1)
+		count++;
+	return (count);
 }
 
-int	ft_isint(char type)
+void	ft_get_flags(char *flags,const char *str, int len)
 {
-	if (ft_strchr("cdi", type))
-		return (1);
-	return (0);
-}
+	int	i;
 
-int	ft_isuint(char type)
-{
-	if (ft_strchr("upxX", type))
-		return (1);
-	return (0);
+	i = 0;
+	printf("\nTESTSETSTEET : [%d]\n", len);
+	while (i < len)
+	{
+		flags[i++] = *(str++);
+		printf("\n\tTEST : [%c]\n", flags[i - 1]);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 08:19:55 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/11 10:16:20 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/11 16:55:23 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_count_nb(char type, unsigned long nb)
 	return (count);
 }
 
-char	ft_getnb_base(char type, unsigned int *nb)
+char	ft_getnb_base(char type, unsigned long *nb)
 {
 	char	r_value;
 
@@ -57,7 +57,7 @@ char	ft_getnb_base(char type, unsigned int *nb)
 	return (r_value);
 }
 
-int	ft_uitos(char type, unsigned int nb)
+int	ft_uitos(char type, unsigned long nb)
 {
 	char	*value;
 	int		len;

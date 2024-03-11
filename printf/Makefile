@@ -29,7 +29,9 @@ LIBFT_OBJS		= $(LIBFT_FILES:%.c=./output/%.o)
 FTPRINTF_FILES	= \
 	ft_printf.c				\
 	ft_utils.c				\
-	ft_check.c
+	ft_check.c				\
+	ft_show.c				\
+	ft_flags.c
 
 FTPRINTF_OBJS	= $(FTPRINTF_FILES:%.c=./output/%.o)
 
@@ -49,7 +51,7 @@ $(NAME)				: $(LIBFT_OBJS) $(FTPRINTF_OBJS)
 						@ar rc $(NAME) $^
 
 norme				:
-						norminette
+						norminette src/* libft/* includes/*
 
 clean 				:
 						$(RM) $(LIBFT_OBJS) $(FTPRINTF_OBJS) a.out

@@ -13,13 +13,19 @@ CD			= cd $(LIBPATH)
 COMMIT		?= ""
 
 watch		:
-				@watch -n 0.2 -t make all
+				@watch -n 0.5 -t make all
 
 all			: build-lib
 				$(CC) $(FLAGS) main.c -L$(LIBPATH) $(LIBNAME) && ./a.out
 
 test		:
-				$(CD) && ~/francinette/tester.sh || ~/francinette-image/run.sh
+				$(CD) && ~/goinfre/francinette-image/run.sh
+
+test-s		:
+				$(CD) && cd ft_printf_tester && sh test m
+
+test-sa		:
+				$(CD) && cd ft_printf_tester && sh test
 
 build-lib	:
 				@$(CD) && make all

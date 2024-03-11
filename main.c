@@ -8,9 +8,9 @@ int	main(void)
 
 	test = -1;
 	nb = 0;
-	nb = ft_printf(" [%p]", &test);
-	printf("\nNB	: [%d]\n", nb);
-	nb = printf(" [%p]", &test);
-	printf("\nNB	: [%d]\n", nb);
+	nb = ft_printf("[%d]", test);
+	printf("\n\tNB	: [%d]\n", nb);
+	nb = printf("[%010d]", test);
+	printf("\n\tNB	: [%d]\n", nb);
 	return (0);
 }
