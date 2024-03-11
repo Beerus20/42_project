@@ -6,11 +6,11 @@ int	main(void)
 	int	nb;
 	int	test;
 
-	test = -100;
+	test = -1;
 	nb = 0;
-	nb = ft_printf(" [%x]", test);
+	nb = ft_printf(" [%p]", &test);
 	printf("\nNB	: [%d]\n", nb);
-	nb = printf(" [%x]", test);
+	nb = printf(" [%p]", &test);
 	printf("\nNB	: [%d]\n", nb);
 	return (0);
 }

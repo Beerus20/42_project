@@ -6,13 +6,13 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:20:17 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/10 22:05:29 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/11 10:14:48 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int	ft_print_int_value(char type, int nb)
+int	ft_print_int(char type, int nb)
 {
 	char	*p_value;
 	int		len;
@@ -31,44 +31,34 @@ int	ft_print_int_value(char type, int nb)
 	return (len);
 }
 
-int	ft_print_uint_value(char type, unsigned int nb)
+int	ft_print_uint(char type, unsigned int nb)
 {
 	int		r_len;
 
-	r_len = 0;
-	if (nb == 0)
-	{
-		ft_putstr_fd("0", 1);
-		return (r_len + 1);
-	}
 	r_len = ft_uitos(type, nb);
 	return (r_len);
 }
 
+int	ft_print_str(char *str)
+{
+	if (!str)
+	{
+		ft_putstr_fd("(null)", 1);
+		return (6);
+	}
+	ft_putstr_fd(str, 1);
+	return (ft_strlen(str));
+}
+
 int	ft_printv(char type, va_list args)
 {
-	char	*p_value;
-	int		len;
-
-	len = 0;
-	p_value = NULL;
 	if (ft_isint(type))
-		return (ft_print_int_value(type, va_arg(args, int)));
+		return (ft_print_int(type, va_arg(args, int)));
 	if (ft_isuint(type))
-		return (ft_print_uint_value(type, va_arg(args, unsigned int)));
+		return (ft_print_uint(type, va_arg(args, unsigned int)));
 	if (type == 's')
-	{
-		p_value = va_arg(args, char *);
-		if (!p_value)
-		{
-			ft_putstr_fd("(null)", 1);
-			return (6);
-		}
-		ft_putstr_fd(p_value, 1);
-		len = ft_strlen(p_value);
-		return (len);
-	}
-	return (len);
+		return (ft_print_str(va_arg(args, char *)));
+	return (0);
 }
 
 int	ft_printf(const char *str, ...)
