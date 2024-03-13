@@ -3,40 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:20:17 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/11 17:28:28 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/13 11:24:47 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int	ft_printv(const char *type, va_list args)
+int	ft_printv(const char *type, va_list args, int *i)
 {
-	char	*flags;
-	int		len_flags;
+	char	*desc;
+	int		len_desc;
+	int		r_len;
 
-	len_flags = ft_len_flags((char *)type);
-	flags = (char *)malloc(sizeof(char) * (len_flags + 1));
-	if (!flags)
+	r_len = 0;
+	len_desc = ft_count(type, ft_check_type);
+	desc = (char *)malloc(sizeof(char) * (len_desc + 1));
+	if (!desc)
 		return (0);
-	ft_get_flags(flags, type, len_flags);
-	printf("\n\tFLAGS	: [%d]\n", len_flags);
-	type += len_flags;
+	ft_get_desc(desc, type, len_desc);
+	type += len_desc;
+	*i += len_desc;
 	if (ft_isint(*type))
-		return (ft_print_int(*type, va_arg(args, int)));
+		r_len = ft_print_int(*type, desc, va_arg(args, int));
 	if (ft_isuint(*type))
-		return (ft_print_u(*type, args));
+		r_len = ft_print_u(*type, desc, args);
 	if (*type == 's')
-		return (ft_print_str(va_arg(args, char *)));
+		r_len = ft_print_str(*type, desc, va_arg(args, char *));
 	if (*type == '%')
 	{
 		ft_putchar_fd('%', 1);
-		return (1);
+		r_len = (1);
 	}
-	free(flags);
-	return (0);
+	free(desc);
+	return (r_len);
 }
 
 int	ft_printf(const char *str, ...)
@@ -53,7 +55,7 @@ int	ft_printf(const char *str, ...)
 		if (str[i] != '%' && str[i] != '\0' && ++len)
 			ft_putchar_fd(str[i], 1);
 		else
-			len += ft_printv(&str[++i], args);
+			len += ft_printv(&str[++i], args, &i);
 		i++;
 	}
 	va_end(args);

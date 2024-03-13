@@ -1,8 +1,11 @@
 .SILENT :
 NAME		= libftprintf.a
 LIBFT_FILES	= \
+	ft_atoi.c				\
 	ft_itoa.c				\
+	ft_split.c				\
 	ft_substr.c				\
+	ft_isdigit.c			\
 	ft_strlen.c				\
 	ft_strjoin.c			\
 	ft_strmapi.c			\
@@ -31,7 +34,9 @@ FTPRINTF_FILES	= \
 	ft_utils.c				\
 	ft_check.c				\
 	ft_show.c				\
-	ft_flags.c
+	ft_flags.c				\
+	ft_flags_utils.c		\
+	ft_flags_function.c
 
 FTPRINTF_OBJS	= $(FTPRINTF_FILES:%.c=./output/%.o)
 

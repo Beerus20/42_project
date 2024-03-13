@@ -6,13 +6,17 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 18:31:54 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/10 07:32:02 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/13 18:37:03 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	ft_putstr_fd(char *s, int fd)
 {
-	write(fd, s, ft_strlen(s));
+	int	len;
+
+	len = ft_strlen(s);
+	write(fd, s, len);
+	return (len);
 }

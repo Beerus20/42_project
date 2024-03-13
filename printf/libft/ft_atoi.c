@@ -1,26 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 11:32:04 by ballain           #+#    #+#             */
-/*   Updated: 2024/02/19 18:41:08 by ballain          ###   ########.fr       */
+/*   Created: 2024/02/20 12:05:17 by ballain           #+#    #+#             */
+/*   Updated: 2024/02/20 12:15:03 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-size_t	ft_strlen(const char *s)
+static int	ft_isspace(const int c)
 {
-	size_t	i;
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	return (0);
+}
 
-	i = 0;
-	while (*s != '\0')
+int	ft_atoi(const char *nptr)
+{
+	int	sign;
+	int	result;
+
+	sign = 1;
+	result = 0;
+	while (ft_isspace(*nptr))
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
 	{
-		i++;
-		s++;
+		if (*nptr == '-')
+			sign = -1;
+		nptr++;
 	}
-	return (i);
+	while (*nptr != '\0')
+	{
+		if (!ft_isdigit(*nptr))
+			break ;
+		result = result * 10 + (*nptr - 48);
+		nptr++;
+	}
+	return (sign * result);
 }

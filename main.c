@@ -4,13 +4,11 @@
 int	main(void)
 {
 	int	nb;
-	int	test;
 
-	test = -1;
 	nb = 0;
-	nb = ft_printf("[%d]", test);
+	nb = ft_printf("This %.p is even stranger", (void *)-1);
 	printf("\n\tNB	: [%d]\n", nb);
-	nb = printf("[%010d]", test);
+	nb = printf("This %p is even stranger", (void *)-1);
 	printf("\n\tNB	: [%d]\n", nb);
 	return (0);
 }

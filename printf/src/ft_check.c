@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 08:23:10 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/11 16:09:32 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/13 22:39:25 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_check.h"
+
+int	ft_isflag(char c)
+{
+	if (ft_strchr("-0# +", c))
+		return (1);
+	return (0);
+}
 
 int	ft_check_type(char c)
 {

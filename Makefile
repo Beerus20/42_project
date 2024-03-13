@@ -11,6 +11,7 @@ FLAGS		= -Wall -Wextra -Werror
 #	SUPP	variable
 CD			= cd $(LIBPATH)
 COMMIT		?= ""
+N			?= ""
 
 watch		:
 				@watch -n 0.5 -t make all
@@ -19,13 +20,13 @@ all			: build-lib
 				$(CC) $(FLAGS) main.c -L$(LIBPATH) $(LIBNAME) && ./a.out
 
 test		:
-				$(CD) && ~/goinfre/francinette-image/run.sh
+				$(CD) && cd ft_printf_tester && sh test $(N)
 
 test-s		:
-				$(CD) && cd ft_printf_tester && sh test m
+				$(CD) && cd ft_printf_tester && sh test m && rm -rf myleaks.txt
 
 test-sa		:
-				$(CD) && cd ft_printf_tester && sh test
+				$(CD) && cd ft_printf_tester && sh test && rm -rf myleaks.txt
 
 build-lib	:
 				@$(CD) && make all
