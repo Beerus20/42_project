@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:55:02 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/13 23:31:10 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/14 08:26:48 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void	ft_get_width(char *desc, t_flags *flags)
 	else
 		max = ft_atoi(w[1]);
 	ft_iflags(flags, flags->flag, min, max);
+	free(w[2]);
+	free(w[1]);
+	free(w[0]);
 	free(w);
 }
 
@@ -73,17 +76,27 @@ int	ft_len(char type, t_flags *flags, void *c)
 	}
 }
 
+void	*ft_treatment(t_flags *flags, void *c)
+{
+	if (ft_strchr(flags->flag, '.'))
+		return (ft_substr(c, 0, flags->max_w));
+	return (ft_strdup(c));
+}
+
 int	ft_apply_flags(char type, t_flags *flags, void *c)
 {
+	void	*value;
 	void	*str;
 	int		len;
 
-	str = ft_init_to_printv(type, flags, c);
+	value = ft_treatment(flags, c);
+	str = ft_init_to_printv(type, flags, value);
 	len = ft_len(type, flags, str);
 	if (ft_strchr(flags->flag, '-'))
 		ft_dash_flag(type, 1, len, str);
 	else
 		ft_dash_flag(type, 0, len, str);
+	free(value);
 	free(str);
 	return (len);
 }

@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:42:51 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/13 23:41:31 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/14 08:25:43 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	*ft_init_to_printv(char type, t_flags *flags, void *str)
 {
-	if (ft_strchr(flags->flag, '.'))
-		str = ft_substr(str, 0, flags->max_w);
 	if (ft_strchr(flags->flag, '#') || type == 'p')
 	{
 		if (type == 'p' && *(int *)str == '0')
