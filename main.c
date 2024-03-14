@@ -3,12 +3,11 @@
 
 int	main(void)
 {
-	int	nb;
+	int nb;
 
-	nb = 0;
-	nb = ft_printf("This [%s] is even stranger", "");
-	printf("\n\tNB	: [%d]\n", nb);
-	nb = printf("This %p is even stranger", (void *)-1);
-	printf("\n\tNB	: [%d]\n", nb);
+	nb = ft_printf("test	: %12c %12d %18d %#12.3s %%\n", 't', 12, 45, "HELLO WORLD");
+	printf("NB	: [%d]", nb);
+	//nb = printf("test	: %c %d %d %s %%\n", 't', 12, 45, "HELLO WORLD");
+	//clearprintf("NB	: [%d]", nb);
 	return (0);
 }

@@ -6,11 +6,23 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:07:58 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/14 07:28:51 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/14 09:44:18 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+
+void	ft_rprintc(char c, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		ft_putchar_fd(c, 1);
+		i++;
+	}
+}
 
 int	ft_print_flags(char type, char *desc, void *str)
 {
@@ -70,7 +82,5 @@ int	ft_print_u(char type, char *desc, va_list args)
 
 int	ft_print_str(char type, char *desc, char *str)
 {
-	if (!str)
-		return (ft_print_flags(type, desc, "(null)"));
 	return (ft_print_flags(type, desc, str));
 }

@@ -31,13 +31,10 @@ LIBFT_OBJS		= $(LIBFT_FILES:%.c=./output/%.o)
 
 FTPRINTF_FILES	= \
 	ft_printf.c				\
-	ft_utils.c				\
 	ft_check.c				\
-	ft_show.c				\
-	ft_flags.c				\
-	ft_flags_utils.c		\
-	ft_flags_function.c		\
-	ft_treatment.c
+	ft_utils.c				\
+	ft_utils_num.c			\
+
 
 FTPRINTF_OBJS	= $(FTPRINTF_FILES:%.c=./output/%.o)
 

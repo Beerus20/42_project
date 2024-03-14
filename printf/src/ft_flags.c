@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:55:02 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/14 08:26:48 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/14 11:40:18 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,13 @@ int	ft_len(char type, t_flags *flags, void *c)
 	}
 }
 
-void	*ft_treatment(t_flags *flags, void *c)
-{
-	if (ft_strchr(flags->flag, '.'))
-		return (ft_substr(c, 0, flags->max_w));
-	return (ft_strdup(c));
-}
-
 int	ft_apply_flags(char type, t_flags *flags, void *c)
 {
 	void	*value;
 	void	*str;
 	int		len;
 
-	value = ft_treatment(flags, c);
+	value = ft_treatment(type, flags, c);
 	str = ft_init_to_printv(type, flags, value);
 	len = ft_len(type, flags, str);
 	if (ft_strchr(flags->flag, '-'))

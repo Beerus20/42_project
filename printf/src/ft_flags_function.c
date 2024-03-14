@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:42:51 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/14 08:25:43 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/14 11:45:37 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,18 @@ int	ft_plen(char type, int len, void *c)
 
 void	ft_dash_flag(char type, int apply, int len, void *c)
 {
-	int	i;
-
-	i = 0;
 	if (apply)
 	{
 		if (type == 'c')
 			ft_putchar_fd(*(char *)c, 1);
 		else
 			ft_putstr_fd((char *)c, 1);
-		while ((i++) < ft_plen(type, len, c))
-			ft_putchar_fd(' ', 1);
+		ft_rprintc(' ', ft_plen(type, len, c));
 	}
 	else
 	{
 		if (len != (int)ft_strlen((char *)c))
-			while ((i++) < ft_plen(type, len, c))
-				ft_putchar_fd(' ', 1);
+			ft_rprintc(' ', ft_plen(type, len, c));
 		if (type == 'c')
 			ft_putchar_fd(*(char *)c, 1);
 		else

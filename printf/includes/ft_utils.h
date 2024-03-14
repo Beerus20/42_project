@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 20:21:57 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/13 23:28:54 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/14 11:42:27 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdarg.h>
 # include "libft.h"
 # include "ft_check.h"
+# include "ft_printf.h"
 
 typedef struct s_flags
 {
@@ -35,4 +36,6 @@ void	ft_get_desc(char *desc, const char *str, int len);
 void	*ft_init_to_printv(char type, t_flags *flags, void *str);
 int		ft_apply_flags(char type, t_flags *flags, void *str);
 void	ft_dash_flag(char type, int apply, int len, void *c);
+void	*ft_streatment(t_flags *flags, void *c);
+void	*ft_treatment(char type, t_flags *flags, void *c);
 #endif
