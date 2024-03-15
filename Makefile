@@ -1,7 +1,7 @@
 .SILENT :
 #	GLOBAL	variable
 NAME		= test
-LIBPATH		?= ./printf
+LIBPATH		?= ./ft_printf
 LIBNAME		?= -lftprintf
 
 #	EXEC	variable

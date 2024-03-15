@@ -34,6 +34,7 @@ FTPRINTF_FILES	= \
 	ft_check.c				\
 	ft_utils.c				\
 	ft_utils_num.c			\
+	ft_get.c			\
 
 
 FTPRINTF_OBJS	= $(FTPRINTF_FILES:%.c=./output/%.o)

@@ -6,14 +6,15 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:07:55 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/14 16:49:47 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/15 15:40:40 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_UTILS_H
 # define FT_UTILS_H
 
+# include "ft_printf.h"
 # include "libft.h"
 
-char	*ft_stoc(char c);
+void	*ft_stoc(int c);
 #endif

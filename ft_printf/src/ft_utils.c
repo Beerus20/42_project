@@ -6,13 +6,13 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:07:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/14 16:13:06 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/15 15:40:52 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_utils.h"
 
-char	*ft_stoc(char c)
+void	*ft_stoc(int c)
 {
 	char	*str;
 

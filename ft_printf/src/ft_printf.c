@@ -6,70 +6,78 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:20:17 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/14 17:18:25 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/15 16:52:59 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void	ft_print_value(t_value *value);
-char	*ft_get_value(char type, va_list args);
-char	*ft_get_str_value(char *value);
-char	*ft_get_int_value(char type, int value);
-char	*ft_get_uint_value(char type, va_list args);
-char	*ft_fill_text_value(t_value *value, const char *str);
-char	*ft_fill_arg_value(t_value *value, const char *str, va_list args);
+int		ft_print_value(t_value *value);
+t_value	*ft_fill_text_value(t_value *value, char *str, int len);
+int		ft_fill_arg_value(t_value *value, char *str, va_list args);
 void	ft_show_value(t_value *value);
+void	ft_free_value(t_value *value);
 
-int	ft_printf(const char *str, ...)
+t_value	*ft_add_next(t_value *value)
+{
+	value->next = (t_value *)malloc(sizeof(t_value));
+	if (!value->next)
+		return (NULL);
+	return (value->next);
+}
+
+int	ft_printf(const char *format, ...)
 {
 	va_list	args;
 	t_value	*value;
 	t_value	*copy;
-	char	*c_str;
+	char	*str;
+	char	*tmp;
 
-	c_str = (char *)str;
+	tmp = NULL;
+	str = (char *)format;
 	value = (t_value *)malloc(sizeof(t_value));
 	copy = value;
 	if (!value)
 		return (0);
-	va_start(args, str);
-	while (*c_str)
+	va_start(args, format);
+	while (*str)
 	{
-		if (ft_strchr(c_str, '%'))
-		{
-			c_str = ft_fill_text_value(value, c_str);
-			value = value->next;
-			c_str = ft_fill_arg_value(value, c_str, args);
-			value = value->next;
-		}
-		else
-			ft_fill_text_value(value, c_str);
+		tmp = str;
+		while (*str != '%' && *str)
+			str++;
+		if ((str - tmp) != 0)
+			value = ft_fill_text_value(value, tmp, (str - tmp));
+		if (*(str++) == '\0')
+			break ;
+		str += ft_fill_arg_value(value, str, args);
+		if (*(++str) == '\0')
+			break ;
+		value = ft_add_next(value);
 	}
-	value->next = NULL;
-	ft_print_value(copy);
-	//ft_show_value(copy);
 	va_end(args);
-	return (0);
+	return (ft_print_value(copy));
 }
 
-char	*ft_fill_text_value(t_value *value, const char *str)
+t_value	*ft_fill_text_value(t_value *value, char *str, int len)
 {
-	char	*tmp;
-
-	tmp = ft_strchr(str, '%');
 	value->type = 't';
 	value->flags = ft_strdup("");
-	value->content = ft_substr(str, 0, tmp - str);
+	value->content = ft_substr(str, 0, len);
 	value->w = 0;
 	value->l = ft_strlen(value->content);
-	value->next = (t_value *)malloc(sizeof(t_value));
-	if (!value->next)
-		return (NULL);
-	return (tmp + 1);
+	if (*(str + len) != '\0')
+	{
+		value->next = (t_value *)malloc(sizeof(t_value));
+		if (!value->next)
+			return (NULL);
+	}
+	else
+		value->next = NULL;
+	return (value->next);
 }
 
-char	*ft_fill_arg_value(t_value *value, const char *str, va_list args)
+int	ft_fill_arg_value(t_value *value, char *str, va_list args)
 {
 	int	i;
 
@@ -80,56 +88,12 @@ char	*ft_fill_arg_value(t_value *value, const char *str, va_list args)
 	value->flags = ft_substr(str, 0, i);
 	value->content = ft_get_value(str[i], args);
 	value->w = 0;
-	value->l = ft_strlen(value->content);
-	value->next = (t_value *)malloc(sizeof(t_value));
-	if (!value->next)
-		return (NULL);
-	return ((char *)(str + ++i));
-}
-
-char	*ft_get_value(char type, va_list args)
-{
-	if (ft_isint(type))
-		return (ft_get_int_value(type, va_arg(args, int)));
-	if (ft_isuint(type))
-		return (ft_get_uint_value(type, args));
- 	if (type == 's')
-		return (ft_get_str_value(va_arg(args, char *)));
-	return (ft_strdup("%"));
-}
-
-char	*ft_get_int_value(char type, int value)
-{
-	if (type == 'c')
-		return (ft_stoc(value));
-	return (ft_itoa(value));
-}
-
-char	*ft_get_uint_value(char type, va_list args)
-{
-	char			*value;
-	int				len;
-	unsigned long	nb;
-
-	nb = 0;
-	value = NULL;
-	if (type == 'p')
-		nb = (unsigned long)(va_arg(args, void *));
+	if (value->type == 'c')
+		value->l = 1;
 	else
-		nb = (unsigned long)va_arg(args, unsigned long);
-	len = ft_count_nb(type, nb);
-	value = (char *)malloc(sizeof(char) * (len + 1));
-	if (!value)
-		return (0);
-	ft_uitos(type, nb, value);
-	return (value);
-}
-
-char	*ft_get_str_value(char *value)
-{
-	if (!value)
-		return (ft_strdup("(null)"));
-	return (ft_strdup(value));
+		value->l = ft_strlen(value->content);
+	value->next = NULL;
+	return (i);
 }
 
 void	ft_show_value(t_value *value)
@@ -148,12 +112,35 @@ void	ft_show_value(t_value *value)
 	}
 }
 
-void	ft_print_value(t_value *value)
+int	ft_print_value(t_value *value)
 {
-	while (value->next)
+	t_value	*to_free;
+	int		len;
+	int		c;
+
+	c = 0;
+	len = 0;
+	to_free = NULL;
+	while (value)
 	{
-		ft_putstr_fd(value->content, 1);
+		to_free = value;
+		if (value->type == 'c')
+		{
+			c = ((int *)value->content)[0];
+			write(1, &c, 1);
+		}
+		else
+			ft_putstr_fd(value->content, 1);
+		len += value->l;
 		value = value->next;
+		ft_free_value(to_free);
 	}
-	ft_putchar_fd('\n', 1);
+	return (len);
+}
+
+void	ft_free_value(t_value *value)
+{
+	free(value->flags);
+	free(value->content);
+	free(value);
 }
