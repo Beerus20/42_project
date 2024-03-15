@@ -10,7 +10,6 @@ FLAGS		= -Wall -Wextra -Werror
 
 #	SUPP	variable
 CD			= cd $(LIBPATH)
-COMMIT		?= ""
 N			?= ""
 
 watch		:
@@ -19,14 +18,8 @@ watch		:
 all			: build-lib
 				$(CC) $(FLAGS) main.c -L$(LIBPATH) $(LIBNAME) && ./a.out
 
-test		:
-				$(CD) && cd ft_printf_tester && sh test $(N)
-
-test-s		:
-				$(CD) && cd ft_printf_tester && sh test m && rm -rf myleaks.txt
-
-test-sa		:
-				$(CD) && cd ft_printf_tester && sh test && rm -rf myleaks.txt
+test-%		:
+				$(CD) && cd ft_printf_tester && sh test $(subst test-, , $@) && rm -rf myleaks.txt
 
 build-lib	:
 				@$(CD) && make all
@@ -40,7 +33,7 @@ clean		:
 fclean		:
 				$(CD) && make fclean
 
-save		: fclean
-				rm -rf a.out && git add . && git commit -m "$(COMMIT)" && git push
+save-%		: fclean
+				rm -rf a.out && git add . && git commit -m "$(subst save-, , $@)" && git push
 
 .PHONY		: save fclean clean build-lib test all watch

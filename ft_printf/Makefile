@@ -38,10 +38,14 @@ FTPRINTF_FILES	= \
 
 
 FTPRINTF_OBJS	= $(FTPRINTF_FILES:%.c=./output/%.o)
+BOMBA		= $(subst ./output,./, $(FTPRINTF_OBJS:%.o=%.r))
 
 CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -rf
 CC			= cc
+
+echo-%-p				:
+						echo  $(subst -p, , $(subst echo-, , $@))
 
 ./output/%.o		: ./libft/%.c
 						@$(CC) $(CFLAGS) -o $@ -c $<
