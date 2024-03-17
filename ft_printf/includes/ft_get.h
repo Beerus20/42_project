@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:07:29 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/15 16:07:53 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/17 23:38:12 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "libft.h"
 
 char	*ft_get_value(char type, va_list args);
-char	*ft_get_str_value(char *value);
+void	*ft_get_str_value(char *value);
 void	*ft_get_int_value(char type, int value);
 char	*ft_get_uint_value(char type, va_list args);
 #endif

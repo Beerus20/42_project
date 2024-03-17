@@ -9,6 +9,7 @@ LIBFT_FILES	= \
 	ft_strlen.c				\
 	ft_strjoin.c			\
 	ft_strmapi.c			\
+	ft_strtrim.c			\
 	ft_strchr.c				\
 	ft_strncmp.c			\
 	ft_strdup.c				\
@@ -34,7 +35,10 @@ FTPRINTF_FILES	= \
 	ft_check.c				\
 	ft_utils.c				\
 	ft_utils_num.c			\
-	ft_get.c			\
+	ft_get.c				\
+	ft_flags.c				\
+	ft_flags_utils.c		\
+	ft_treatment.c			\
 
 
 FTPRINTF_OBJS	= $(FTPRINTF_FILES:%.c=./output/%.o)

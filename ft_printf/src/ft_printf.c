@@ -6,11 +6,13 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:20:17 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/15 22:02:14 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/17 23:42:10 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+#include "../includes/ft_utils.h"
+#include "../includes/ft_flags.h"
 
 int		ft_print_value(t_value *value);
 t_value	*ft_fill_text_value(t_value *value, char *str, int *len);
@@ -41,6 +43,7 @@ int	ft_printf(const char *format, ...)
 		value = ft_fill_arg_value(value, (char *)format, args, &len);
 		format += len + 1;
 	}
+	//ft_show_value(copy);
 	va_end(args);
 	return (ft_print_value(copy));
 }
@@ -74,21 +77,23 @@ t_value	*ft_fill_text_value(t_value *value, char *str, int *len)
 
 t_value	*ft_fill_arg_value(t_value *value, char *str, va_list args, int *len)
 {
-	int	i;
+	char	*desc;
+	int		i;
 
 	i = 0;
-	while (!ft_check_type(str[i]) && *len++)
+	desc = NULL;
+	while (!ft_check_type(str[i]))
+	{
 		i++;
+		*len += 1;
+	}
+	desc = ft_substr(str, 0, i);
 	value->type = str[i];
-	value->flags = ft_substr(str, 0, i);
 	value->content = ft_get_value(str[i], args);
-	value->w = 0;
 	value->next = NULL;
-	if (value->type == 'c')
-		value->l = 1;
-	else
-		value->l = ft_strlen(value->content);
-	if (*(str + 1) != '\0')
+	ft_get_flags(value, desc);
+	free(desc);
+	if (str[i + 1] != '\0')
 	{
 		value->next = (t_value *)malloc(sizeof(t_value));
 		if (!value->next)
@@ -103,21 +108,19 @@ int	ft_print_value(t_value *value)
 {
 	t_value	*to_free;
 	int		len;
-	int		c;
 
-	c = 0;
 	len = 0;
 	to_free = NULL;
 	while (value)
 	{
-		to_free = value;
 		if (value->type == 'c')
-		{
-			c = ((int *)value->content)[0];
-			write(1, &c, 1);
-		}
+			ft_printc(value);
 		else
+		{
+			ft_apply_flags(value);
 			ft_putstr_fd(value->content, 1);
+		}
+		to_free = value;
 		len += value->l;
 		value = value->next;
 		ft_free_value(to_free);

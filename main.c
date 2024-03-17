@@ -3,7 +3,13 @@
 
 int	main(void)
 {
-	ft_printf("test %c%c%c*\n", '\0', '1', 1);
+	/* int	nb;
+
+	nb = 5; */
+	ft_printf("[%12.0d]\n", -12);
+	//printf("[%-20d]\n", nb);
+	//printf("[%12x]\n", 45);
+	//printf("[%s]\n", "test.");
 	/* printf("ORIGINAL	:\n");
 	printf("[%c] [%d]\n", '\0', '\0');
 	printf("[%c] [%d]\n", '1', '1');

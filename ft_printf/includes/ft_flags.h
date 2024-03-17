@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils.h                                         :+:      :+:    :+:   */
+/*   ft_flags.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 16:07:55 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/18 00:12:03 by beerus           ###   ########.fr       */
+/*   Created: 2024/03/14 18:57:37 by beerus            #+#    #+#             */
+/*   Updated: 2024/03/17 23:39:09 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_UTILS_H
-# define FT_UTILS_H
+#ifndef FT_FLAGS_H
+# define FT_FLAGS_H
 
 # include "ft_printf.h"
 # include "libft.h"
 
-void	*ft_stoc(int c);
-void	ft_show_value(t_value *value);
-void	ft_show_test(t_value *value);
-int		ft_hasflag(char *flag);
-void	ft_add_front_content_value(t_value *value, char *str);
+void	ft_len_flag_str(t_value *value);
+void	ft_len_flag_number(t_value *value, char *tmp);
+void	ft_width_flag(t_value *value);
+void	ft_get_flags(t_value *value, char *desc);
 #endif

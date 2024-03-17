@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:07:26 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/15 16:15:45 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/17 23:37:56 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_get.h"
+#include "../includes/ft_utils.h"
 
 char	*ft_get_value(char type, va_list args)
 {
@@ -39,7 +40,11 @@ char	*ft_get_uint_value(char type, va_list args)
 	nb = 0;
 	value = NULL;
 	if (type == 'p')
+	{
 		nb = (unsigned long)(va_arg(args, void *));
+		if (!nb)
+			return ((char *)0);
+	}
 	else
 		nb = (unsigned long)va_arg(args, unsigned long);
 	len = ft_count_nb(type, nb);
@@ -50,9 +55,9 @@ char	*ft_get_uint_value(char type, va_list args)
 	return (value);
 }
 
-char	*ft_get_str_value(char *value)
+void	*ft_get_str_value(char *value)
 {
 	if (!value)
-		return (ft_strdup("(null)"));
+		return ((char *)0);
 	return (ft_strdup(value));
 }
