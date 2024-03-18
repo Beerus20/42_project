@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:57:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/17 23:39:09 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/18 14:29:29 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_FLAGS_H
 
 # include "ft_printf.h"
-# include "libft.h"
+# include "function.h"
 
 void	ft_len_flag_str(t_value *value);
 void	ft_len_flag_number(t_value *value, char *tmp);

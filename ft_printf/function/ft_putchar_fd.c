@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils_num.h                                     :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 16:33:09 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/18 14:29:29 by beerus           ###   ########.fr       */
+/*   Created: 2024/02/21 18:31:03 by ballain           #+#    #+#             */
+/*   Updated: 2024/03/18 14:29:30 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_UTILS_NUM_H
-# define FT_UTILS_NUM_H
+#include "../includes/function.h"
 
-# include "function.h"
-
-int		ft_pow(int nb, int pow);
-int		ft_count_nb(char type, unsigned long nb);
-char	ft_getnb_base(char type, unsigned long *nb);
-void	ft_reverse(char *str);
-void	ft_uitos(char type, unsigned long nb, char *value);
-#endif
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}

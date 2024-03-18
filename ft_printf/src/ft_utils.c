@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:07:32 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/18 00:12:05 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/18 09:56:41 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,32 @@ int	ft_hasflag(char *flag)
 	return (0);
 }
 
-void	ft_show_test(t_value *value)
+int	ft_zero_flag_condition(t_value *value)
 {
-	printf("CONTENT	: \n");
-	printf("\tTYPE	: [%c]\n", value->type);
-	printf("\tFALGS	: [%s]\n", value->flags);
-	printf("\tVALUE	: [%s]\n", (char *)value->content);
-	printf("\tWIDTH	: [%d]\n", value->w);
-	printf("\tLEN	: [%d]\n", value->l);
+	int	is_true;
+
+	is_true = 1;
+	if (!ft_strchr(value->flags, '0'))
+		is_true = 0;
+	if (ft_strchr(value->flags, 'l'))
+		is_true = 0;
+	if (!ft_isnumber(value->type))
+		is_true = 0;
+	return (is_true);
 }
 
-void	ft_show_value(t_value *value)
+int	ft_has_extra_flags(char *flags, char *str)
 {
-	int	i;
+	int	has_extra;
 
-	i = 0;
-	while (value)
-	{
-		printf("CONTENT	: [%i]\n", i++);
-		printf("\tTYPE	: [%c]\n", value->type);
-		printf("\tFALGS	: [%s]\n", value->flags);
-		printf("\tVALUE	: [%s]\n", (char *)value->content);
-		printf("\tWIDTH	: [%d]\n", value->w);
-		printf("\tLEN	: [%d]\n", value->l);
-		value = value->next;
-	}
+	has_extra = 0;
+	if (str[0] == '-')
+		has_extra = 1;
+	if (str[0] == '+')
+		has_extra = 1;
+	if (str[0] == ' ')
+		has_extra = 1;
+	if (ft_strchr(flags, '#'))
+		has_extra = 1;
+	return (has_extra);
 }

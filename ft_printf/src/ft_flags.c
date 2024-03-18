@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:51:03 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/17 15:43:18 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/18 14:07:33 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_count_flags(char *desc)
 		count += 2;
 	if (ft_strlen(desc))
 	{
-		while (ft_isflag(desc[i]))
+		while (ft_isflag(desc[i]) && desc[i])
 		{
 			count++;
 			i++;
@@ -53,8 +53,6 @@ void	ft_get_lenght(t_value *value, char *desc)
 				value->l = 0;
 			else if (value->content)
 				value->l = ft_strlen(value->content);
-			else
-				value->l = ft_strlen("(null)");
 		}
 		return ;
 	}

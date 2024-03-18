@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils_num.h                                     :+:      :+:    :+:   */
+/*   ft_func_supp.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 16:33:09 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/18 14:29:29 by beerus           ###   ########.fr       */
+/*   Created: 2024/03/18 10:07:32 by beerus            #+#    #+#             */
+/*   Updated: 2024/03/18 14:07:55 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_UTILS_NUM_H
-# define FT_UTILS_NUM_H
+#include "../includes/ft_utils.h"
 
-# include "function.h"
-
-int		ft_pow(int nb, int pow);
-int		ft_count_nb(char type, unsigned long nb);
-char	ft_getnb_base(char type, unsigned long *nb);
-void	ft_reverse(char *str);
-void	ft_uitos(char type, unsigned long nb, char *value);
-#endif
+int	ft_is_null_hex_value(char *content)
+{
+	while (*content)
+	{
+		if (*content != '0')
+			return (0);
+		content++;
+	}
+	return (1);
+}

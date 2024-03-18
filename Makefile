@@ -31,9 +31,12 @@ clean		:
 				$(CD) && make clean
 
 fclean		:
-				$(CD) && make fclean
+				rm -rf a.out && $(CD) && make fclean &&
+
+re			:
+				$(CD) && make re
 
 save-%		: fclean
 				rm -rf a.out && git add . && git commit -m "$(subst save-, , $@)" && git push
 
-.PHONY		: save fclean clean build-lib test all watch
+.PHONY		: save fclean clean build-lib test all watch re

@@ -3,10 +3,13 @@
 
 int	main(void)
 {
-	/* int	nb;
+	int	nb;
 
-	nb = 5; */
-	ft_printf("[%12.0d]\n", -12);
+	//nb = ft_printf("%------21p yeah i'm %p running out %--p of ideas\n", (void *) 13, (void *) 65, (void *)-1);
+	nb = ft_printf("%------21p yeah i'm %p running out %--p of ideas\n", (void *) 13, (void *) 65, (void *) -1);
+	printf("NB	: [%d]\n", nb);
+	nb = printf("%-21p yeah i'm %p running out %-p of ideas\n", (void *) 13, (void *) 65, (void *) -1);
+	printf("NB	: [%d]\n", nb);
 	//printf("[%-20d]\n", nb);
 	//printf("[%12x]\n", 45);
 	//printf("[%s]\n", "test.");

@@ -6,12 +6,13 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:35:45 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/18 00:20:20 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/18 12:43:46 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 #include "../includes/ft_flags.h"
+#include "../includes/ft_utils.h"
 
 void	ft_len_flag_str(t_value *value)
 {
@@ -19,17 +20,9 @@ void	ft_len_flag_str(t_value *value)
 	int		i;
 
 	i = 0;
-	tmp = NULL;
-	if (!value->content)
+	tmp = ft_strdup(value->content);
+	if (value->l < (int)ft_strlen(value->content))
 	{
-		if (value->l < 6)
-			value->content = ft_strdup("");
-		else
-			value->content = ft_strdup("(null)");
-	}
-	else if (value->l < (int)ft_strlen(value->content))
-	{
-		tmp = ft_strdup(value->content);
 		free(value->content);
 		value->content = (char *)malloc(sizeof(char) * (value->l + 1));
 		if (!value->content)
@@ -40,8 +33,8 @@ void	ft_len_flag_str(t_value *value)
 			i++;
 		}
 		value->content[i] = '\0';
-		free(tmp);
 	}
+	free(tmp);
 }
 
 void	ft_len_flag_number(t_value *value, char *tmp)
@@ -52,13 +45,7 @@ void	ft_len_flag_number(t_value *value, char *tmp)
 
 	i = 0;
 	j = 0;
-	len = ft_strlen(value->content);
-	free(value->content);
-	if (value->l == 0 && tmp[0] == '0')
-	{
-		value->content = ft_strdup("");
-		return ;
-	}
+	len = ft_strlen(tmp);
 	if (tmp[0] == '-')
 	{
 		len--;
@@ -71,7 +58,7 @@ void	ft_len_flag_number(t_value *value, char *tmp)
 			return ;
 		while (i < (value->l - len))
 			value->content[i++] = '0';
-		while (tmp[j])
+		while (i < value->l)
 			value->content[i++] = tmp[j++];
 		value->content[i] = '\0';
 	}
@@ -79,32 +66,56 @@ void	ft_len_flag_number(t_value *value, char *tmp)
 		value->content = ft_strdup(tmp);
 }
 
-void	ft_OAdot_flag(t_value *value, char *str, int apply_O)
+void	ft_zero_flag(t_value *value, char *str, int i, int w)
 {
-	int		i;
-	int		j;
 	char	space_type;
+	int		j;
 
-	i = 0;
 	j = 0;
 	space_type = ' ';
-	if (ft_strchr(value->flags, '0') && apply_O)
+	if (ft_zero_flag_condition(value))
 		space_type = '0';
 	if (ft_strchr(value->flags, '-'))
 	{
 		while (i < value->l)
 			value->content[i++] = str[j++];
-		while (i < value->w)
+		while (i < w)
 			value->content[i++] = space_type;
 	}
 	else
 	{
-		while (i < (value->w - value->l))
+		while (i < (w - value->l))
 			value->content[i++] = space_type;
-		while (i < value->w)
+		while (i < w)
 			value->content[i++] = str[j++];
 	}
 	value->content[i] = '\0';
+}
+
+void	ft_dot_flag(t_value *value, char *str)
+{
+	int		i;
+	int		w;
+
+	i = 0;
+	w = value->w;
+	if (ft_has_extra_flags(value->flags, str) && ft_zero_flag_condition(value))
+	{
+		if (ft_strchr(value->flags, '#'))
+		{
+			value->content[i++] = '0';
+			value->content[i++] = value->type;
+			str += 2;
+			w += 2;
+		}
+		else
+		{
+			value->content[i++] = str[0];
+			str++;
+			w++;
+		}
+	}
+	ft_zero_flag(value, str, i, w);
 }
 
 void	ft_width_flag(t_value *value)
@@ -113,18 +124,16 @@ void	ft_width_flag(t_value *value)
 	int		len;
 
 	len = value->l;
-	tmp = ft_strdup(value->content);
+	tmp = NULL;
 	if (value->w > len)
 	{
+		tmp = ft_strdup(value->content);
 		free(value->content);
 		value->content = (char *)malloc(sizeof(char) * (value->w + 1));
 		if (!value->content)
 			return ;
-		if (ft_isnumber(value->type))
-			ft_OAdot_flag(value, tmp, 1);
-		else
-			ft_OAdot_flag(value, tmp, 0);
+		ft_dot_flag(value, tmp);
 		value->l = value->w;
+		free(tmp);
 	}
-	free(tmp);
 }

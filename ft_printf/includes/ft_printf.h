@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:46:38 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/17 10:25:00 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/18 14:28:24 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_PRINTF_H
 
 # include <stdarg.h>
-# include "libft.h"
+# include "function.h"
 # include "ft_check.h"
 # include "ft_utils_num.h"
 # include "ft_get.h"
@@ -29,7 +29,11 @@ typedef struct s_value
 	struct s_value	*next;
 }	t_value;
 
+int		ft_printf(const char *format, ...);
+int		ft_print_value(t_value *value);
+t_value	*ft_fill_text_value(t_value *value, char *str, int *len);
+t_value	*ft_fill_arg_value(t_value *value, char *str, va_list args, int *len);
+void	ft_free_value(t_value *value);
 void	ft_printc(t_value *value);
 void	ft_apply_flags(t_value *value);
-int		ft_printf(const char *format, ...);
 #endif
