@@ -31,7 +31,7 @@ clean		:
 				$(CD) && make clean
 
 fclean		:
-				rm -rf a.out && $(CD) && make fclean &&
+				rm -rf a.out && $(CD) && make fclean
 
 re			:
 				$(CD) && make re

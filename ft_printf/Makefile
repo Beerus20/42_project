@@ -33,6 +33,8 @@ CFLAGS				= -Wall -Wextra -Werror
 RM					= rm -rf
 CC					= cc
 
+output				:
+						mkdir $@
 
 ./output/%.o		: ./function/%.c
 						@$(CC) $(CFLAGS) -o $@ -c $<
