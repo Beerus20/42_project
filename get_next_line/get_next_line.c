@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/19 21:02:37 by beerus            #+#    #+#             */
+/*   Updated: 2024/03/19 22:05:30 by beerus           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "get_next_line.h"
@@ -5,14 +17,45 @@
 int	ft_strlen(const char *str)
 {
 	int	count;
+	int	i;
 
+	i = 0;
 	count = 0;
-	while (*str)
+	while (str[i])
 	{
-		str++;
+		i++;
 		count++;
 	}
 	return (count);
+}
+
+int	ft_check(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_zalloc(int n)
+{
+	char	*str;
+	int		i;
+
+	i = 0;
+	str = (char *)malloc(sizeof(char) * (n + 1));
+	if (!str)
+		return (NULL);
+	while (i < n)
+		str[i++] = 0;
+	str[i] = '\0';
+	return (str);
 }
 
 char	*ft_strdup(const char *s)
@@ -23,7 +66,7 @@ char	*ft_strdup(const char *s)
 
 	i = 0;
 	len = ft_strlen(s);
-	r_value = (char *)malloc(sizeof(char) * (len + 1));
+	r_value = ft_zalloc((len + 1));
 	if (!r_value)
 		return (0);
 	while (i < len)
@@ -41,19 +84,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*r_value;
 
 	i = 0;
-	r_value = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	r_value = ft_zalloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!r_value)
-		return (0);
+		return (NULL);
 	while (*s1 != '\0')
-	{
-		r_value[i++] = *s1;
-		s1++;
-	}
+		r_value[i++] = *(s1++);
 	while (*s2 != '\0')
-	{
-		r_value[i++] = *s2;
-		s2++;
-	}
+		r_value[i++] = *(s2++);
 	r_value[i] = '\0';
 	return (r_value);
 }
@@ -72,7 +109,7 @@ int	ft_size(char const *s, unsigned int start, size_t len)
 	else
 		r_value = len + 1;
 	if (start >= len_s)
-		r_value = (int)(sizeof(char) * 1);
+		r_value = (int)(sizeof(char));
 	return (r_value);
 }
 
@@ -84,7 +121,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	i = 0;
 	len_s = ft_strlen(s);
-	r_value = (char *)malloc(ft_size(s, start, len));
+	r_value = ft_zalloc(ft_size(s, start, len));
 	if (!r_value)
 		return (0);
 	if (start >= len_s)
@@ -103,55 +140,70 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (r_value);
 }
 
-char	*get_next_line(int fd)
+char	*ft_get_value(char *buffer, char *r_value, char *content)
 {
-	static char	*buffer;
-	char		*buffer_tmp;
-	char		*r_value;
-	int			stop_reading;
-	int			size;
-	int			i;
+	int		i;
+	char	*tmp;
+	char	*copy;
 
 	i = 0;
-	size = 0;
-	stop_reading = 0;
-	buffer_tmp = NULL;
-	r_value = (char *)malloc(sizeof(char));
-	if (!buffer)
+	tmp = NULL;
+	copy = NULL;
+	while (buffer[i] != '\n' && buffer[i])
+		i++;
+	if (buffer[i++] == '\n')
 	{
-		buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (!buffer && !r_value && !fd)
-			return (0);
+		copy = ft_strdup(r_value);
+		tmp = ft_substr(buffer, 0, i);
+		free(r_value);
+		r_value = ft_strjoin(copy, tmp);
+		free(tmp);
+		free(copy);
+
+		tmp = ft_substr(content, i, ft_strlen(content));
+		free(content);
+		content = ft_strdup(tmp);
+		free(tmp);
+		free(copy);
 	}
-	while (!stop_reading)
+	else
 	{
-		if (!ft_strlen(buffer))
-		{
-			buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-			if (!buffer && !r_value && !fd)
-				return (0);
-			size = read(fd, buffer, BUFFER_SIZE);
-			if (!size)
-				return (NULL);
-			buffer[size] = '\0';
-		}
-		i = 0;
-		while (buffer[i] != '\n' && buffer[i])
-			i++;
-		if (buffer[i] == '\n')
-		{
-			r_value = ft_strjoin(r_value, ft_substr(buffer, 0, ++i));
-			buffer_tmp = ft_substr(buffer, i, ft_strlen(buffer));
-			free(buffer);
-			buffer = ft_strdup(buffer_tmp);
-			printf("____BUFFER	: [\n%s]\n", buffer);
-			stop_reading = 1;
-		}
-		else
-		{
-			r_value = ft_strjoin(r_value, ft_substr(buffer, 0, i));
-			buffer = ft_strdup("");
-		}
+		copy = ft_strdup(r_value);
+		tmp = ft_substr(buffer, 0, i);
+		free(r_value);
+		r_value = ft_strjoin(copy, tmp);
+		free(tmp);
+		free(copy);
+	}
+	return (r_value);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*content;
+	char		*buffer;
+	char		*tmp;
+	char		*r_value;
+	int			size;
+
+	size = 0;
+	r_value = ft_zalloc(1);
+	if (fd == -1 || !r_value)
+		return (NULL);
+	while (1)
+	{
+		buffer = ft_zalloc(BUFFER_SIZE);
+		if (!buffer)
+			return (NULL);
+		size = read(fd, buffer, BUFFER_SIZE);
+		if (size == -1 || size == 0)
+			return (NULL);
+		buffer[size] = '\0';
+		tmp = ft_strdup(r_value);
+		free(r_value);
+		r_value = ft_get_value(buffer, tmp, content);
+		if (ft_check(r_value, '\n'))
+			break ;
 	}
 	return (r_value);
 }
