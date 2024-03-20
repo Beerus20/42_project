@@ -1,6 +1,1 @@
-hello world bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-test value in getnextline
-tu le verras venir
-test d'evaluation de la value
-autre
-test
+h
