@@ -11,4 +11,4 @@ buff-%	:
 			@$(CC) $(FLAGS) -D BUFFER_SIZE=$(subst buff-, , $@) main.c && ./a.out
 
 test	: all
-			valgrind -s --leak-check=full  ./a.out
+			valgrind -s --leak-check=full --track-origins=yes ./a.out

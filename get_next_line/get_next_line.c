@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/19 22:05:30 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/22 17:46:57 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,196 +14,140 @@
 #include <stdlib.h>
 #include "get_next_line.h"
 
-int	ft_strlen(const char *str)
+int	ft_strchr(char *str, int c)
 {
-	int	count;
-	int	i;
-
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		i++;
-		count++;
-	}
-	return (count);
-}
-
-int	ft_check(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
+	if (!str)
+		return (0);
+	while (*str != c && *str)
+		str++;
+	if (*str == c)
+		return (1);
 	return (0);
 }
 
-char	*ft_zalloc(int n)
+char	*ft_read_file(int fd)
 {
-	char	*str;
-	int		i;
+	char	*buffer;
+	int		size;
 
-	i = 0;
-	str = (char *)malloc(sizeof(char) * (n + 1));
-	if (!str)
+	size = 0;
+	buffer = ft_zalloc(BUFFER_SIZE);
+	if (!buffer)
 		return (NULL);
-	while (i < n)
-		str[i++] = 0;
-	str[i] = '\0';
-	return (str);
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*r_value;
-	int		i;
-	int		len;
-
-	i = 0;
-	len = ft_strlen(s);
-	r_value = ft_zalloc((len + 1));
-	if (!r_value)
-		return (0);
-	while (i < len)
+	size = read(fd, buffer, BUFFER_SIZE);
+	if (size <= 0)
 	{
-		r_value[i] = s[i];
-		i++;
-	}
-	r_value[i] = '\0';
-	return (r_value);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	int		i;
-	char	*r_value;
-
-	i = 0;
-	r_value = ft_zalloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!r_value)
+		free(buffer);
 		return (NULL);
-	while (*s1 != '\0')
-		r_value[i++] = *(s1++);
-	while (*s2 != '\0')
-		r_value[i++] = *(s2++);
-	r_value[i] = '\0';
-	return (r_value);
-}
-
-int	ft_size(char const *s, unsigned int start, size_t len)
-{
-	size_t	r_value;
-	size_t	len_s;
-	size_t	len_r;
-
-	r_value = 0;
-	len_s = ft_strlen(s);
-	len_r = start + len;
-	if (len_r >= len_s)
-		r_value = len_s - start + 1;
-	else
-		r_value = len + 1;
-	if (start >= len_s)
-		r_value = (int)(sizeof(char));
-	return (r_value);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	size_t		i;
-	size_t		len_s;
-	char		*r_value;
-
-	i = 0;
-	len_s = ft_strlen(s);
-	r_value = ft_zalloc(ft_size(s, start, len));
-	if (!r_value)
-		return (0);
-	if (start >= len_s)
-	{
-		r_value[i] = '\0';
-		return (r_value);
 	}
-	while (i < len)
+	buffer[size] = '\0';
+	return (buffer);
+}
+
+t_list	*ft_get_file_content(int fd, t_list *list)
+{
+	t_list	*value;
+	char	*buffer;
+
+	value = list;
+	if (value->content)
 	{
-		if (s[start + i] == '\0')
+		while (value->next)
+			value = value->next;
+		if (!ft_strchr(value->content, '\n'))
+		{
+			value->next = (t_list *)malloc(sizeof(t_list));
+			if (!value->next)
+				return (NULL);
+			value = value->next;
+			value->content = NULL;
+			value->next = NULL;
+		}
+		else
+			return (NULL);
+	}
+	while (1)
+	{
+		buffer = ft_read_file(fd);
+		value->content = ft_strdup(buffer);
+		if (ft_strchr(value->content, '\n'))
 			break ;
-		r_value[i] = s[start + i];
-		i++;
+		value->next = (t_list *)malloc(sizeof(t_list));
+		if (!value->next)
+			return (NULL);
+		value = value->next;
+		value->content = NULL;
+		value->next = NULL;
 	}
-	r_value[i] = '\0';
-	return (r_value);
+	return (list);
 }
 
-char	*ft_get_value(char *buffer, char *r_value, char *content)
+int	ft_check_content(t_list *value)
 {
-	int		i;
-	char	*tmp;
-	char	*copy;
+	while (ft_strchr(value->content, '\n') && value)
+		value = value->next;
+	if (ft_strchr(value->content, '\n'))
+		return (1);
+	return (0);
+}
 
-	i = 0;
-	tmp = NULL;
+void	ft_show(t_list *value)
+{
+	t_list	*copy;
+
 	copy = NULL;
-	while (buffer[i] != '\n' && buffer[i])
-		i++;
-	if (buffer[i++] == '\n')
+	if (!value)
+		return ;
+	copy = value;
+	printf("VALUE	: [%p] ------------------------------\n", value);
+	while (copy)
 	{
-		copy = ft_strdup(r_value);
-		tmp = ft_substr(buffer, 0, i);
-		free(r_value);
-		r_value = ft_strjoin(copy, tmp);
-		free(tmp);
-		free(copy);
+		printf("content	: [%s]\n", copy->content);
+		copy = copy->next;
+	}
+	printf("---------------------------------------------\n");
+}
 
-		tmp = ft_substr(content, i, ft_strlen(content));
-		free(content);
-		content = ft_strdup(tmp);
-		free(tmp);
-		free(copy);
-	}
-	else
+void	ft_free(t_list *value)
+{
+	t_list	*to_free;
+
+	to_free = NULL;
+	if (!value)
+		return ;
+	while (value)
 	{
-		copy = ft_strdup(r_value);
-		tmp = ft_substr(buffer, 0, i);
-		free(r_value);
-		r_value = ft_strjoin(copy, tmp);
-		free(tmp);
-		free(copy);
+		to_free = value;
+		value = value->next;
+		free(to_free->content);
+		free(to_free);
 	}
-	return (r_value);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*content;
-	char		*buffer;
-	char		*tmp;
-	char		*r_value;
-	int			size;
+	static t_list	*value;
+	t_list			*copy;
 
-	size = 0;
-	r_value = ft_zalloc(1);
-	if (fd == -1 || !r_value)
+	copy = NULL;
+	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
-	while (1)
+	if (!value)
 	{
-		buffer = ft_zalloc(BUFFER_SIZE);
-		if (!buffer)
+		value = (t_list *)malloc(sizeof(t_list));
+		if (!value)
 			return (NULL);
-		size = read(fd, buffer, BUFFER_SIZE);
-		if (size == -1 || size == 0)
-			return (NULL);
-		buffer[size] = '\0';
-		tmp = ft_strdup(r_value);
-		free(r_value);
-		r_value = ft_get_value(buffer, tmp, content);
-		if (ft_check(r_value, '\n'))
-			break ;
+		value->content = NULL;
+		value->next = NULL;
 	}
-	return (r_value);
+	if ((value && !ft_check_content(value)))
+	{
+		value = ft_get_file_content(fd, value);
+		if (!value)
+			return (NULL);
+		copy = value;
+		ft_show(copy);
+		ft_free(copy);
+	}
+	return (0);
 }
