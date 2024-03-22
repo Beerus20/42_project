@@ -16,6 +16,15 @@ int	main(void)
 	line = get_next_line(fd);
 	printf("result	: %s \n",line);
 	free(line);
+	line = get_next_line(fd);
+	printf("result	: %s \n",line);
+	free(line);
+	line = get_next_line(fd);
+	printf("result	: %s \n",line);
+	free(line);
+	line = get_next_line(fd);
+	printf("result	: %s \n",line);
+	free(line);
 	close(fd);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/22 17:46:57 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/22 21:15:02 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ t_list	*ft_get_file_content(int fd, t_list *list)
 
 int	ft_check_content(t_list *value)
 {
+	if (!value->content)
+		return (0);
 	while (ft_strchr(value->content, '\n') && value)
 		value = value->next;
 	if (ft_strchr(value->content, '\n'))
@@ -111,17 +113,22 @@ void	ft_show(t_list *value)
 void	ft_free(t_list *value)
 {
 	t_list	*to_free;
+	t_list	*copy;
 
 	to_free = NULL;
+	copy = value;
 	if (!value)
 		return ;
-	while (value)
+	if (copy->next)
+		copy = copy->next;
+	while (copy)
 	{
-		to_free = value;
-		value = value->next;
+		to_free = copy;
+		copy = copy->next;
 		free(to_free->content);
 		free(to_free);
 	}
+	value->content = NULL;
 }
 
 char	*get_next_line(int fd)
@@ -140,6 +147,7 @@ char	*get_next_line(int fd)
 		value->content = NULL;
 		value->next = NULL;
 	}
+	printf("TAFIDITRA ATO 1: [%p]..........\n", value);
 	if ((value && !ft_check_content(value)))
 	{
 		value = ft_get_file_content(fd, value);
