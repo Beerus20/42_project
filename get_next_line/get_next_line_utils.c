@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:03:36 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/23 09:12:12 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/23 11:52:59 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,9 @@ char	*ft_zalloc(int n)
 	int		i;
 
 	i = 0;
-	printf("=> ---- LEN ZALLOC	: [%d] \n", n);
-	str = (char *)malloc(n);
+	str = (char *)malloc(sizeof(char) * (n + 1));
 	if (!str)
 		return (NULL);
-	printf("=> ---- GREAT ALLOC IN ZALLOC\n");
 	while (i < n)
 		str[i++] = 0;
 	str[i] = '\0';
@@ -53,9 +51,7 @@ char	*ft_strdup(char *s)
 
 	i = 0;
 	len = ft_strlen(s);
-	printf("=> LEN				: [%d]\n", len);
 	r_value = ft_zalloc(len);
-	printf("=> GREAT\n");
 	if (!r_value)
 		return (0);
 	while (i < len)

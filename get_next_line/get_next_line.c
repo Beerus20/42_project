@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/23 08:58:06 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/23 12:04:18 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,16 +129,19 @@ void	ft_free(t_list *value)
 	to_free = NULL;
 	copy = value;
 	if (copy->next)
-		copy = copy->next;
-	printf(".....................FREE.....................\n");
-	while (copy)
 	{
-		to_free = copy;
 		copy = copy->next;
-		free(to_free->content);
-		free(to_free);
+		printf(".....................FREE.....................\n");
+		while (copy)
+		{
+			to_free = copy;
+			copy = copy->next;
+			free(to_free->content);
+			free(to_free);
+		}
+		printf("...................end FREE...................\n");
 	}
-	printf("...................end FREE...................\n");
+	free(value->content);
 	value->content = NULL;
 	value->next = NULL;
 }
