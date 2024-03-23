@@ -22,6 +22,9 @@ int	main(void)
 	line = get_next_line(fd);
 	printf("result	: %s \n\n",line);
 	free(line);
+	line = get_next_line(fd);
+	printf("result	: %s \n\n",line);
+	free(line);
 	close(fd);
 	return (0);
 }
