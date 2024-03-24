@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/24 06:40:19 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/24 06:45:57 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,9 +140,7 @@ int	ft_get_len(t_list *value)
 void	ft_free(t_list **value)
 {
 	t_list	*to_free;
-	t_list	*tmp;
 
-	tmp = NULL;
 	to_free = NULL;
 	printf("...................start FREE...................\n");
 	while (!ft_strchr((*value)->content, '\n') && (*value))
@@ -153,20 +151,17 @@ void	ft_free(t_list **value)
 		free(to_free);
 	}
 	if ((*value)->next)
-	{
-		tmp = (*value);
-		value = &(*value)->next;
-		free(tmp->content);
-		free(tmp);
-	}
-	else
-	{
-		free((*value)->content);
-		free((*value));
-	}
+		value = &((*value)->next);
+	free((*value)->content);
+	free((*value));
 	printf("...................end FREE...................\n");
 }
 
+/* void	ft_get_rvalue(t_list **value)
+{
+
+}
+ */
 char	*get_next_line(int fd)
 {
 	static t_list	*value;
