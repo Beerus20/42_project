@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/24 06:40:19 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/24 08:40:25 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,34 @@ char	*ft_read_file(int fd)
 	return (buffer);
 }
 
+void	ft_add_last(t_list *value)
+{
+	int	i;
+	int	j;
+	int	len;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	while (value->content[i++] != '\n')
+		;
+	len = ft_strlen(value->content) - i;
+	if (len <= 0)
+		return ;
+	value->next = (t_list *)malloc(sizeof(t_list));
+	if (!value->next)
+		return ;
+	printf("LEN AT ADD LAST	=========> : [%d] [%s]\n", len, value->content);
+	value->next->content = ft_zalloc(len);
+	value->next->next = NULL;
+	while (value->content[i])
+		value->next->content[j++] = value->content[i++];
+}
+
 t_list	*ft_get_file_content(int fd, t_list *list)
 {
 	t_list	*value;
 	char	*buffer;
-
 
 	value = (t_list *)malloc(sizeof(t_list));
 	if (!value)
@@ -59,8 +82,7 @@ t_list	*ft_get_file_content(int fd, t_list *list)
 		list->next = value;
 	else
 	{
-		if (list)
-			free(list);
+		free(list);
 		list = value;
 	}
 	while (1)
@@ -76,7 +98,10 @@ t_list	*ft_get_file_content(int fd, t_list *list)
 		value->content = ft_strdup(buffer);
 		printf("content added 2	: [%p] [%s]..........\n", value, value->content);
 		if (ft_strchr(value->content, '\n'))
+		{
+			ft_add_last(value);
 			break ;
+		}
 		if (ft_strlen(value->content) != BUFFER_SIZE)
 			break ;
 		value->next = (t_list *)malloc(sizeof(t_list));
@@ -89,7 +114,7 @@ t_list	*ft_get_file_content(int fd, t_list *list)
 	return (list);
 }
 
-int	ft_check_content(t_list *value)
+/* int	ft_check_content(t_list *value)
 {
 	if (!value->content)
 	{
@@ -99,7 +124,7 @@ int	ft_check_content(t_list *value)
 	if (ft_strchr(value->content, '\n'))
 		return (1);
 	return (0);
-}
+} */
 
 void	ft_show(t_list *value)
 {
@@ -137,40 +162,59 @@ int	ft_get_len(t_list *value)
 	return (len);
 }
 
-void	ft_free(t_list **value)
+t_list	*ft_free(t_list *value)
 {
 	t_list	*to_free;
-	t_list	*tmp;
 
-	tmp = NULL;
 	to_free = NULL;
 	printf("...................start FREE...................\n");
-	while (!ft_strchr((*value)->content, '\n') && (*value))
+	while (!ft_strchr(value->content, '\n') && value)
 	{
-		to_free = *value;
-		*value = (*value)->next;
+		to_free = value;
+		value = value->next;
 		free(to_free->content);
 		free(to_free);
 	}
-	if ((*value)->next)
-	{
-		tmp = (*value);
-		value = &(*value)->next;
-		free(tmp->content);
-		free(tmp);
-	}
-	else
-	{
-		free((*value)->content);
-		free((*value));
-	}
 	printf("...................end FREE...................\n");
+	if (ft_strchr(value->content, '\n'))
+		return (value);
+	return (NULL);
+}
+
+char	*ft_get_rvalue(t_list *value)
+{
+	char	*r_value;
+	int		i;
+	int		j;
+	int		len;
+
+	i = 0;
+	len = ft_get_len(value);
+	r_value = ft_zalloc(len + 1);
+	while (!ft_strchr(value->content, '\n') && value->next)
+	{
+		j = 0;
+		while (value->content[j])
+			r_value[i++] = value->content[j++];
+		value = value->next;
+	}
+	if (ft_strchr(value->content, '\n'))
+	{
+		j = 0;
+		while (value->content[j] != '\n')
+			r_value[i++] = value->content[j++];
+		r_value[i++] = value->content[j];
+	}
+	printf("RESULTAT	==============================> [%d] [%s]\n", len, r_value);
+	return (r_value);
 }
 
 char	*get_next_line(int fd)
 {
 	static t_list	*value;
+	char			*r_value;
 
+	r_value = NULL;
 	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!value)
@@ -182,14 +226,17 @@ char	*get_next_line(int fd)
 		value->next = NULL;
 	}
 	printf("TAFIDITRA ATO 1: [%p]====================================\n", value);
-	if (value && !ft_check_content(value))
+	if (value && !ft_strchr(value->content, '\n'))
 	{
 		printf("############# CALL READ FILE TO ADD CONTENT #############\n");
-		printf("_______ check result	: [%d]\n", ft_check_content(value));
 		value = ft_get_file_content(fd, value);
+		if (!value->content)
+			return (NULL);
+		printf("########### END CALL READ FILE TO ADD CONTENT ###########\n");
 	}
 	//printf("============	: [%p] [%s]..........\n", value, value->content);
 	ft_show(value);
-	ft_free(&value);
-	return (0);
+	r_value = ft_get_rvalue(value);
+	value = ft_free(value);
+	return (r_value);
 }
