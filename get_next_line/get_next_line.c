@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/23 18:19:27 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/24 06:40:19 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_list	*ft_get_file_content(int fd, t_list *list)
 			break ;
 		}
 		value->content = ft_strdup(buffer);
-		printf("content added 2	: [%p] [%s]..........\n\n", value, value->content);
+		printf("content added 2	: [%p] [%s]..........\n", value, value->content);
 		if (ft_strchr(value->content, '\n'))
 			break ;
 		if (ft_strlen(value->content) != BUFFER_SIZE)
@@ -137,58 +137,40 @@ int	ft_get_len(t_list *value)
 	return (len);
 }
 
-void	ft_free(t_list *value)
+void	ft_free(t_list **value)
 {
 	t_list	*to_free;
-	t_list	*copy;
-	char	*tmp;
-	int		i;
-	int		j;
+	t_list	*tmp;
 
-	i = 0;
-	j = 0;
 	tmp = NULL;
 	to_free = NULL;
-	copy = value;
-	printf(".....................FREE.....................\n");
-	if (copy->next)
+	printf("...................start FREE...................\n");
+	while (!ft_strchr((*value)->content, '\n') && (*value))
 	{
-		copy = copy->next;
-		while (copy->next)
-		{
-			to_free = copy;
-			copy = copy->next;
-			free(to_free->content);
-			free(to_free);
-		}
+		to_free = *value;
+		*value = (*value)->next;
+		free(to_free->content);
+		free(to_free);
 	}
-	if (ft_strchr(copy->content, '\n'))
+	if ((*value)->next)
 	{
-		while (copy->content[i++] != '\n')
-			;
-		tmp = ft_zalloc(ft_strlen(copy->content) - i);
-		if (!tmp)
-			return ;
-		while (copy->content[i])
-			tmp[j++] = copy->content[i++];
-		tmp[j] = '\0';
+		tmp = (*value);
+		value = &(*value)->next;
+		free(tmp->content);
+		free(tmp);
 	}
-	free(value->content);
-	if (tmp && ft_strlen(tmp))
-		value->content = ft_strdup(tmp);
 	else
-		value->content = NULL;
-	printf("REST	: [%s]\n", value->content);
-	value->next = NULL;
+	{
+		free((*value)->content);
+		free((*value));
+	}
 	printf("...................end FREE...................\n");
 }
 
 char	*get_next_line(int fd)
 {
 	static t_list	*value;
-	t_list			*copy;
 
-	copy = NULL;
 	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!value)
@@ -207,8 +189,7 @@ char	*get_next_line(int fd)
 		value = ft_get_file_content(fd, value);
 	}
 	//printf("============	: [%p] [%s]..........\n", value, value->content);
-	copy = value;
-	ft_show(copy);
-	ft_free(copy);
+	ft_show(value);
+	ft_free(&value);
 	return (0);
 }

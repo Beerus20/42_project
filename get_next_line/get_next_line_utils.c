@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:03:36 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/23 17:07:16 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/24 06:12:44 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	ft_strlen( char *str)
 	count = 0;
 	while (str[i])
 	{
-		i++;
 		count++;
+		i++;
 	}
 	return (count);
 }
