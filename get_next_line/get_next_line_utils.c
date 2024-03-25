@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:03:36 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/25 08:09:23 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/25 09:07:18 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,49 +83,3 @@ char	*ft_strjoin(char  *s1, char  *s2)
 	r_value[i] = '\0';
 	return (r_value);
 }
-
-int	ft_size(char  *s, unsigned int start, size_t len)
-{
-	size_t	r_value;
-	size_t	len_s;
-	size_t	len_r;
-
-	r_value = 0;
-	len_s = ft_strlen(s);
-	len_r = start + len;
-	if (len_r >= len_s)
-		r_value = len_s - start + 1;
-	else
-		r_value = len + 1;
-	if (start >= len_s)
-		r_value = (int)(sizeof(char));
-	return (r_value);
-}
-
-char	*ft_substr(char  *s, unsigned int start, size_t len)
-{
-	size_t		i;
-	size_t		len_s;
-	char		*r_value;
-
-	i = 0;
-	len_s = ft_strlen(s);
-	r_value = ft_zalloc(ft_size(s, start, len));
-	if (!r_value)
-		return (0);
-	if (start >= len_s)
-	{
-		r_value[i] = '\0';
-		return (r_value);
-	}
-	while (i < len)
-	{
-		if (s[start + i] == '\0')
-			break ;
-		r_value[i] = s[start + i];
-		i++;
-	}
-	r_value[i] = '\0';
-	return (r_value);
-}
-
