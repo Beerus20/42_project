@@ -6,7 +6,7 @@
 /*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:03:36 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/24 06:12:44 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/25 08:09:23 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	ft_strlen( char *str)
 
 	i = 0;
 	count = 0;
+	if (!str)
+		return (count);
 	while (str[i])
 	{
 		count++;
@@ -60,8 +62,6 @@ char	*ft_strdup(char *s)
 		i++;
 	}
 	r_value[i] = '\0';
-	if (s)
-		free(s);
 	return (r_value);
 }
 
@@ -71,10 +71,12 @@ char	*ft_strjoin(char  *s1, char  *s2)
 	char	*r_value;
 
 	i = 0;
+	if (!s1 && !s2)
+		return (NULL);
 	r_value = ft_zalloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!r_value)
 		return (NULL);
-	while (*s1 != '\0')
+	while (*s1)
 		r_value[i++] = *(s1++);
 	while (*s2 != '\0')
 		r_value[i++] = *(s2++);

@@ -14,11 +14,7 @@ int	main(void)
 	if (!fd)
 		return (0);
 	line = get_next_line(fd);
-	printf("result	: %s \n\n",line);
-	free(line);
-
-	line = get_next_line(fd);
-	printf("result	: %s \n\n",line);
+	printf("result	: %s",line);
 	free(line);
 
 	close(fd);
