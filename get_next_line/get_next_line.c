@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/25 09:31:51 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/25 13:48:30 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,57 @@ void	ft_get_file_content(int fd, t_list **list)
 	free(buffer);
 }
 
+int	ft_get_len(t_list *value)
+{
+	int	len;
+	int	i;
+
+	i = 0;
+	len = 0;
+	while (!ft_strchr(value->content, '\n') && value->next)
+	{
+		len += ft_strlen(value->content);
+		value = value->next;
+	}
+	if (ft_strchr(value->content, '\n'))
+	{
+		while (value->content[i++] != '\n')
+			;
+		len += i;
+	}
+	else
+		len += ft_strlen(value->content);
+	return (len);
+}
+
+char	*ft_get_line(t_list *value)
+{
+	char	*r_value;
+	int		i;
+	int		j;
+
+	i = 0;
+	r_value = ft_zalloc(ft_get_len(value));
+	if (!r_value)
+		return (NULL);
+	while (!ft_strchr(value->content, '\n') && value->next)
+	{
+		j = 0;
+		while (value->content[j])
+			r_value[i++] = value->content[j++];
+		value = value->next;
+	}
+	if (ft_strchr(value->content, '\n'))
+	{
+		j = 0;
+		while (value->content[j] != '\n')
+			r_value[i++] = value->content[j++];
+		r_value[i++] = value->content[j];
+	}
+	printf("\nLEN	: [%d] [%s]\n", ft_get_len(value), r_value);
+	return (r_value);
+}
+
 void	ft_free(t_list *value)
 {
 	t_list	*to_free;
@@ -84,6 +135,7 @@ char	*get_next_line(int fd)
 	value->content = NULL;
 	value->next = NULL;
 	ft_get_file_content(fd, &value);
+	line = ft_get_line(value);
 	ft_free(value);
 	return (line);
 }
