@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:03:36 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/25 09:07:18 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/25 15:40:17 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*ft_strdup(char *s)
 
 	i = 0;
 	len = ft_strlen(s);
-	r_value = ft_zalloc(len);
+	r_value = (char *)malloc(sizeof(char) * (len + 1));
 	if (!r_value)
 		return (0);
 	while (i < len)
@@ -61,25 +61,6 @@ char	*ft_strdup(char *s)
 		r_value[i] = s[i];
 		i++;
 	}
-	r_value[i] = '\0';
-	return (r_value);
-}
-
-char	*ft_strjoin(char  *s1, char  *s2)
-{
-	int		i;
-	char	*r_value;
-
-	i = 0;
-	if (!s1 && !s2)
-		return (NULL);
-	r_value = ft_zalloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!r_value)
-		return (NULL);
-	while (*s1)
-		r_value[i++] = *(s1++);
-	while (*s2 != '\0')
-		r_value[i++] = *(s2++);
 	r_value[i] = '\0';
 	return (r_value);
 }
