@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/23 12:04:18 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/25 08:10:12 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,165 +14,136 @@
 #include <stdlib.h>
 #include "get_next_line.h"
 
-int	ft_strchr(char *str, int c)
+char	*ft_strchr(char *str, int c)
 {
 	if (!str)
 		return (0);
-	while (*str != c && *str)
+	while (*str)
+	{
+		if (*str == c)
+			return (str);
 		str++;
-	if (*str == c)
-		return (1);
-	return (0);
+	}
+	return (NULL);
 }
 
-char	*ft_read_file(int fd)
+void	ft_get_file_content(int fd, t_list **list)
 {
+	t_list	*value;
 	char	*buffer;
 	int		size;
 
 	size = 0;
+	value = *list;
+	printf("\n#____________________#  GET CONTENT ============================\n");
 	buffer = ft_zalloc(BUFFER_SIZE);
 	if (!buffer)
-		return (NULL);
-	size = read(fd, buffer, BUFFER_SIZE);
-	if (size <= 0)
+		return ;
+	while (!ft_strchr(buffer, '\n'))
 	{
-		free(buffer);
-		return (NULL);
-	}
-	buffer[size] = '\0';
-	return (buffer);
-}
-
-t_list	*ft_get_file_content(int fd, t_list *list)
-{
-	t_list	*value;
-	char	*buffer;
-
-	value = list;
-	if (value->content)
-	{
-		while (value->next)
-			value = value->next;
-		if (!ft_strchr(value->content, '\n'))
-		{
-			value->next = (t_list *)malloc(sizeof(t_list));
-			if (!value->next)
-				return (NULL);
-			value = value->next;
-			value->content = NULL;
-			value->next = NULL;
-		}
-		else
-			return (NULL);
-	}
-	while (1)
-	{
-		buffer = ft_read_file(fd);
-		printf("buffer got _________	: [%s]..........\n", buffer);
-		if (!buffer)
-		{
-			printf("NULL BUFFER	: [%s]..........\n", buffer);
-			free(buffer);
+		size = read(fd, buffer, BUFFER_SIZE);
+		if (size == -1 || size == 0)
 			break ;
-		}
+		buffer[size] = '\0';
 		value->content = ft_strdup(buffer);
-		printf("content added 2	: [%p] [%s]..........\n\n", value, value->content);
-		if (ft_strchr(value->content, '\n'))
-			break ;
-		if (ft_strlen(value->content) != BUFFER_SIZE)
-			break ;
-		value->next = (t_list *)malloc(sizeof(t_list));
+		printf("CONTENT->value	: [%s]\n", value->content);
+		value->next = malloc(sizeof(t_list));
 		if (!value->next)
-			return (NULL);
+			return ;
 		value = value->next;
 		value->content = NULL;
 		value->next = NULL;
 	}
-	return (list);
+	printf("#____________________#  GET END\n");
+	free(buffer);
 }
 
-int	ft_check_content(t_list *value)
+int	ft_get_len(t_list *value)
 {
-	if (!value->content)
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (!ft_strchr(value->content, '\n') && value->next)
 	{
-		printf("............... VALUE CONTENT NULL ERROR \n");
-		return (0);
-	}
-	while (!ft_strchr(value->content, '\n') && value)
+		len += ft_strlen(value->content);
 		value = value->next;
+	}
 	if (ft_strchr(value->content, '\n'))
-		return (1);
-	return (0);
+	{
+		while (value->content[i++] != '\n')
+			;
+		len += i;
+	}
+	else
+		len += ft_strlen(value->content);
+	return (len);
 }
 
-void	ft_show(t_list *value)
+char	*ft_get_line(t_list *value)
 {
-	t_list	*copy;
+	char	*r_value;
+	int		i;
+	int		j;
 
-	printf("####################### SHOW CALL #######################\n");
-	copy = value;
-	printf("VALUE	: [%p] ------------------------------\n", value);
-	while (copy)
+	i = 0;
+	j = 0;
+	r_value = ft_zalloc(ft_get_len(value));
+	if (!r_value)
+		return (NULL);
+	while (!ft_strchr(value->content, '\n') && value->next)
 	{
-		printf("content	: [%s] \n", copy->content);
-		copy = copy->next;
+		j = 0;
+		while (value->content[j])
+			r_value[i++] = value->content[j++];
+		value = value->next;
 	}
-	printf("---------------------------------------------\n");
+	if (ft_strchr(value->content, '\n'))
+	{
+		j = 0;
+		while (value->content[j] != '\n')
+			r_value[i++] = value->content[j++];
+		r_value[i++] = value->content[j];
+	}
+	return (r_value);
 }
 
 void	ft_free(t_list *value)
 {
 	t_list	*to_free;
-	t_list	*copy;
 
 	to_free = NULL;
-	copy = value;
-	if (copy->next)
+	while (value)
 	{
-		copy = copy->next;
-		printf(".....................FREE.....................\n");
-		while (copy)
-		{
-			to_free = copy;
-			copy = copy->next;
-			free(to_free->content);
-			free(to_free);
-		}
-		printf("...................end FREE...................\n");
+		to_free = value;
+		printf("TO_FREE	: [%s]\n", to_free->content);
+		value = value->next;
+		free(to_free->content);
+		free(to_free);
 	}
-	free(value->content);
-	value->content = NULL;
-	value->next = NULL;
 }
 
 char	*get_next_line(int fd)
 {
-	static t_list	*value;
-	t_list			*copy;
+	//static char	*rest;
+	t_list		*value;
+	char		*line;
 
-	copy = NULL;
+	line = NULL;
 	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
+	value = (t_list *)malloc(sizeof(t_list));
 	if (!value)
-	{
-		value = (t_list *)malloc(sizeof(t_list));
-		if (!value)
-			return (NULL);
-		value->content = NULL;
-		value->next = NULL;
-	}
-	printf("TAFIDITRA ATO 1: [%p]..........\n", value);
-	ft_show(value);
-	if (value && !ft_check_content(value))
-	{
-		printf("############# CALL READ FILE TO ADD CONTENT #############\n");
-		printf("_______ check result	: [%d]\n", ft_check_content(value));
-		value = ft_get_file_content(fd, value);
-	}
-	//printf("============	: [%p] [%s]..........\n", value, value->content);
-	copy = value;
-	ft_show(copy);
-	ft_free(copy);
-	return (0);
+		return (NULL);
+	value->content = NULL;
+	value->next = NULL;
+	ft_get_file_content(fd, &value);
+	line = ft_get_line(value);
+	ft_free(value);
+	return (line);
 }
+
+/*
+*	faire en sorte que le rest soit static mais que la list ne le soit pas
+ */
