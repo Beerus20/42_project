@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/25 17:12:07 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/25 22:05:16 by beerus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,24 @@ char	*ft_strchr(char *str, int c)
 		str++;
 	}
 	return (NULL);
+}
+
+int	ft_add_value(char *receiver, char *to_add, char stop)
+{
+	int	i;
+
+	i = 0;
+	while (to_add[i] != stop && to_add[i])
+	{
+		receiver[i] = to_add[i];
+		i++;
+	}
+	if (stop == '\n')
+	{
+		receiver[i] = to_add[i];
+		i++;
+	}
+	return (i);
 }
 
 void	ft_get_file_content(int fd, t_list **list)
@@ -76,24 +94,6 @@ int	ft_get_len(t_list *value)
 	else
 		len += ft_strlen(value->content);
 	return (len);
-}
-
-int	ft_add_value(char *receiver, char *to_add, char stop)
-{
-	int	i;
-
-	i = 0;
-	while (to_add[i] != stop && to_add[i])
-	{
-		receiver[i] = to_add[i];
-		i++;
-	}
-	if (stop == '\n')
-	{
-		receiver[i] = to_add[i];
-		i++;
-	}
-	return (i);
 }
 
 char	*ft_get_line(t_list *value)
@@ -190,6 +190,11 @@ char	*get_next_line(int fd)
 	line = ft_get_line(value);
 	rest = ft_get_rest(value);
 	ft_free(value);
+	if (!ft_strlen(line))
+	{
+		free(line);
+		return (NULL);
+	}
 	return (line);
 }
 /*
