@@ -11,9 +11,6 @@ int	main(void)
 	fd = open("text.txt", O_RDONLY);
 	if (!fd)
 		return (0);
-	line = get_next_line(fd);
-	printf("result	: %s",line);
-	free(line);
 
 	line = get_next_line(fd);
 	printf("result	: %s",line);
@@ -23,9 +20,7 @@ int	main(void)
 	printf("result	: %s",line);
 	free(line);
 
-	line = get_next_line(fd);
-	printf("result	: %s",line);
-	free(line);
+	close(fd);
 
 	line = get_next_line(fd);
 	printf("result	: %s",line);

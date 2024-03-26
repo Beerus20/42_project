@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/26 09:10:37 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/26 13:47:47 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,10 @@ char	*get_next_line(int fd)
 	static char	*rest;
 	t_list		*value;
 	char		*line;
+	int			state;
 
 	line = NULL;
+	state = 0;
 	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
 	value = (t_list *)malloc(sizeof(t_list));
@@ -177,9 +179,16 @@ char	*get_next_line(int fd)
 	value->next = NULL;
 	if (ft_init(value, &rest))
 	{
-		if (ft_get_file_content(fd, &value) <= 0 && value->content == NULL)
+		state = ft_get_file_content(fd, &value);
+		if (state == -1)
+		{
+			ft_free(value);
+			return (NULL);
+		}
+		if (state == 0 && value->content == NULL)
 		{
 			free(value);
+			free(rest);
 			return (NULL);
 		}
 	}
