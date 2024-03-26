@@ -42,7 +42,7 @@ output				:
 ./output/%.o		: ./src/%.c
 						@$(CC) $(CFLAGS) -o $@ -c $<
 
-all 				: $(NAME)
+all 				: output $(NAME)
 
 $(NAME)				: $(SUPP_FUNCT_OBJS) $(FTPRINTF_OBJS)
 						@ar rc $(NAME) $^

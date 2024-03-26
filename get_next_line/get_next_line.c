@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 21:02:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/26 13:47:47 by ballain          ###   ########.fr       */
+/*   Created: 2024/03/19 21:02:37 by ballain           #+#    #+#             */
+/*   Updated: 2024/03/26 18:07:31 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,18 @@ int	ft_get_file_content(int fd, t_list **list)
 	{
 		size = read(fd, buffer, BUFFER_SIZE);
 		if (size == -1 || size == 0)
-		{
-			free(buffer);
-			return (size);
-		}
+			break ;
 		buffer[size] = '\0';
 		value->content = ft_strdup(buffer);
 		value->next = malloc(sizeof(t_list));
+		if (!value->next)
+			return (0);
+		value->next->content = NULL;
+		value->next->next = NULL;
 		value = value->next;
-		value->content = NULL;
-		value->next = NULL;
 	}
 	free(buffer);
-	return (1);
+	return (size);
 }
 
 int	ft_get_len(t_list *value)
@@ -143,20 +142,25 @@ void	ft_free(t_list *value)
 	}
 }
 
-int	ft_init(t_list *value, char **rest)
+int	ft_init(t_list **value, char **rest)
 {
+	(*value) = (t_list *)malloc(sizeof(t_list));
+	if (!(*value))
+		return (0);
+	(*value)->content = NULL;
+	(*value)->next = NULL;
 	if (*rest && ft_strlen(*rest))
 	{
-		value->content = ft_strdup(*rest);
+		(*value)->content = ft_strdup(*rest);
 		free(*rest);
 		*rest = NULL;
-		if (ft_strchr(value->content, '\n'))
+		if (ft_strchr((*value)->content, '\n'))
 			return (0);
-		value->next = (t_list *)malloc(sizeof(t_list));
-		if (!value->next)
+		(*value)->next = (t_list *)malloc(sizeof(t_list));
+		if (!(*value)->next)
 			return (0);
-		value->next->content = NULL;
-		value->next->next = NULL;
+		(*value)->next->content = NULL;
+		(*value)->next->next = NULL;
 	}
 	return (1);
 }
@@ -169,36 +173,21 @@ char	*get_next_line(int fd)
 	int			state;
 
 	line = NULL;
+	value = NULL;
 	state = 0;
 	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
-	value = (t_list *)malloc(sizeof(t_list));
-	if (!value)
-		return (0);
-	value->content = NULL;
-	value->next = NULL;
-	if (ft_init(value, &rest))
+	if (ft_init(&value, &rest))
 	{
 		state = ft_get_file_content(fd, &value);
-		if (state == -1)
+		if (state == -1 || (state == 0 && value->content == NULL))
 		{
 			ft_free(value);
-			return (NULL);
-		}
-		if (state == 0 && value->content == NULL)
-		{
-			free(value);
-			free(rest);
 			return (NULL);
 		}
 	}
 	line = ft_get_line(value, &rest);
 	ft_free(value);
-	if (!ft_strlen(line))
-	{
-		free(line);
-		return (NULL);
-	}
 	return (line);
 }
 /*
