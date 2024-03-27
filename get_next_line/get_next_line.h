@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ballain <marvin@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 08:42:41 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/26 12:23:46 by ballain          ###   ########.fr       */
+/*   Created: 2024/03/26 08:42:41 by ballain           #+#    #+#             */
+/*   Updated: 2024/03/27 09:58:21 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 42
 # endif
 
 # include <fcntl.h>
@@ -27,8 +27,10 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+char	*ft_strchr(char *str, int c);
 int		ft_strlen(char *str);
-char	*ft_zalloc(int n);
-char	*ft_strdup(char *s);
+int		ft_get_len(t_list *value);
+char	*ft_alloc(char *s, int len);
+void	ft_free(t_list *value);
 char	*get_next_line(int fd);
 #endif

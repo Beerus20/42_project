@@ -3,15 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ballain <marvin@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 21:03:36 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/25 15:40:17 by ballain          ###   ########.fr       */
+/*   Created: 2024/03/19 21:03:36 by ballain           #+#    #+#             */
+/*   Updated: 2024/03/27 09:58:32 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
+
+char	*ft_strchr(char *str, int c)
+{
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		if (*str == c)
+			return (str);
+		str++;
+	}
+	return (NULL);
+}
 
 int	ft_strlen( char *str)
 {
@@ -30,37 +43,67 @@ int	ft_strlen( char *str)
 	return (count);
 }
 
-char	*ft_zalloc(int n)
+int	ft_get_len(t_list *value)
 {
-	char	*str;
-	int		i;
+	int	len;
+	int	i;
 
 	i = 0;
-	str = (char *)malloc(sizeof(char) * (n + 1));
-	if (!str)
-		return (NULL);
-	while (i < n)
-		str[i++] = 0;
-	str[i] = '\0';
-	return (str);
+	len = 0;
+	while (!ft_strchr(value->content, '\n') && value->next)
+	{
+		len += ft_strlen(value->content);
+		value = value->next;
+	}
+	if (ft_strchr(value->content, '\n'))
+	{
+		while (value->content[i++] != '\n')
+			;
+		len += i;
+	}
+	else
+		len += ft_strlen(value->content);
+	return (len);
 }
 
-char	*ft_strdup(char *s)
+char	*ft_alloc(char *s, int len)
 {
 	char	*r_value;
 	int		i;
-	int		len;
 
 	i = 0;
-	len = ft_strlen(s);
+	if (s)
+		len = ft_strlen(s);
 	r_value = (char *)malloc(sizeof(char) * (len + 1));
 	if (!r_value)
 		return (0);
-	while (i < len)
+	if (s)
 	{
-		r_value[i] = s[i];
-		i++;
+		while (i < len)
+		{
+			r_value[i] = s[i];
+			i++;
+		}
+	}
+	else
+	{
+		while (i < len)
+			r_value[i++] = 0;
 	}
 	r_value[i] = '\0';
 	return (r_value);
+}
+
+void	ft_free(t_list *value)
+{
+	t_list	*to_free;
+
+	to_free = NULL;
+	while (value)
+	{
+		to_free = value;
+		value = value->next;
+		free(to_free->content);
+		free(to_free);
+	}
 }

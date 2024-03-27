@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ballain <marvin@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/26 18:07:31 by ballain          ###   ########.fr       */
+/*   Updated: 2024/03/27 09:57:19 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "get_next_line.h"
-
-char	*ft_strchr(char *str, int c)
-{
-	if (!str)
-		return (0);
-	while (*str)
-	{
-		if (*str == c)
-			return (str);
-		str++;
-	}
-	return (NULL);
-}
 
 int	ft_add_value(char *receiver, char *to_add, char stop)
 {
@@ -53,9 +38,7 @@ int	ft_get_file_content(int fd, t_list **list)
 
 	size = 0;
 	value = *list;
-	if ((*list)->content)
-		value = (*list)->next;
-	buffer = ft_zalloc(BUFFER_SIZE);
+	buffer = ft_alloc(NULL, BUFFER_SIZE);
 	if (!buffer)
 		return (0);
 	while (!ft_strchr(buffer, '\n'))
@@ -64,7 +47,7 @@ int	ft_get_file_content(int fd, t_list **list)
 		if (size == -1 || size == 0)
 			break ;
 		buffer[size] = '\0';
-		value->content = ft_strdup(buffer);
+		value->content = ft_alloc(buffer, 0);
 		value->next = malloc(sizeof(t_list));
 		if (!value->next)
 			return (0);
@@ -76,36 +59,13 @@ int	ft_get_file_content(int fd, t_list **list)
 	return (size);
 }
 
-int	ft_get_len(t_list *value)
-{
-	int	len;
-	int	i;
-
-	i = 0;
-	len = 0;
-	while (!ft_strchr(value->content, '\n') && value->next)
-	{
-		len += ft_strlen(value->content);
-		value = value->next;
-	}
-	if (ft_strchr(value->content, '\n'))
-	{
-		while (value->content[i++] != '\n')
-			;
-		len += i;
-	}
-	else
-		len += ft_strlen(value->content);
-	return (len);
-}
-
 char	*ft_get_line(t_list *value, char **rest)
 {
 	char	*r_value;
 	int		i;
 
 	i = 0;
-	r_value = ft_zalloc(ft_get_len(value));
+	r_value = ft_alloc(NULL, ft_get_len(value));
 	if (!r_value)
 		return (NULL);
 	i = 0;
@@ -119,27 +79,13 @@ char	*ft_get_line(t_list *value, char **rest)
 		i = ft_add_value(&r_value[i], value->content, '\n');
 		if ((ft_strlen(value->content) - i) != 0)
 		{
-			*rest = ft_zalloc(ft_strlen(value->content) - i);
+			*rest = ft_alloc(NULL, ft_strlen(value->content) - i);
 			if (!(*rest))
 				return (NULL);
 			ft_add_value((*rest), &value->content[i], '\0');
 		}
 	}
 	return (r_value);
-}
-
-void	ft_free(t_list *value)
-{
-	t_list	*to_free;
-
-	to_free = NULL;
-	while (value)
-	{
-		to_free = value;
-		value = value->next;
-		free(to_free->content);
-		free(to_free);
-	}
 }
 
 int	ft_init(t_list **value, char **rest)
@@ -151,7 +97,7 @@ int	ft_init(t_list **value, char **rest)
 	(*value)->next = NULL;
 	if (*rest && ft_strlen(*rest))
 	{
-		(*value)->content = ft_strdup(*rest);
+		(*value)->content = ft_alloc(*rest, 0);
 		free(*rest);
 		*rest = NULL;
 		if (ft_strchr((*value)->content, '\n'))
@@ -170,17 +116,20 @@ char	*get_next_line(int fd)
 	static char	*rest;
 	t_list		*value;
 	char		*line;
-	int			state;
+	int			size;
 
 	line = NULL;
 	value = NULL;
-	state = 0;
+	size = 0;
 	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (ft_init(&value, &rest))
 	{
-		state = ft_get_file_content(fd, &value);
-		if (state == -1 || (state == 0 && value->content == NULL))
+		if (!value->content)
+			size = ft_get_file_content(fd, &value);
+		else
+			size = ft_get_file_content(fd, &value->next);
+		if (size == -1 || (size == 0 && value->content == NULL))
 		{
 			ft_free(value);
 			return (NULL);
