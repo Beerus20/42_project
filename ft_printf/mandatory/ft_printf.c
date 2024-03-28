@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include "ft_printf.h"
+#include "./includes/ft_printf.h"
 
 void	*ft_stoc(int c);
 void	ft_write_value(char type, int *len, va_list args);
@@ -28,8 +27,7 @@ int	ft_printf(const char *format, ...)
 			ft_write_value(format[++i], &len, args);
 		i++;
 	}
-	printf("\nLEN	: [%d]\n", len);
-	return (0);
+	return (len);
 }
 
 void	*ft_stoc(int c)

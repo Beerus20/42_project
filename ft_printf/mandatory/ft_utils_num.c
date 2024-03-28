@@ -1,5 +1,5 @@
-#include "ft_printf.h"
-#include "ft_utils_num.h"
+#include "./includes/ft_printf.h"
+#include "./includes/ft_utils_num.h"
 
 int	ft_count_nb(char type, unsigned long nb)
 {
