@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <marvin@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:09:56 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/18 14:13:34 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/27 13:55:14 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,7 @@ int	ft_print_value(t_value *value)
 		if (value->type == 'c')
 			ft_printc(value);
 		else
-		{
 			ft_apply_flags(value);
-			ft_putstr_fd(value->content, 1);
-		}
 		to_free = value;
 		len += value->l;
 		value = value->next;

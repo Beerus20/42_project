@@ -33,6 +33,8 @@ CFLAGS				= -Wall -Wextra -Werror
 RM					= rm -rf
 CC					= cc
 
+all 				: output $(NAME)
+
 output				:
 						mkdir $@
 
@@ -41,8 +43,6 @@ output				:
 
 ./output/%.o		: ./src/%.c
 						@$(CC) $(CFLAGS) -o $@ -c $<
-
-all 				: output $(NAME)
 
 $(NAME)				: $(SUPP_FUNCT_OBJS) $(FTPRINTF_OBJS)
 						@ar rc $(NAME) $^

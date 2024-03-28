@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_treatment.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <marvin@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 08:34:57 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/18 14:10:19 by beerus           ###   ########.fr       */
+/*   Updated: 2024/03/27 14:29:10 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,18 @@ void	ft_apply_flags(t_value *value)
 		ft_apply_flags_number(value);
 	if (ft_strchr(value->flags, 'w'))
 		ft_width_flag(value);
+	ft_putstr_fd(value->content, 1);
+}
+
+void	ft_apply_flag(t_value *value)
+{
+	char	type;
+
+	type = value->type;
+	if (type == 's' && !value->content)
+		value->content = ft_strdup("(null)");
+	if (type == 'p' && !value->content)
+		value->content = ft_strdup("(nil)");
+	value->l = ft_strlen(value->content);
+	ft_putstr_fd(value->content, 1);
 }
