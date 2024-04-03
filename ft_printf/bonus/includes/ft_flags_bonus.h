@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils_num.h                                     :+:      :+:    :+:   */
+/*   ft_flags_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 16:33:09 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/18 14:29:29 by beerus           ###   ########.fr       */
+/*   Created: 2024/03/14 18:57:37 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/03 13:56:08 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_UTILS_NUM_H
-# define FT_UTILS_NUM_H
+#ifndef FT_FLAGS_BONUS_H
+# define FT_FLAGS_BONUS_H
 
+# include "ft_printf_bonus.h"
 # include "function.h"
 
-int		ft_pow(int nb, int pow);
-int		ft_count_nb(char type, unsigned long nb);
-char	ft_getnb_base(char type, unsigned long *nb);
-void	ft_reverse(char *str);
-void	ft_uitos(char type, unsigned long nb, char *value);
+void	ft_len_flag_str(t_value *value);
+void	ft_len_flag_number(t_value *value, char *tmp);
+void	ft_width_flag(t_value *value);
+void	ft_get_flags(t_value *value, char *desc);
 #endif

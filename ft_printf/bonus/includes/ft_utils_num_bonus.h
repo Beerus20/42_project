@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check.h                                         :+:      :+:    :+:   */
+/*   ft_utils_num_bonus.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 08:21:25 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/18 14:28:43 by beerus           ###   ########.fr       */
+/*   Created: 2024/03/14 16:33:09 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/03 14:06:27 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_CHECK_H
-# define FT_CHECK_H
+#ifndef FT_UTILS_NUM_BONUS_H
+# define FT_UTILS_NUM_BONUS_H
 
 # include "function.h"
 
-int	ft_check_type(char c);
-int	ft_isint(char type);
-int	ft_isuint(char type);
-int	ft_isflag(int c);
-int	ft_isnumber(char type);
+int		ft_pow(int nb, int pow);
+int		ft_count_nb(char type, unsigned long nb);
+char	ft_getnb_base(char type, unsigned long *nb);
+void	ft_reverse(char *str);
+void	ft_uitos(char type, unsigned long nb, char *value);
 #endif

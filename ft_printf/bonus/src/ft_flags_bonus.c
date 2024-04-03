@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_flags.c                                         :+:      :+:    :+:   */
+/*   ft_flags_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 19:51:03 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/18 14:07:33 by beerus           ###   ########.fr       */
+/*   Created: 2024/03/14 19:51:03 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/03 13:49:48 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_flags.h"
+#include "../includes/ft_flags_bonus.h"
 
 int	ft_count_flags(char *desc)
 {

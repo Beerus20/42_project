@@ -1,7 +1,9 @@
-NAME			= libftprintf.a
+.SILENT			:
+NAME				= libftprintf.a
 FTPRINTF_FILES		= \
 	ft_printf.c				\
 	ft_check.c				\
+	ft_utils.c				\
 	ft_utils_num.c			\
 	ft_itoa.c				\
 
@@ -14,23 +16,22 @@ CC					= cc
 all 				: output $(NAME)
 
 output				:
-						mkdir $@
+ifneq ($(shell [ -d output ] && echo true),true)
+	@mkdir output
+endif
 
 ./output/%.o		: %.c
 						@$(CC) $(CFLAGS) -o $@ -c $<
 
 $(NAME)				: $(FTPRINTF_OBJS)
-						@ar rc $(NAME) $^ && mv $(NAME) ..
+						@ar rc $(NAME) $^ && mv $(NAME) ../
 
 norme				:
-						norminette includes/* function/* src/*
+						norminette includes/* *.c
 
 clean 				:
 						$(RM) $(FTPRINTF_OBJS) a.out
 
-fclean				: clean
-						cd .. && $(RM) $(NAME)
-
 cleanall			: fclean vimclean
 re					: fclean all
-.PHONY				: fclean clean all bonus re
+.PHONY				: fclean clean all bonus re $(NAME)

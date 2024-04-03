@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*   ft_printf_utils_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballain <marvin@student.42.fr>             +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 14:09:56 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/27 13:55:14 by ballain          ###   ########.fr       */
+/*   Created: 2024/03/18 14:09:56 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/03 13:50:21 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
-#include "../includes/ft_utils.h"
-#include "../includes/ft_flags.h"
+#include "../includes/ft_printf_bonus.h"
+#include "../includes/ft_utils_bonus.h"
+#include "../includes/ft_flags_bonus.h"
 
 void	ft_printc(t_value *value)
 {

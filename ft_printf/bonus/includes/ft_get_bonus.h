@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_flags.h                                         :+:      :+:    :+:   */
+/*   ft_get_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 18:57:37 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/18 14:29:29 by beerus           ###   ########.fr       */
+/*   Created: 2024/03/15 16:07:29 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/03 14:05:36 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_FLAGS_H
-# define FT_FLAGS_H
+#ifndef FT_GET_BONUS_H
+# define FT_GET_BONUS_H
 
-# include "ft_printf.h"
+# include "ft_printf_bonus.h"
 # include "function.h"
 
-void	ft_len_flag_str(t_value *value);
-void	ft_len_flag_number(t_value *value, char *tmp);
-void	ft_width_flag(t_value *value);
-void	ft_get_flags(t_value *value, char *desc);
+char	*ft_get_value(char type, va_list args);
+void	*ft_get_str_value(char *value);
+void	*ft_get_int_value(char type, int value);
+char	*ft_get_uint_value(char type, va_list args);
 #endif

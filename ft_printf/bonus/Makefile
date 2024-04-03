@@ -1,6 +1,6 @@
-.SILENT :
-NAME		= libftprintf.a
-MANDATORY_PATH	= ./mandatory
+.SILENT 			:
+NAME				= libftprintf.a
+MANDATORY_PATH		= ./mandatory
 SUPP_FUNCT_FILES	= \
 	ft_atoi.c				\
 	ft_itoa.c				\
@@ -16,16 +16,16 @@ SUPP_FUNCT_FILES	= \
 SUPP_FUNCT_OBJS		= $(SUPP_FUNCT_FILES:%.c=./output/%.o)
 
 FTPRINTF_FILES		= \
-	ft_printf.c				\
-	ft_printf_utils.c		\
-	ft_check.c				\
-	ft_utils.c				\
-	ft_utils_num.c			\
-	ft_get.c				\
-	ft_flags.c				\
-	ft_flags_utils.c		\
-	ft_treatment.c			\
-	ft_func_supp.c			\
+	ft_printf_bonus.c				\
+	ft_printf_utils_bonus.c		\
+	ft_check_bonus.c				\
+	ft_utils_bonus.c				\
+	ft_utils_num_bonus.c			\
+	ft_get_bonus.c				\
+	ft_flags_bonus.c				\
+	ft_flags_utils_bonus.c		\
+	ft_treatment_bonus.c			\
+	ft_func_supp_bonus.c			\
 
 
 FTPRINTF_OBJS		= $(FTPRINTF_FILES:%.c=./output/%.o)
@@ -37,7 +37,9 @@ CC					= cc
 all 				: output $(NAME)
 
 output				:
-						mkdir $@
+ifneq ($(shell [ -d output ] && echo true),true)
+	@mkdir output
+endif
 
 ./output/%.o		: ./function/%.c
 						@$(CC) $(CFLAGS) -o $@ -c $<
@@ -46,16 +48,13 @@ output				:
 						@$(CC) $(CFLAGS) -o $@ -c $<
 
 $(NAME)				: $(SUPP_FUNCT_OBJS) $(FTPRINTF_OBJS)
-						@ar rc $(NAME) $^ && mv $(NAME) ..
+						@ar rc $(NAME) $^ && mv $(NAME) ../
 
 norme				:
 						norminette includes/* function/* src/*
 
 clean 				:
 						$(RM) $(SUPP_FUNCT_OBJS) $(FTPRINTF_OBJS) a.out
-
-fclean				: clean
-						$(RM) $(NAME)
 
 cleanall			: fclean vimclean
 re					: fclean all

@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_func_supp.c                                     :+:      :+:    :+:   */
+/*   ft_check_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 10:07:32 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/18 14:07:55 by beerus           ###   ########.fr       */
+/*   Created: 2024/03/10 08:21:25 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/03 13:56:01 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_utils.h"
+#ifndef FT_CHECK_BONUS_H
+# define FT_CHECK_BONUS_H
 
-int	ft_is_null_hex_value(char *content)
-{
-	while (*content)
-	{
-		if (*content != '0')
-			return (0);
-		content++;
-	}
-	return (1);
-}
+# include "function.h"
+
+int	ft_check_type(char c);
+int	ft_isint(char type);
+int	ft_isuint(char type);
+int	ft_isflag(int c);
+int	ft_isnumber(char type);
+#endif

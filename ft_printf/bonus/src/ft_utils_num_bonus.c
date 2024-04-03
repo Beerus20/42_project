@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils_num.c                                     :+:      :+:    :+:   */
+/*   ft_utils_num_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:33:04 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/15 16:11:45 by ballain          ###   ########.fr       */
+/*   Updated: 2024/04/03 13:50:38 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_utils_num.h"
+#include "../includes/ft_utils_num_bonus.h"
 
 int	ft_pow(int nb, int pow)
 {

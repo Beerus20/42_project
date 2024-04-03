@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_printf_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:46:38 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/18 14:28:24 by beerus           ###   ########.fr       */
+/*   Updated: 2024/04/03 14:05:57 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef FT_PRINTF_BONUS_H
+# define FT_PRINTF_BONUS_H
 
 # include <stdarg.h>
 # include "function.h"
-# include "ft_check.h"
-# include "ft_utils_num.h"
-# include "ft_get.h"
+# include "ft_check_bonus.h"
+# include "ft_utils_num_bonus.h"
+# include "ft_get_bonus.h"
 
 typedef struct s_value
 {

@@ -1,36 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_check.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/03 13:59:58 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/03 14:01:39 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./includes/ft_printf.h"
-
-int	ft_strlen(char *value)
-{
-	int	i;
-
-	i = 0;
-	if (!value)
-		return (i);
-	while (value[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strdup(char *s)
-{
-	char	*r_value;
-	int		i;
-	int		len;
-
-	i = 0;
-	len = ft_strlen(s);
-	r_value = (char *)malloc(sizeof(char) * (len + 1));
-	if (!r_value)
-		return (0);
-	while (i < len)
-	{
-		r_value[i] = s[i];
-		i++;
-	}
-	r_value[i] = '\0';
-	return (r_value);
-}
 
 char	*ft_strchr(char *str, char c)
 {

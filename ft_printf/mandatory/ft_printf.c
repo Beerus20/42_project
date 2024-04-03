@@ -1,8 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/03 14:00:09 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/03 14:04:03 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./includes/ft_printf.h"
 
-void	*ft_stoc(int c);
 void	ft_write_value(char type, int *len, va_list args);
-void	ft_printv(char type, char *value, int *len);
 void	*ft_get_int_value(char type, int value);
 char	*ft_get_uint_value(char type, va_list args);
 void	*ft_get_str_value(char *value);
@@ -30,25 +40,18 @@ int	ft_printf(const char *format, ...)
 	return (len);
 }
 
-void	*ft_stoc(int c)
-{
-	char	*str;
-
-	str = (char *)malloc(sizeof(char) * 2);
-	if (!str)
-		return ((void *)0);
-	str[0] = c;
-	str[1] = '\0';
-	return (str);
-}
-
 void	ft_write_value(char type, int *len, va_list args)
 {
 	char	*r_value;
 
 	r_value = NULL;
-	if (ft_isint(type))
-		r_value = ft_get_int_value(type, va_arg(args, int));
+	if (type == 'c')
+	{
+		ft_printc(va_arg(args, int), len);
+		return ;
+	}
+	else if (ft_isint(type))
+		r_value = ft_itoa(va_arg(args, int));
 	else if (ft_isuint(type))
 		r_value = ft_get_uint_value(type, args);
 	else if (type == 's')
@@ -56,37 +59,7 @@ void	ft_write_value(char type, int *len, va_list args)
 	else
 		r_value = ft_strdup("%");
 	ft_printv(type, r_value, len);
-}
-
-void	ft_printv(char type, char *value, int *len)
-{
-	if (type == 's' && !value)
-	{
-		*len += 6;
-		write(1, "(null)", 6);
-	}
-	else if (type == 'p')
-	{
-		if (!value)
-		{
-			*len += 5;
-			write(1, "(nil)", 5);
-		}
-		else
-		{
-			*len += 2;
-			write(1, "0x", 2);
-		}
-	}
-	write(1, value, ft_strlen(value));
-	*len += ft_strlen(value);
-}
-
-void	*ft_get_int_value(char type, int value)
-{
-	if (type == 'c')
-		return (ft_stoc(value));
-	return (ft_itoa(value));
+	free(r_value);
 }
 
 char	*ft_get_uint_value(char type, va_list args)

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check.c                                         :+:      :+:    :+:   */
+/*   ft_check_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 08:23:10 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/18 14:03:19 by beerus           ###   ########.fr       */
+/*   Created: 2024/03/10 08:23:10 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/03 13:49:44 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_check.h"
+#include "../includes/ft_check_bonus.h"
 
 int	ft_isflag(int c)
 {

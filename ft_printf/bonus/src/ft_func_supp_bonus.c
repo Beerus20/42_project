@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_func_supp_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 16:33:14 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/03 10:44:11 by ballain          ###   ########.fr       */
+/*   Created: 2024/03/18 10:07:32 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/03 13:50:00 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/function.h"
+#include "../includes/ft_utils_bonus.h"
 
-char	*ft_strdup(const char *s)
+int	ft_is_null_hex_value(char *content)
 {
-	char	*r_value;
-	int		i;
-	int		len;
-
-	i = 0;
-	len = ft_strlen(s);
-	r_value = (char *)malloc(sizeof(char) * (len + 1));
-	if (!r_value)
-		return (0);
-	while (i < len)
+	while (*content)
 	{
-		r_value[i] = s[i];
-		i++;
+		if (*content != '0')
+			return (0);
+		content++;
 	}
-	r_value[i] = '\0';
-	return (r_value);
+	return (1);
 }

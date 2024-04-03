@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_flags_utils.c                                   :+:      :+:    :+:   */
+/*   ft_flags_utils_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 23:35:45 by beerus            #+#    #+#             */
-/*   Updated: 2024/03/18 12:43:46 by beerus           ###   ########.fr       */
+/*   Created: 2024/03/17 23:35:45 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/03 13:49:55 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
-#include "../includes/ft_flags.h"
-#include "../includes/ft_utils.h"
+#include "../includes/ft_printf_bonus.h"
+#include "../includes/ft_flags_bonus.h"
+#include "../includes/ft_utils_bonus.h"
 
 void	ft_len_flag_str(t_value *value)
 {

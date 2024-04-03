@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get.c                                           :+:      :+:    :+:   */
+/*   ft_get_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beerus <beerus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:07:26 by ballain           #+#    #+#             */
-/*   Updated: 2024/03/17 23:37:56 by beerus           ###   ########.fr       */
+/*   Updated: 2024/04/03 13:50:09 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_get.h"
-#include "../includes/ft_utils.h"
+#include "../includes/ft_get_bonus.h"
+#include "../includes/ft_utils_bonus.h"
 
 char	*ft_get_value(char type, va_list args)
 {

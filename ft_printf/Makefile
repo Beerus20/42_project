@@ -1,22 +1,34 @@
-.SILENT :
-./output/%.o		: ./function/%.c
-						@$(CC) $(CFLAGS) -o $@ -c $<
+NAME				= libftprintf.a
+MANDATORY			= ./mandatory
+BONUS				= ./bonus
 
-./output/%.o		: ./src/%.c
-						@$(CC) $(CFLAGS) -o $@ -c $<
+all					: $(NAME)
 
-$(NAME)				: $(SUPP_FUNCT_OBJS) $(FTPRINTF_OBJS)
-						@ar rc $(NAME) $^
+$(NAME)				:
+ifeq ($(shell [ -d $(NAME) ] && echo true), true)
+	rm -rf $(NAME)
+endif
+						@cd $(MANDATORY) && make all					
 
 norme				:
 						norminette includes/* function/* src/*
 
+bonus				:
+ifeq ($(shell [ -d $(NAME) ] && echo true), true)
+	rm -rf $(NAME)
+endif
+						@cd $(BONUS) && make all
+
+norme				:
+						@cd $(MANDATORY) && make norme
+						@cd $(BONUS)	&& make norme
+
 clean 				:
-						$(RM) $(SUPP_FUNCT_OBJS) $(FTPRINTF_OBJS) a.out
+						@cd $(MANDATORY) && make clean
+						@cd $(BONUS)	&& make clean
 
 fclean				: clean
 						$(RM) $(NAME)
 
-cleanall			: fclean vimclean
 re					: fclean all
-.PHONY				: fclean clean all bonus re
+.PHONY				: fclean clean all bonus re $(NAME)	
