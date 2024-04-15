@@ -1,34 +1,38 @@
-NAME				= libftprintf.a
-MANDATORY			= ./mandatory
-BONUS				= ./bonus
+NAME		= libftprintf.a
+FUNCS		= \
+	ft_add.c			\
+	ft_add_utils.c		\
+	ft_get_len.c		\
+	ft_printf_utils.c
+OBJS		= $(FUNCS:%.c=./output/%.o)
+FLAGS		= -Wall -Wextra -Werror
+CC			= cc
 
-all					: $(NAME)
+echo					:
+							echo $(OBJS)
 
-$(NAME)				:
-ifeq ($(shell [ -d $(NAME) ] && echo true), true)
-	rm -rf $(NAME)
-endif
-						@cd $(MANDATORY) && make all					
+debug					:
+							$(CC) main.c -L. -lftprintf && lldb ./a.out
 
-norme				:
-						norminette includes/* function/* src/*
+test					:
+							$(CC) main.c -L. -lftprintf && ./a.out
 
-bonus				:
-ifeq ($(shell [ -d $(NAME) ] && echo true), true)
-	rm -rf $(NAME)
-endif
-						@cd $(BONUS) && make all
+all						: $(NAME)
 
-norme				:
-						@cd $(MANDATORY) && make norme
-						@cd $(BONUS)	&& make norme
+./output/%.o			: ./functions/%.c
+							$(CC) $(FLAGS) -c $< -o $@
 
-clean 				:
-						@cd $(MANDATORY) && make clean
-						@cd $(BONUS)	&& make clean
+./output/ft_printf.o	:
+							$(CC) $(FLAGS) -c ft_printf.c -o $@
 
-fclean				: clean
-						$(RM) $(NAME)
+$(NAME)					:  $(OBJS) ./output/ft_printf.o
+							ar rcs $@ $(OBJS) ./output/ft_printf.o
 
-re					: fclean all
-.PHONY				: fclean clean all bonus re $(NAME)	
+clean					:
+							rm -rf $(OBJS)
+
+fclean					: clean
+							rm -rf $(NAME)
+
+re						: fclean all
+.PHONY					: all clean fclean re $(NAME)

@@ -1,61 +1,38 @@
-.SILENT 			:
-NAME				= libftprintf.a
-MANDATORY_PATH		= ./mandatory
-SUPP_FUNCT_FILES	= \
-	ft_atoi.c				\
-	ft_itoa.c				\
-	ft_isdigit.c			\
-	ft_substr.c				\
-	ft_strlen.c				\
-	ft_strjoin.c			\
-	ft_strchr.c				\
-	ft_strdup.c				\
-	ft_putchar_fd.c			\
-	ft_putstr_fd.c			\
+NAME		= libftprintf.a
+FUNCS		= \
+	ft_add.c			\
+	ft_add_utils.c		\
+	ft_get_len.c		\
+	ft_printf_utils.c
+OBJS		= $(FUNCS:%.c=./output/%.o)
+FLAGS		= -Wall -Wextra -Werror
+CC			= cc
 
-SUPP_FUNCT_OBJS		= $(SUPP_FUNCT_FILES:%.c=./output/%.o)
+echo					:
+							echo $(OBJS)
 
-FTPRINTF_FILES		= \
-	ft_printf_bonus.c				\
-	ft_printf_utils_bonus.c		\
-	ft_check_bonus.c				\
-	ft_utils_bonus.c				\
-	ft_utils_num_bonus.c			\
-	ft_get_bonus.c				\
-	ft_flags_bonus.c				\
-	ft_flags_utils_bonus.c		\
-	ft_treatment_bonus.c			\
-	ft_func_supp_bonus.c			\
+debug					:
+							$(CC) main.c -L. -lftprintf && lldb ./a.out
 
+test					:
+							$(CC) main.c -L. -lftprintf && ./a.out
 
-FTPRINTF_OBJS		= $(FTPRINTF_FILES:%.c=./output/%.o)
+all						: $(NAME)
 
-CFLAGS				= -Wall -Wextra -Werror
-RM					= rm -rf
-CC					= cc
+./output/%.o			: ./functions/%.c
+							$(CC) $(FLAGS) -c $< -o $@
 
-all 				: output $(NAME)
+./output/ft_printf.o	:
+							$(CC) $(FLAGS) -c ft_printf.c -o $@
 
-output				:
-ifneq ($(shell [ -d output ] && echo true),true)
-	@mkdir output
-endif
+$(NAME)					:  $(OBJS) ./output/ft_printf.o
+							ar rcs $@ $(OBJS) ./output/ft_printf.o
 
-./output/%.o		: ./function/%.c
-						@$(CC) $(CFLAGS) -o $@ -c $<
+clean					:
+							rm -rf $(OBJS)
 
-./output/%.o		: ./src/%.c
-						@$(CC) $(CFLAGS) -o $@ -c $<
+fclean					: clean
+							rm -rf $(NAME)
 
-$(NAME)				: $(SUPP_FUNCT_OBJS) $(FTPRINTF_OBJS)
-						@ar rc $(NAME) $^ && mv $(NAME) ../
-
-norme				:
-						norminette includes/* function/* src/*
-
-clean 				:
-						$(RM) $(SUPP_FUNCT_OBJS) $(FTPRINTF_OBJS) a.out
-
-cleanall			: fclean vimclean
-re					: fclean all
-.PHONY				: fclean clean all bonus re
+re						: fclean all
+.PHONY					: all clean fclean re $(NAME)
