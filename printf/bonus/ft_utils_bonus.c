@@ -34,6 +34,7 @@ int	ft_get_width(char *str)
 	}
 	return (width);
 }
+
 int	ft_get_precision(char *str)
 {
 	int	i;
