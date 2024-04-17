@@ -1,11 +1,13 @@
 NAME		= libftprintf.a
 FUNCS		= \
-	ft_add.c				\
-	ft_add_utils.c			\
 	ft_get_len.c			
-
+	
+# ft_add.c
+# ft_add_utils.c			
 #ft_printf_utils.c
 BONUS_FUNC	= \
+	ft_add_bonus.c					\
+	ft_add_utils_bonus.c					\
 	ft_check_bonus.c					\
 	ft_utils_bonus.c					\
 	ft_printf_utils_bonus.c

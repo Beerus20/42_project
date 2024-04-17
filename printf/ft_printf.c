@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:01 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/16 16:04:05 by ballain          ###   ########.fr       */
+/*   Updated: 2024/04/17 09:50:10 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	ft_printf(const char *format, ...)
 	while (i < len)
 		text[i++] = 0;
 	text[i] = '\0';
-	// ft_add(format, text, cp_args);
-	// write(1, text, len);
+	ft_add(format, text, cp_args);
+	write(1, text, len);
 	free(text);
 	return (len);
 }

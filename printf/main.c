@@ -9,10 +9,12 @@ int	main(void)
 	char	*test;
 
 	test = NULL;
-	nb = -21;
+	nb = 21;
 	// text = "result : [%10c %.2s %20p %d %i %u %#20x %#20X %%] \n";
 	// printf("%d\n", ft_get_with("0#- 20.5d"));
 	// printf("%d\n", ft_get_precision("0#- 20.5d"));
+	printf("NB	: %d\n", ft_printf("CPY	: [%-3u]\n", nb));
+	printf("NB	: %d\n", printf("ORG	: [%-3u]\n", nb));
 	// printf("NB	: %d\n", ft_printf(text, 'c', test, test, nb, nb, nb, nb, nb));
 	// printf("NB	: %d\n", printf(text, 'c', test, test, nb, nb, nb, nb, nb));
 	// printf("test	: [%20p]\n", test);

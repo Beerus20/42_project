@@ -45,3 +45,36 @@ int	ft_check_extra_len(char *str)
 		len += 2;
 	return (len);
 }
+
+/* 
+	0	: -
+	1	: +
+	2	: #
+	3	: 0
+	4	: ' '
+	5	: w
+	6	: p
+*/
+void	ft_check_flags(char *format, int flags[7])
+{
+	int	i;
+
+	i = 0;
+	while (!ft_check_desc(format[i]))
+	{
+		if (format[i] == '-')
+			flags[0] = 1;
+		if (format[i] == '+')
+			flags[1] = 1;
+		if (format[i] == '#')
+			flags[2] = 2;
+		if (format[i] == '0')
+			flags[3] = 1;
+		if (format[i] == ' ')
+			flags[4] = 1;
+		if (format[i] == '.' && flags[6] == -1)
+			flags[6] = ft_get_precision(format);
+		i++;
+	}
+	flags[5] = ft_get_width(format);
+}

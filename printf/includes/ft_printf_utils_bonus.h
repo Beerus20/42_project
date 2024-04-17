@@ -8,4 +8,4 @@
 
 int	ft_get_size(const char *format, va_list args);
 int	ft_get_len(const char *format, va_list args);
-#endif
+#endif/*  */
