@@ -1,19 +1,5 @@
 #include "../includes/ft_str_bonus.h"
 
-int	ft_strlen(char *str)
-{
-	int	len;
-	int	i;
-
-	i = 0;
-	len = 0;
-	if (!str)
-		return (0);
-	while (str[i++])
-		len++;
-	return (len);
-}
-
 int	ft_manage_strlen(char *str, int prec)
 {
 	int	len;
