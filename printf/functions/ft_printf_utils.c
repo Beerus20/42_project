@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:04:41 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/16 16:05:44 by ballain          ###   ########.fr       */
+/*   Updated: 2024/04/20 15:52:55 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	ft_get_len(const char *format, va_list args)
 		else
 		{
 			len += ft_len_value(&((char *)format)[i + 1], args);
-			i++;
+			while (!ft_isdesc(format[++i]))
+				;
 		}
 		i++;
 	}

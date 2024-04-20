@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:04:25 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/18 21:12:44 by ballain          ###   ########.fr       */
+/*   Updated: 2024/04/20 12:52:44 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,6 @@ int	ft_strlen(char *str)
 	len = 0;
 	if (!str)
 		return (0);
-	while (str[i++])
-		len++;
-	return (len);
-}
-
-int	ft_string_len(char *text, char *str)
-{
-	int	i;
-	int	len;
-	int	prec;
-
-	i = 0;
-	len = 0;
-	while (*text != '%' && *text != '.')
-		text--;
-	prec = ft_get_precision(text);
-	if (!str)
-	{
-		if (*text == '.' && prec < 6)
-			return (0);
-		return (6);
-	}
-	if (*text == '.')
-		return (prec);
 	while (str[i++])
 		len++;
 	return (len);
@@ -85,20 +61,6 @@ int	ft_nblen(long nb)
 	return (len);
 }
 
-int	ft_number_len(char *text, long nb)
-{
-	int	prec;
-	int	len;
-
-	while (*text != '%')
-		text--;
-	prec = ft_get_precision(text);
-	len = ft_nblen(nb);
-	if (nb < 0 && prec >= len)
-		len = prec + 1;
-	return (len);
-}
-
 int	ft_len_value(char *type, va_list args)
 {
 	unsigned long	value;
@@ -110,9 +72,9 @@ int	ft_len_value(char *type, va_list args)
 		return (1);
 	}
 	if (*type == 's')
-		return (ft_string_len(type, (char *)va_arg(args, char *)));
+		return (ft_strlen((char *)va_arg(args, char *)));
 	if (*type == 'd' || *type == 'i')
-		return (ft_number_len(type, (int)va_arg(args, int)));
+		return (ft_nblen((int)va_arg(args, int)));
 	if (*type == 'p')
 	{
 		value = (unsigned long)va_arg(args, void *);

@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:04:54 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/18 10:51:26 by ballain          ###   ########.fr       */
+/*   Updated: 2024/04/20 12:50:06 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FT_GET_LEN_H
 
 # include <stdarg.h>
-# include "ft_utils_bonus.h"
 
 int	ft_strlen(char *str);
 int	ft_u_nblen(unsigned long nb, int base);

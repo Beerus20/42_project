@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:04:14 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/16 11:00:27 by ballain          ###   ########.fr       */
+/*   Updated: 2024/04/20 15:57:44 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "ft_printf_utils_bonus.h"
-# include "ft_add.h"
+# include "ft_printf_utils.h"
+# include "ft_add_bonus.h"
 
 int	ft_printf(const char *format, ...);
 #endif
