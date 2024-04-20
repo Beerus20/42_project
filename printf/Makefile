@@ -1,9 +1,9 @@
 NAME		= libftprintf.a
 FUNCS		= \
-	ft_get_len.c			
-	
+	ft_get_len.c\
+	ft_add_utils.c
+
 # ft_add.c
-# ft_add_utils.c			
 #ft_printf_utils.c
 BONUS_FUNC	= \
 	ft_add_bonus.c					\
@@ -34,9 +34,9 @@ all						: 	$(NAME)
 $(NAME)					:	$(OBJS) $(BONUS_OBJS) ./output/ft_printf.o
 							ar rcs $@ $(OBJS) $(BONUS_OBJS) ./output/ft_printf.o
 
-bonus					:	$(NAME) 
-							$(CC) main.c -L. -lftprintf
-							./a.out
+bonus					:	$(NAME)
+							# $(CC) main.c -L. -lftprintf
+							# ./a.out
 
 clean					:
 							rm -rf $(OBJS) $(BONUS_OBJS) ./output/ft_printf.o

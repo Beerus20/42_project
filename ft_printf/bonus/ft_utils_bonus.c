@@ -5,7 +5,7 @@ int	ft_check(char c)
 	char	*desc;
 
 	i = 0;
-	desc = "csduixX%";
+	desc = "cspduixX%";
 	while (desc[i])
 	{
 		if (desc[i] == c)

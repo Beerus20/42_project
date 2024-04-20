@@ -46,7 +46,7 @@ int	ft_check_extra_len(char *str)
 	return (len);
 }
 
-/* 
+/*
 	0	: -
 	1	: +
 	2	: #

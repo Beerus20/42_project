@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:04:54 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/16 16:33:58 by ballain          ###   ########.fr       */
+/*   Updated: 2024/04/18 10:51:26 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 
 int	ft_strlen(char *str);
 int	ft_u_nblen(unsigned long nb, int base);
-int	ft_nblen(int nb);
+int	ft_nblen(long nb);
 int	ft_len_value(char *type, va_list args);
 #endif

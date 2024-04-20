@@ -18,9 +18,9 @@ int	ft_get_size(const char *format, va_list args)
 		i++;
 	len = ft_len_value(&((char *)format)[i], args);
 	len += ft_check_extra_len((char *)format);
-	if ((width < prec) && !ft_strchr("csp", format[i]))
+	if ((width < prec) && ft_strchr("csp", format[i]) == -1)
 		r_value = prec;
-	if (len >= width)
+	if (len >= r_value)
 		r_value = len;
 	return (r_value);
 }

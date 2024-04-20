@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:04:25 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/16 16:27:50 by ballain          ###   ########.fr       */
+/*   Updated: 2024/04/18 21:12:44 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_u_nblen(unsigned long nb, int base)
 	return (len);
 }
 
-int	ft_nblen(int nb)
+int	ft_nblen(long nb)
 {
 	int	len;
 
@@ -85,6 +85,20 @@ int	ft_nblen(int nb)
 	return (len);
 }
 
+int	ft_number_len(char *text, long nb)
+{
+	int	prec;
+	int	len;
+
+	while (*text != '%')
+		text--;
+	prec = ft_get_precision(text);
+	len = ft_nblen(nb);
+	if (nb < 0 && prec >= len)
+		len = prec + 1;
+	return (len);
+}
+
 int	ft_len_value(char *type, va_list args)
 {
 	unsigned long	value;
@@ -98,7 +112,7 @@ int	ft_len_value(char *type, va_list args)
 	if (*type == 's')
 		return (ft_string_len(type, (char *)va_arg(args, char *)));
 	if (*type == 'd' || *type == 'i')
-		return (ft_nblen((int)va_arg(args, int)));
+		return (ft_number_len(type, (int)va_arg(args, int)));
 	if (*type == 'p')
 	{
 		value = (unsigned long)va_arg(args, void *);
