@@ -1,4 +1,4 @@
-#include "../includes/ft_char_bonus.h"
+#include "../../includes/ft_char_bonus.h"
 
 int	ft_get_len_char(int flags[7], int c)
 {

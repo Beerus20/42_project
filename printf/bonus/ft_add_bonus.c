@@ -12,14 +12,14 @@ int	ft_add_value(char *type, char *text, va_list args)
 		return (ft_add_char_value(text, flags, va_arg(args, int)));
 	if (*type == 's')
 		return (ft_add_str_value(text, flags, (char *)va_arg(args, char *)));
-	// if (type == 'd' || type == 'i')
-	// 	return (ft_add_nb(text, (int)va_arg(args, int)));
+	if (*type == 'd' || *type == 'i')
+		return (ft_add_nb_value(text, flags, (int)va_arg(args, int)));
 	// if (type == 'p')
 	// 	return (ft_add_pointer(text, (unsigned long)va_arg(args, void *)));
-	// if (type == 'x')
-	// 	return (ft_add_unb(text, va_arg(args, unsigned int), "0123456789abcdef"));
-	// if (type == 'X')
-	// 	return (ft_add_unb(text, va_arg(args, unsigned int), "0123456789ABCDEF"));
+	if (*type == 'x')
+		return (ft_add_hex_value(text, flags, va_arg(args, unsigned int), 0));
+	if (*type == 'X')
+		return (ft_add_hex_value(text, flags, va_arg(args, unsigned int), 1));
 	if (*type == 'u')
 		return (ft_add_unb_value(text, flags, va_arg(args, unsigned int)));
 	// else
