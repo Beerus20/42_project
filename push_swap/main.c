@@ -4,22 +4,31 @@
 
 int	main(int argc, char **argv)
 {
-	t_list *l1;
-	t_list *l2;
-	t_list **tmp;
+	t_list **pile_a;
+	t_list **pile_b;
 
-	l1 = (t_list *)malloc(sizeof(t_list));
-	l1->content = 1;
-	l2 = (t_list *)malloc(sizeof(t_list));
-	l1->next = l2;
-	l2->content = 2;
-	l2->next = NULL;
-	tmp = &l1;
-	ft_sa(tmp);
-	while (*tmp)
-	{
-		ft_printf("%d\n", (*tmp)->content);
-		*tmp = (*tmp)->next;
-	}
+	pile_a = (t_list **)malloc(sizeof(t_list *));
+	pile_b = (t_list **)malloc(sizeof(t_list *));
+	if (!pile_a || !pile_b)
+		return (0);
+	*pile_b = NULL;
+	ft_init_pile(argc, argv, pile_a);
+	ft_push(pile_a, pile_b);
+	// ft_rev_rotate(pile_a);
+	ft_show("A", *pile_a);
+	ft_show("B", *pile_b);
+	ft_free(pile_a);
+	ft_free(pile_b);
+	// ft_printf("NUMBER	: [%s]\n", argv[0]);
 	return (0);
 }
+
+// int	ft_check(t_list **pile)
+// {
+// 	while ((*pile)->next)
+// 	{
+// 		if ((*pile)->content > (*pile)->next->content)
+// 			return (0);
+
+// 	}
+// }

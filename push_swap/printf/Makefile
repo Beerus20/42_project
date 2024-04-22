@@ -1,3 +1,4 @@
+.SILENT					:
 NAME		= libftprintf.a
 FUNCS		= \
 	ft_get_len.c		\
@@ -7,7 +8,7 @@ FUNCS		= \
 HEADERS		= \
 	ft_add.h		\
 	ft_get_len.h	\
-	ft_printf.h			
+	ft_printf.h
 
 INCLUDES		= $(HEADERS:%.h=./includes/%.h)
 SRC_OBJ			= ./output/ft_printf.o
@@ -31,7 +32,7 @@ $(SRC_OBJ)				:
 $(NAME)					:	$(OBJS) $(SRC_OBJ)
 							ar rcs $@ $(OBJS) $(SRC_OBJ) $(INCLUDES) && mv $(NAME) ..
 
-clean					:	
+clean					:
 							@rm -rf $(OBJS) $(SRC_OBJ) $(NAME)
 
 fclean					: 	clean

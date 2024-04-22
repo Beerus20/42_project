@@ -1,8 +1,9 @@
 NAME		= push_swap
 FILES	= \
-	ft_movement.c
+	ft_movement.c \
+	ft_utils.c
 
-FUNCS		= $(FILES:%.c=./movement/%.c)
+# FUNCS		= $(FILES:%.c=./movement/%.c)
 FLAGS		= -Wall -Wextra -Werror
 CC			= clang -g
 
@@ -11,12 +12,12 @@ all						:	$(NAME)
 
 
 $(NAME)					:	lib $(OBJS)
-							$(CC) main.c $(FUNCS) -L. -lftprintf -o $(NAME)
+							$(CC) main.c $(FILES) -L. -lftprintf -o $(NAME)
 
 lib						:
 							cd ./printf && make all
 
-clean					:	
+clean					:
 							cd ./printf && make clean
 
 fclean					: clean
