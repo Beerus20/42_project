@@ -28,7 +28,7 @@ CC					= cc -g
 all						:	output $(NAME)
 
 output					:
-							if [ -d output ]; then\
+							@if [ ! -d output ]; then\
 								mkdir output; \
 							fi
 
