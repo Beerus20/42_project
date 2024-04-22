@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unumber_bonus.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/22 10:15:11 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/22 10:15:11 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/ft_unumber_bonus.h"
 
 int	ft_get_len_unb(int flags[7], unsigned long nb)
@@ -57,4 +69,3 @@ int	ft_add_unb_value(char *text, int flags[7], unsigned long nb)
 	}
 	return (r_len);
 }
-

@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:04:50 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/17 09:35:00 by ballain          ###   ########.fr       */
+/*   Updated: 2024/04/22 10:20:15 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 int		ft_add_char(char *text, char c);
 int		ft_add_str(char *text, char *str);
-int		ft_add_unb(char *text, unsigned long nb, char *base);
+int		ft_add_unb(char *text, unsigned long nb, int type);
 int		ft_add_nb(char *text, long nb);
 int		ft_add_pointer(char *text, unsigned long nb);
 void	ft_add(const char *format, char *text, va_list args);

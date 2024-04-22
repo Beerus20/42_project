@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_get_flags.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/22 10:10:15 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/22 10:10:27 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_flags_bonus.h"
 
 void	ft_init_flags(int flags[7])
@@ -50,16 +62,6 @@ int	ft_get_prec(char *str)
 	return (r_value);
 }
 
-/**
- * 0 : '-'
- * 1 : '+'
- * 2 : '0'
- * 3 : ' '
- * 4 : '#'
- * 5 : 'w'
- * 6 : 'p'
-*/
-
 void	ft_check_flags(char *str, int flags[7])
 {
 	while (!ft_isdesc(*str) && (!ft_isdigit(*str) || *str == '0'))
@@ -75,7 +77,7 @@ void	ft_check_flags(char *str, int flags[7])
 		if (*str == '#')
 			flags[4] = 2;
 		if (*str == '.')
-			break;
+			break ;
 		str++;
 	}
 	flags[5] = ft_get_width(str);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_add_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/22 10:11:20 by ballain           #+#    #+#             */
+/*   Updated: 2024/04/22 14:55:54 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_add_bonus.h"
 
 int	ft_add_value(char *type, char *text, va_list args)
@@ -14,17 +26,15 @@ int	ft_add_value(char *type, char *text, va_list args)
 		return (ft_add_str_value(text, flags, (char *)va_arg(args, char *)));
 	if (*type == 'd' || *type == 'i')
 		return (ft_add_nb_value(text, flags, (int)va_arg(args, int)));
-	// if (type == 'p')
-	// 	return (ft_add_pointer(text, (unsigned long)va_arg(args, void *)));
+	if (*type == 'p')
+		return (ft_add_pval(text, flags, (unsigned long)va_arg(args, void *)));
 	if (*type == 'x')
 		return (ft_add_hex_value(text, flags, va_arg(args, unsigned int), 0));
 	if (*type == 'X')
 		return (ft_add_hex_value(text, flags, va_arg(args, unsigned int), 1));
 	if (*type == 'u')
 		return (ft_add_unb_value(text, flags, va_arg(args, unsigned int)));
-	// else
-	// {
-	// 	ft_add_str(text, "%");
+	*(text++) = '%';
 	return (1);
 }
 

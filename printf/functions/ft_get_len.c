@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:04:25 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/20 12:52:44 by ballain          ###   ########.fr       */
+/*   Updated: 2024/04/22 14:21:36 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ int	ft_strlen(char *str)
 	while (str[i++])
 		len++;
 	return (len);
+}
+
+int	ft_get_strlen(char *str)
+{
+	if (!str)
+		return (6);
+	return (ft_strlen(str));
 }
 
 int	ft_u_nblen(unsigned long nb, int base)
@@ -72,7 +79,7 @@ int	ft_len_value(char *type, va_list args)
 		return (1);
 	}
 	if (*type == 's')
-		return (ft_strlen((char *)va_arg(args, char *)));
+		return (ft_get_strlen((char *)va_arg(args, char *)));
 	if (*type == 'd' || *type == 'i')
 		return (ft_nblen((int)va_arg(args, int)));
 	if (*type == 'p')
