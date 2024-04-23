@@ -1,14 +1,37 @@
 #include "./printf/includes/ft_printf.h"
 #include "push_swap.h"
 
-void	ft_show(char *title, t_list *pile)
+void	ft_show(char *title, t_list *pile_a, t_list *pile_b)
 {
 	ft_printf("%s	:\n", title);
-	while (pile)
+	while (pile_a || pile_b)
 	{
-		ft_printf("-- %d\n", pile->content);
-		pile = pile->next;
+		if (pile_a)
+		{
+			ft_printf(" %d", pile_a->content);
+			pile_a = pile_a->next;
+		}
+		if (pile_b)
+		{
+			ft_printf("	%d", pile_b->content);
+			pile_b = pile_b->next;
+		}
+		ft_printf("\n");
 	}
+	ft_printf(" _	_\n");
+	ft_printf(" A	B\n\n");
+}
+
+void	ft_show_ipile(t_ipile pile)
+{
+	ft_printf("PILE INFO : \n");
+	if (pile.first)
+		ft_printf("- FIRST		: [%d]\n", *(pile.first));
+	if (pile.second)
+		ft_printf("- SECOND	: [%d]\n", *(pile.second));
+	if (pile.last)
+		ft_printf("- LAST		: [%d]\n", *(pile.last));
+	ft_printf("- LEN		: [%d]\n", pile.len);
 }
 
 void	ft_free(t_list **pile)
@@ -90,4 +113,37 @@ void	 ft_init_pile(int argc, char **argv, t_list **pile)
 		tmp = tmp->next;
 		i++;
 	}
+}
+
+
+int	ft_check(t_list *pile, int	argc)
+{
+	int	to_compare;
+	int	i;
+
+	i = 1;
+	to_compare = pile->content;
+	if (pile->next)
+	{
+		pile = pile->next;
+		i++;
+		while (pile)
+		{
+			if (to_compare > pile->content)
+				return (0);
+			to_compare = pile->content;
+			pile = pile->next;
+			i++;
+		}
+	}
+	if (i == argc)
+		return (1);
+	return (0);
+}
+
+t_list	*ft_get_last(t_list *pile)
+{
+	while (pile->next)
+		pile = pile->next;
+	return (pile);
 }

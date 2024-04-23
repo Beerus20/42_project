@@ -1,7 +1,8 @@
 NAME		= push_swap
 FILES	= \
-	ft_movement.c \
-	ft_utils.c
+	ft_movement.c 	\
+	ft_utils.c		\
+	ft_info.c
 
 # FUNCS		= $(FILES:%.c=./movement/%.c)
 FLAGS		= -Wall -Wextra -Werror
@@ -19,7 +20,8 @@ lib						:
 
 clean					:
 							cd ./printf && make clean
-
+							rm -rf libftprintf.a
+							
 fclean					: clean
 							rm -rf $(NAME)
 
