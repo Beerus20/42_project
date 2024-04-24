@@ -1,7 +1,9 @@
 NAME		= push_swap
 FILES	= \
-	ft_movement.c 	\
-	ft_utils.c		\
+	ft_movement.c 		\
+	ft_utils.c			\
+	ft_analyses.c		\
+	ft_actions.c		\
 	ft_info.c
 
 # FUNCS		= $(FILES:%.c=./movement/%.c)

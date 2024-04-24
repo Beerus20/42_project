@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	ft_swap(t_list **pile)
+void	ft_swap(t_list **pile, t_ipile *ipile)
 {
 	t_list	*tmp;
 
@@ -8,9 +8,11 @@ void	ft_swap(t_list **pile)
 	(*pile)->next = tmp->next;
 	tmp->next = (*pile);
 	*pile = tmp;
+	ft_free_info(ipile);
+	ft_get_info(pile, ipile);
 }
 
-void	ft_push(t_list **pile_a, t_list **pile_b)
+void	ft_push(t_list **pile_a, t_list **pile_b, t_ipile *ia, t_ipile *ib)
 {
 	t_list	*tmp;
 
@@ -20,10 +22,14 @@ void	ft_push(t_list **pile_a, t_list **pile_b)
 		*pile_a = tmp->next;
 		tmp->next = *pile_b;
 		*pile_b = tmp;
+		ft_free_info(ia);
+		ft_free_info(ib);
+		ft_get_info(pile_a, ia);
+		ft_get_info(pile_b, ib);
 	}
 }
 
-void	ft_rotate(t_list **pile)
+void	ft_rotate(t_list **pile, t_ipile *ipile)
 {
 	t_list	*tmp;
 	t_list	*end;
@@ -37,10 +43,12 @@ void	ft_rotate(t_list **pile)
 			tmp = tmp->next;
 		tmp->next = end;
 		tmp->next->next = NULL;
+		ft_free_info(ipile);
+		ft_get_info(pile, ipile);
 	}
 }
 
-void	ft_rev_rotate(t_list **pile)
+void	ft_rev_rotate(t_list **pile, t_ipile *ipile)
 {
 	t_list	*tmp;
 	t_list	*start;
@@ -58,7 +66,12 @@ void	ft_rev_rotate(t_list **pile)
 			}
 			tmp = tmp->next;
 		}
-		start->next = *pile;
-		*pile = start;
+		if (start)
+		{
+			start->next = *pile;
+			*pile = start;
+		}
+		ft_free_info(ipile);
+		ft_get_info(pile, ipile);
 	}
 }
