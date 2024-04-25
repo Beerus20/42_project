@@ -51,5 +51,7 @@ int		ft_search_position(t_list *pile, int value);
 int		ft_action_isgreater(t_list **pile, t_ipile *ipile);
 int		ft_is_both_aligned(t_list **pile_a, t_list **pile_b, t_ipile *ia, t_ipile *ib);
 int		ft_arrange_pile(t_list **pile, t_ipile *ipile);
+int		*ft_count_move(t_list **pile, t_ipile *ia, t_ipile *ib);
+int		ft_add_in_position(t_list **pile_a, t_list **pile_b, t_ipile *ia, t_ipile *ib);
 
 #endif

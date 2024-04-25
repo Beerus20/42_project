@@ -4,6 +4,7 @@ void	ft_swap(t_list **pile, t_ipile *ipile)
 {
 	t_list	*tmp;
 
+	ft_printf("## SWAP\n");
 	tmp = (*pile)->next;
 	(*pile)->next = tmp->next;
 	tmp->next = (*pile);
@@ -18,6 +19,7 @@ void	ft_push(t_list **pile_a, t_list **pile_b, t_ipile *ia, t_ipile *ib)
 
 	if (*pile_a)
 	{
+		ft_printf("## PUSH\n");
 		tmp = *pile_a;
 		*pile_a = tmp->next;
 		tmp->next = *pile_b;
@@ -38,6 +40,7 @@ void	ft_rotate(t_list **pile, t_ipile *ipile)
 	end = tmp;
 	if (tmp->next)
 	{
+		ft_printf("## ROTATE\n");
 		*pile = tmp->next;
 		while (tmp->next)
 			tmp = tmp->next;
@@ -56,6 +59,7 @@ void	ft_rev_rotate(t_list **pile, t_ipile *ipile)
 	tmp = *pile;
 	if (tmp->next)
 	{
+		ft_printf("## INV ROTATE\n");
 		while (tmp->next)
 		{
 			if (!tmp->next->next)
