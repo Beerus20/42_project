@@ -13,17 +13,7 @@ int	ft_get_list_len(t_list *pile)
 	return (i);
 }
 
-void	ft_init_ipile(t_ipile *ipile)
-{
-	ipile->first = NULL;
-	ipile->second = NULL;
-	ipile->last = NULL;
-	ipile->len = (int *)malloc(sizeof(int));
-	if (!ipile->len)
-		exit(0);
-}
-
-void	ft_get_fpile(t_list **pile, t_ipile *info)
+void	ft_get_fpile(t_list **pile, t_info *info)
 {
 	if (*pile)
 	{
@@ -31,13 +21,20 @@ void	ft_get_fpile(t_list **pile, t_ipile *info)
 		{
 			info->first = (int *)malloc(sizeof(int));
 			if (!info->first)
-				exit(0);
+				exit(1);
 			*(info->first) = (*pile)->content;
 		}
 	}
 }
 
-void	ft_get_salpile(t_list **pile, t_ipile *info)
+t_list	*ft_get_last(t_list *pile)
+{
+	while (pile->next)
+		pile = pile->next;
+	return (pile);
+}
+
+void	ft_get_salpile(t_list **pile, t_info *info)
 {
 	t_list	*tmp;
 	t_list	*to_verify;
@@ -50,7 +47,7 @@ void	ft_get_salpile(t_list **pile, t_ipile *info)
 			tmp = tmp->next;
 			info->second = (int *)malloc(sizeof(int));
 			if (!info->second)
-				exit(0);
+				exit(1);
 			*(info->second) = tmp->content;
 			to_verify = tmp;
 			tmp = ft_get_last(tmp);
@@ -58,17 +55,28 @@ void	ft_get_salpile(t_list **pile, t_ipile *info)
 			{
 				info->last = (int *)malloc(sizeof(int));
 				if (!info->last)
-					exit(0);
+					exit(1);
 				*(info->last) = tmp->content;
 			}
 		}
 	}
 }
 
-void	ft_get_info(t_list **pile, t_ipile *info)
+void	ft_init_info(t_info *pile)
 {
-	ft_init_ipile(info);
+	pile->first = NULL;
+	pile->second = NULL;
+	pile->last = NULL;
+	pile->len = (int *)malloc(sizeof(int));
+	if (!pile->len)
+		exit(1);
+	*(pile->len) = 0;
+}
+
+void	ft_get_info(t_list **pile, t_info *info)
+{
+	ft_init_info(info);
 	ft_get_fpile(pile, info);
 	ft_get_salpile(pile, info);
-	*(info->len) = ft_get_list_len(*pile);		
+	*(info->len) = ft_get_list_len(*pile);
 }
