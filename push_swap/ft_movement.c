@@ -4,31 +4,32 @@ void	ft_swap(t_list **pile)
 {
 	t_list	*tmp;
 
-	tmp = (*pile)->next;
-	(*pile)->next = tmp->next;
-	tmp->next = (*pile);
-	*pile = tmp;
+	if (*pile)
+	{
+		tmp = (*pile)->next;
+		(*pile)->next = tmp->next;
+		tmp->next = (*pile);
+		*pile = tmp;
+	}
 }
 
 void	ft_push(t_pile *pile, int inv)
 {
 	t_list	*tmp;
-	t_list	**pile_a;
-	t_list	**pile_b;
 
-	pile_a = pile->a;
-	pile_b = pile->b;
-	if (inv)
+	if (inv && *(pile->b))
 	{
-		pile_a = pile->b;
-		pile_b = pile->a;
+		tmp = *(pile->b);
+		*(pile->b) = tmp->next;
+		tmp->next = *(pile->a);
+		*(pile->a) = tmp;
 	}
-	if (*pile_a)
+	if (!inv && *(pile->a))
 	{
-		tmp = *pile_a;
-		*pile_a = tmp->next;
-		tmp->next = *pile_b;
-		*pile_b = tmp;
+		tmp = *(pile->a);
+		*(pile->a) = tmp->next;
+		tmp->next = *(pile->b);
+		*(pile->b) = tmp;
 	}
 }
 
@@ -39,13 +40,16 @@ void	ft_rotate(t_list **pile)
 
 	tmp = *pile;
 	end = tmp;
-	if (tmp->next)
+	if (tmp)
 	{
-		*pile = tmp->next;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = end;
-		tmp->next->next = NULL;
+		if (tmp->next)
+		{
+			*pile = tmp->next;
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = end;
+			tmp->next->next = NULL;
+		}
 	}
 }
 

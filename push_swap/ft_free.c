@@ -20,4 +20,19 @@ void	ft_free_info(t_info *info)
 	free(info->second);
 	free(info->last);
 	free(info->len);
+	info->first = NULL;
+	info->second = NULL;
+	info->last = NULL;
+	info->len = NULL;
+}
+
+void	ft_free_pile(t_pile *pile)
+{
+	ft_free(pile->a);
+	ft_free(pile->b);
+	ft_free_info(pile->ia);
+	ft_free_info(pile->ib);
+	free(pile->ia);
+	free(pile->ib);
+	free(pile);
 }

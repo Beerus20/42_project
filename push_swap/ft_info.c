@@ -15,23 +15,29 @@ int	ft_get_list_len(t_list *pile)
 
 void	ft_get_fpile(t_list **pile, t_info *info)
 {
-	if (*pile)
+	t_list	*tmp;
+
+	tmp = *pile;
+	if (tmp)
 	{
-		if ((*pile)->content)
+		if (tmp->content)
 		{
 			info->first = (int *)malloc(sizeof(int));
 			if (!info->first)
 				exit(1);
-			*(info->first) = (*pile)->content;
+			*(info->first) = tmp->content;
 		}
 	}
 }
 
 t_list	*ft_get_last(t_list *pile)
 {
-	while (pile->next)
-		pile = pile->next;
-	return (pile);
+	t_list	*tmp;
+
+	tmp = pile;
+	while (tmp->next)
+		tmp = tmp->next;
+	return (tmp);
 }
 
 void	ft_get_salpile(t_list **pile, t_info *info)
@@ -79,4 +85,10 @@ void	ft_get_info(t_list **pile, t_info *info)
 	ft_get_fpile(pile, info);
 	ft_get_salpile(pile, info);
 	*(info->len) = ft_get_list_len(*pile);
+}
+
+void	ft_update_info(t_pile *pile)
+{
+	ft_get_info(pile->a, pile->ia);
+	ft_get_info(pile->b, pile->ib);
 }

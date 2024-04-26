@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void 	ft_exec_swap(t_pile *pile, char type)
+void	ft_exec_swap(t_pile *pile, char type)
 {
 	if (type == 'a')
 	{
@@ -25,7 +25,7 @@ void 	ft_exec_swap(t_pile *pile, char type)
 	}
 }
 
-void 	ft_exec_push(t_pile *pile, char type)
+void	ft_exec_push(t_pile *pile, char type)
 {
 	if (type == 'a')
 	{
@@ -44,7 +44,7 @@ void 	ft_exec_push(t_pile *pile, char type)
 	}
 }
 
-void 	ft_exec_rotate(t_pile *pile, char type)
+void	ft_exec_rotate(t_pile *pile, char type)
 {
 	if (type == 'a')
 	{
@@ -69,7 +69,7 @@ void 	ft_exec_rotate(t_pile *pile, char type)
 	}
 }
 
-void 	ft_exec_rev_rotate(t_pile *pile, char type)
+void	ft_exec_rev_rotate(t_pile *pile, char type)
 {
 	if (type == 'a')
 	{
@@ -120,7 +120,6 @@ int	exec(t_pile *pile, char *action)
 	while (*action)
 	{
 		nb = ft_chr_action_type(action, &index);
-		ft_printf("VALUE	: [%c] [%c]\n", action[index], action[index + 1]);
 		if (nb == 2)
 		{
 			if (action[index] == 's')
@@ -132,6 +131,14 @@ int	exec(t_pile *pile, char *action)
 		}
 		else
 			ft_exec_rev_rotate(pile, action[index + 2]);
+		ft_free_info(pile->ia);
+		ft_free_info(pile->ib);
+		ft_update_info(pile);
+		if (DEBUG)
+		{
+			ft_show(*pile);
+			ft_show_info(*pile);
+		}
 		action += index + nb;
 	}
 	return (0);

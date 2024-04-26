@@ -39,7 +39,7 @@ int	ft_atoi(const char *str)
 	return (nb * mul);
 }
 
-void	 ft_init_pile(int argc, const char **argv, t_list **pile)
+void	ft_init_pile(int argc, const char **argv, t_list **pile)
 {
 	int		i;
 	t_list	*tmp;
@@ -76,9 +76,9 @@ t_pile	*ft_init_piles(int argc, const char **argv)
 	pile->b = (t_list **)malloc(sizeof(t_list *));
 	pile->ia = (t_info *)malloc(sizeof(t_info));
 	pile->ib = (t_info *)malloc(sizeof(t_info));
-	*(pile->a) = (t_list *)malloc(sizeof(t_list));
-	if (!pile || !pile->a || !pile->b || !(*(pile->a)) || !pile->ia || !pile->ib)
+	if (!pile || !pile->a || !pile->b || !pile->ia || !pile->ib)
 		exit(1);
+	*(pile->a) = NULL;
 	*(pile->b) = NULL;
 	ft_init_pile(argc, argv, pile->a);
 	ft_get_info(pile->a, pile->ia);
