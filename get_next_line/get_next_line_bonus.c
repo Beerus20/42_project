@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/03 10:53:49 by ballain          ###   ########.fr       */
+/*   Updated: 2024/04/27 13:41:48 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,3 +142,4 @@ char	*get_next_line(int fd)
 /*
 *	faire en sorte que le rest soit static mais que la list ne le soit pas
  */
+

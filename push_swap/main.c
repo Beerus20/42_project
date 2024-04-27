@@ -1,7 +1,7 @@
 #include "push_swap.h"
 
-void	ft_arrange_2(t_pile *pile);
-int		ft_specific_case(t_pile *pile);
+// void	ft_arrange_2(t_pile *pile);
+// int		ft_specific_case(t_pile *pile);
 void	launch(t_pile *pile);
 
 int	main(int argc, const char **argv)
@@ -9,7 +9,9 @@ int	main(int argc, const char **argv)
 	t_pile	*pile;
 
 	pile = ft_init_piles(argc, argv);
-	ft_printf("POSITION	: [%d]\n", ft_get_position(*(pile->a), 9));
+	ft_action(pile, 0, 0, 1);
+	// ft_printf("POSITION	: [%d]\n", ft_get_position(*(pile->a), 5));
+	// ft_printf("INDEX	: [%d]\n", ft_get_index(*(pile->a), 5));
 	// launch(pile);
 	ft_free_pile(pile);
 	return (0);

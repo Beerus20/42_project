@@ -11,7 +11,7 @@ int	ft_get_position(t_list *pile, int value)
 	number = pile->content;
 	while (pile)
 	{
-		ft_printf("CONTENT		: [%d]\nNUMBER		: [%d]\nVALUE		: [%d]\nPOSITION	: [%d]\n\n", pile->content, number, value, position);
+		// ft_printf("CONTENT		: [%d]\nNUMBER		: [%d]\nVALUE		: [%d]\nPOSITION	: [%d]\n\n", pile->content, number, value, position);
 		if (pile->content > value)
 		{
 			if (pile->content < number)

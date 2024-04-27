@@ -44,6 +44,7 @@ void	ft_get_salpile(t_list **pile, t_info *info);
 void	ft_init_info(t_info *pile);
 void	ft_get_info(t_list **pile, t_info *info);
 void	ft_update_info(t_pile *pile);
+int		ft_info(t_info info, int id);
 
 /**	_________________ UTILS _________________ **/
 void	ft_show_info(t_pile pile);
@@ -70,5 +71,9 @@ int		ft_check_isalign(t_list *pile);
 int		ft_check_percent(char *title, t_pile *pile, int (*function)(t_list *), int index);
 
 /**	_________________ GETTERS _________________ **/
+int		ft_get_index(t_list *pile, int value);
 int		ft_get_position(t_list *pile, int value);
+
+/**	_________________ ACTION _________________ **/
+void	ft_action(t_pile *pile, int id_pile, int id_info, int index);
 #endif

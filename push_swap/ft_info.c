@@ -92,3 +92,16 @@ void	ft_update_info(t_pile *pile)
 	ft_get_info(pile->a, pile->ia);
 	ft_get_info(pile->b, pile->ib);
 }
+
+int	ft_info(t_info info, int id)
+{
+	if (id == 0 && info.first)
+		return (*info.first);
+	if (id == 1 && info.second)
+		return (*info.second);
+	if (id == 2 && info.last)
+		return (*info.last);
+	if (info.len)
+		return (*info.len);
+	return (0);
+}

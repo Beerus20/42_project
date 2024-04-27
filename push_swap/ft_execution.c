@@ -30,12 +30,12 @@ void	ft_exec_push(t_pile *pile, char type)
 	if (type == 'a')
 	{
 		ft_printf("pa\n");
-		ft_push(pile, 0);
+		ft_push(pile, 1);
 	}
 	else if (type == 'b')
 	{
 		ft_printf("pb\n");
-		ft_push(pile, 1);
+		ft_push(pile, 0);
 	}
 	else
 	{

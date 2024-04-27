@@ -121,9 +121,3 @@ int	ft_check_percent(char *title, t_pile *pile, int (*function)(t_list *), int i
 		return ((int )((p_b * 100) / (*(pile->ib)->len)));
 	return (0);
 }
-
-// 3 2 1
-// 4 2 3 1
-// 2 3 1
-// 3 1 2
-// 2 1 3
