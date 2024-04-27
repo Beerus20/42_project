@@ -7,6 +7,8 @@ FILES	= \
 	ft_init.c			\
 	ft_info.c			\
 	ft_check.c			\
+	ft_action.c			\
+	ft_getters.c		\
 	ft_utils.c
 
 # FUNCS		= $(FILES:%.c=./movement/%.c)

@@ -62,11 +62,13 @@ void	ft_init_pile(int argc, const char **argv, t_list **pile);
 t_pile	*ft_init_piles(int argc, const char **argv);
 
 /**	_________________ CHECK _________________ **/
-
 int		ft_check_isbigger(t_list *pile, int nb);
 int		ft_check_issmaller(t_list *pile, int nb);
 int		ft_check_increas(t_list *pile);
 int		ft_check_decreas(t_list *pile);
 int		ft_check_isalign(t_list *pile);
 int		ft_check_percent(char *title, t_pile *pile, int (*function)(t_list *), int index);
+
+/**	_________________ GETTERS _________________ **/
+int		ft_get_position(t_list *pile, int value);
 #endif
