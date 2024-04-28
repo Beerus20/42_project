@@ -71,6 +71,8 @@ int		ft_check_isalign(t_list *pile);
 int		ft_check_percent(char *title, t_pile *pile, int (*function)(t_list *), int index);
 
 /**	_________________ GETTERS _________________ **/
+int		ft_get_min_value(t_list *pile);
+int		ft_get_max_value(t_list *pile);
 int		ft_get_index(t_list *pile, int value);
 int		ft_get_position(t_list *pile, int value);
 

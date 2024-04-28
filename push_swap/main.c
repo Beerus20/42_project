@@ -10,13 +10,13 @@ int	main(int argc, const char **argv)
 
 	i = 0;
 	pile = ft_init_piles(argc, argv);
-	// while (i < 4)
-	// {
-	// 	ft_arrange(pile);
-	// 	i++;
-	// }
+	while (i < 6)
+	{
+		ft_arrange(pile);
+		i++;
+	}
 	// ft_action(pile, 0, 0, 1);
-	ft_printf("POSITION	: [%d]\n", ft_get_position(*(pile->a), 2));
+	// ft_printf("POSITION	: [%d]\n", ft_get_position(*(pile->a), 4));
 	// ft_printf("INDEX	: [%d]\n", ft_get_index(*(pile->a), 5));
 	// launch(pile);
 	ft_free_pile(pile);
