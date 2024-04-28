@@ -20,13 +20,13 @@ all						:	$(NAME)
 test\:%					: 	$(NAME)
 							valgrind --leak-check=full --track-origins=yes ./push_swap $(subst test:,,$@)
 
-run\:%						: $(NAME)
+run\:%					:	$(NAME)
 							./push_swap $(subst run:,,$@)
 
-gdb\:%				: 	$(NAME)
+gdb\:%					: 	$(NAME)
 							gdb  -silent --args push_swap $(subst gdb:,,$@)
 
-debug\:%						:
+debug\:%				:	lib
 							@$(CC) main.c $(FILES) -D DEBUG=1 -L. -lftprintf -o $(NAME) && ./push_swap $(subst debug:,,$@)
 
 $(NAME)					:	lib $(OBJS)

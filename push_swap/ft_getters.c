@@ -1,5 +1,19 @@
 #include "push_swap.h"
 
+int	ft_get_max_value(t_list *pile)
+{
+	int	max;
+
+	max = pile->content;
+	while (pile)
+	{
+		if (pile->content > max)
+			max = pile->content;
+		pile = pile->next;
+	}
+	return (max);
+}
+
 int	ft_get_position(t_list *pile, int value)
 {
 	int	number;
@@ -8,7 +22,7 @@ int	ft_get_position(t_list *pile, int value)
 
 	position = 0;
 	i = 0;
-	number = pile->content;
+	number = ft_get_max_value(pile);
 	while (pile)
 	{
 		// ft_printf("CONTENT		: [%d]\nNUMBER		: [%d]\nVALUE		: [%d]\nPOSITION	: [%d]\n\n", pile->content, number, value, position);

@@ -75,5 +75,5 @@ int		ft_get_index(t_list *pile, int value);
 int		ft_get_position(t_list *pile, int value);
 
 /**	_________________ ACTION _________________ **/
-void	ft_action(t_pile *pile, int id_pile, int id_info, int index);
+int		ft_action(t_pile *pile, int id_pile, int id_info, int index);
 #endif

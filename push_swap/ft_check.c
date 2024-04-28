@@ -89,8 +89,10 @@ int	ft_check_issmaller(t_list *pile, int nb)
 int	ft_check_isalign(t_list *pile)
 {
 	t_list	*tmp;
+	int		i;
 	int		to_compare;
 
+	i = 1;
 	tmp = pile;
 	to_compare = tmp->content;
 	tmp = tmp->next;
@@ -98,9 +100,11 @@ int	ft_check_isalign(t_list *pile)
 	{
 		if (to_compare > tmp->content)
 			return (0);
+		to_compare = tmp->content;
 		tmp = tmp->next;
+		i++;
 	}
-	return (1);
+	return (i);
 }
 
 int	ft_check_percent(char *title, t_pile *pile, int (*function)(t_list *), int index)
