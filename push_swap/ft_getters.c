@@ -73,7 +73,7 @@ int	ft_get_position_inv(t_list *pile, int value)
 		if (pile->content > value)
 		{
 			i++;
-			if (pile->content <= number)
+			if (pile->content >= number)
 			{
 				number = pile->content;
 				position = i;

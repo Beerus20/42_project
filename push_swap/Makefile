@@ -42,5 +42,10 @@ clean					:
 fclean					: clean
 							rm -rf $(NAME)
 
+push\:%					:	fclean
+							git add .
+							git commit -m "$(subst push:,,$@)"
+							git push
+
 re						: fclean all
 .PHONY					: all clean fclean re $(NAME)
