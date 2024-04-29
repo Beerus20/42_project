@@ -23,7 +23,6 @@ int	ft_to_do_first(t_pile *pile, t_list *tmp, int position, int value)
 	}
 	else if (position != (*to_use->len - 2) && position > 1)
 	{
-		ft_printf("ATO ================================================\n");
 		exec(pile, "pb");
 		return (1);
 	}
@@ -47,19 +46,13 @@ int	ft_to_do_last(t_pile *pile, t_list *tmp, int position, int value)
 	to_use = pile->ia;
 	if (*(pile->b) == tmp)
 		to_use = pile->ib;
-	if (position == 1)
+	if (position >= 1 || !ft_check_isalign(tmp))
 	{
-		exec(pile, "rra sa");
-		return (1);
-	}
-	else if (position > 1)
-	{
+		if (position == (*to_use->len - 2) && ft_get_position(tmp, tmp->content) != 0)
+			exec(pile, "pb");
 		exec(pile, "rra");
-		return (1);
-	}
-	else if (!ft_check_isalign(tmp))
-	{
-		exec(pile, "rra");
+		if (position == 1)
+			exec(pile, "sa");
 		return (1);
 	}
 	return (0);
