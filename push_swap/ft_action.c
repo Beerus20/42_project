@@ -1,5 +1,48 @@
 #include "push_swap.h"
 
+int	ft_add_to_a(t_pile *pile)
+{
+	int	p_a;
+
+	if (!(*pile->b))
+		return (0);
+	p_a = ft_get_position(*pile->a, (*(pile->b))->content);
+	if (p_a < 2 && (*(pile->b))->content < (*(pile->a))->content)
+	{
+		exec(pile, "pa");
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_add_to_b(t_pile *pile)
+{
+	int	position;
+
+	position = ft_get_position_inv(*(pile->b), (*(pile->a))->content);
+	if (*(pile->b) == NULL)
+	{
+		exec(pile, "pb");
+		return (1);
+	}
+	if (position > *(pile->ib->len) / 2)
+	{
+		position = *(pile->ib->len) - position;
+		while (position--)
+			exec(pile, "rrb");
+		exec(pile, "pb rb");
+		return (1);
+	}
+	else
+	{
+		while (position--)
+			exec(pile, "rb");
+		exec(pile, "pb");
+		return (1);
+	}
+	return (0);
+}
+
 int	ft_to_do_first(t_pile *pile, t_list *tmp, int position, int value)
 {
 	t_info	*to_use;
@@ -21,11 +64,11 @@ int	ft_to_do_first(t_pile *pile, t_list *tmp, int position, int value)
 		exec(pile, "sa");
 		return (1);
 	}
-	else if (position != (*to_use->len - 2) && position > 1)
-	{
-		exec(pile, "pb");
-		return (1);
-	}
+	// else if (position != (*to_use->len - 2) && position > 1 && *(to_use->last) > value)
+	// {
+	// 	ft_add_to_b(pile);
+	// 	return (1);
+	// }
 	return (0);
 }
 
@@ -48,11 +91,17 @@ int	ft_to_do_last(t_pile *pile, t_list *tmp, int position, int value)
 		to_use = pile->ib;
 	if (position >= 1 || !ft_check_isalign(tmp))
 	{
-		if (position == (*to_use->len - 2) && ft_get_position(tmp, tmp->content) != 0)
-			exec(pile, "pb");
+		if (ft_get_position(tmp, tmp->content) != 0 || ft_get_max_value(tmp) == tmp->content)
+		{
+			ft_add_to_b(pile);
+			return (1);
+		}
 		exec(pile, "rra");
 		if (position == 1)
+		{
 			exec(pile, "sa");
+			ft_add_to_a(pile);
+		}
 		return (1);
 	}
 	return (0);
