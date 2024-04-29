@@ -43,7 +43,9 @@ fclean					: clean
 							rm -rf $(NAME)
 
 push\:%					:	fclean
+							git status
 							git add .
+							git status
 							git commit -m "$(subst push:,,$@)"
 							git push
 
