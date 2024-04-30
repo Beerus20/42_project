@@ -31,6 +31,9 @@ typedef struct s_pile
 	t_info	*ib;
 }	t_pile;
 
+/**	_________________ TRANSFORM _________________ **/
+void	ft_transform_value(t_pile *pile);
+
 /**	_________________ MOUVEMENT _________________ **/
 void	ft_swap(t_list **pile);
 void	ft_push(t_pile *pile, int inv);
@@ -49,6 +52,7 @@ int		ft_info(t_info info, int id);
 /**	_________________ UTILS _________________ **/
 void	ft_show_info(t_pile pile);
 void	ft_show(t_pile pile);
+void	ft_show_test(t_list *pile, int *tab);
 
 /**	_________________ FREE _________________ **/
 void	ft_free_info(t_info *info);
@@ -57,6 +61,7 @@ void	ft_free_pile(t_pile *pile);
 
 /**	_________________ EXECUTION _________________ **/
 int		exec(t_pile *pile, char *action);
+void	loop_exec(t_pile *pile, int nb_iter, char *to_do);
 
 /**	_________________ INIT _________________ **/
 void	ft_init_pile(int argc, const char **argv, t_list **pile);
@@ -68,7 +73,7 @@ int		ft_check_issmaller(t_list *pile, int nb);
 int		ft_check_increas(t_list *pile);
 int		ft_check_decreas(t_list *pile);
 int		ft_check_isalign(t_list *pile);
-int		ft_check_percent(char *title, t_pile *pile, int (*function)(t_list *), int index);
+int		ft_check_percent(t_pile *pile, int (*function)(t_list *), int index);
 
 /**	_________________ GETTERS _________________ **/
 int		ft_get_min_value(t_list *pile);
@@ -79,7 +84,8 @@ int		ft_get_position(t_list *pile, int value);
 int		ft_get_position_inv(t_list *pile, int value);
 
 /**	_________________ ACTION _________________ **/
-int		ft_add_to_a(t_pile *pile);
-int		ft_add_to_b(t_pile *pile);
-int		ft_action(t_pile *pile, int id_pile, int id_info, int index);
+int		ft_move_to_a(t_pile *pile);
+int		ft_move_to_b(t_pile *pile);
+int		ft_count_move(t_list *pile, int value);
+int		ft_action(t_pile *pile, int id_pile, int id_info);
 #endif

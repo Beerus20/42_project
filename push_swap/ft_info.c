@@ -20,13 +20,10 @@ void	ft_get_fpile(t_list **pile, t_info *info)
 	tmp = *pile;
 	if (tmp)
 	{
-		if (tmp->content)
-		{
-			info->first = (int *)malloc(sizeof(int));
-			if (!info->first)
-				exit(1);
-			*(info->first) = tmp->content;
-		}
+		info->first = (int *)malloc(sizeof(int));
+		if (!info->first)
+			exit(1);
+		*(info->first) = tmp->content;
 	}
 }
 

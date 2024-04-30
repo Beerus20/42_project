@@ -107,18 +107,13 @@ int	ft_check_isalign(t_list *pile)
 	return (i);
 }
 
-int	ft_check_percent(char *title, t_pile *pile, int (*function)(t_list *), int index)
+int	ft_check_percent(t_pile *pile, int (*function)(t_list *), int index)
 {
 	int	p_a;
 	int	p_b;
 
 	p_a = function(*(pile->a));
 	p_b = function(*(pile->b));
-	ft_printf("%s	: [%d] [%d] [%d]\n", title, p_a, p_b, (*(pile->ia)->len));
-	if (*(pile->a))
-		ft_printf("-PILE A	: \033[0;31m[%d%%]\033[0;0m\n", (int )((p_a * 100) / (*(pile->ia)->len)));
-	if (*(pile->b))
-		ft_printf("-PILE B	: \033[0;31m[%d%%]\033[0;0m\n", (int )((p_b * 100) / (*(pile->ib)->len)));
 	if (!index)
 		return ((int )((p_a * 100) / (*(pile->ia)->len)));
 	else

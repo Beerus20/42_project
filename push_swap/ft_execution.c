@@ -143,3 +143,12 @@ int	exec(t_pile *pile, char *action)
 	}
 	return (0);
 }
+
+void	loop_exec(t_pile *pile, int nb_iter, char *to_do)
+{
+	while (nb_iter)
+	{
+		exec(pile, to_do);
+		nb_iter--;
+	}
+}

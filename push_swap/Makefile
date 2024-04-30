@@ -1,6 +1,7 @@
 .SILENT					:
 NAME		= push_swap
 FILES	= \
+	ft_transform.c 		\
 	ft_movement.c 		\
 	ft_execution.c		\
 	ft_free.c			\
