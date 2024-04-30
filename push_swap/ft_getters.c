@@ -32,6 +32,21 @@ int	ft_get_max_value(t_list *pile)
 	return (max);
 }
 
+int	ft_get_index(t_list *pile, int value)
+{
+	int	i;
+
+	i = 0;
+	while (pile)
+	{
+		if (pile->content == value)
+			return (i);
+		i++;
+		pile = pile->next;
+	}
+	return (-1);
+}
+
 int	ft_get_position(t_list *pile, int value)
 {
 	int	number;
@@ -67,13 +82,16 @@ int	ft_get_position_inv(t_list *pile, int value)
 
 	position = 0;
 	i = 0;
-	number = ft_get_min_value(pile);
+	number = ft_get_max_value(pile);
+	if (value > number)
+		return (ft_get_index(pile, number));
 	while (pile)
 	{
 		if (pile->content > value)
 		{
 			i++;
-			if (pile->content >= number)
+			// ft_printf("VALUE	: [%d]\nCONTENT	: [%d]\n\n", value, pile->content);
+			if (pile->content <= number)
 			{
 				number = pile->content;
 				position = i;
@@ -82,21 +100,6 @@ int	ft_get_position_inv(t_list *pile, int value)
 		pile = pile->next;
 	}
 	return (position);
-}
-
-int	ft_get_index(t_list *pile, int value)
-{
-	int	i;
-
-	i = 0;
-	while (pile)
-	{
-		if (pile->content == value)
-			return (i);
-		i++;
-		pile = pile->next;
-	}
-	return (-1);
 }
 
 int	ft_get_value(t_list *pile, int index)

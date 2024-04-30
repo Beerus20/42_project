@@ -30,7 +30,7 @@ int	ft_add_to_b(t_pile *pile)
 		position = *(pile->ib->len) - position;
 		while (position--)
 			exec(pile, "rrb");
-		exec(pile, "pb rb");
+		exec(pile, "pb");
 		return (1);
 	}
 	else

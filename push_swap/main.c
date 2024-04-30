@@ -54,7 +54,7 @@ void	ft_reverse_arrange(t_pile *pile)
 	else
 	{
 		max = max_b;
-		
+
 	}
 	if (*pile->b && max == (*(pile->b))->content)
 		exec(pile, "rb");
