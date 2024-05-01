@@ -10,6 +10,16 @@ int	request(t_pile *pile, int question, char *to_do)
 	return (0);
 }
 
+int	request_loop(t_pile *pile, int question, int nb_iter ,char *to_do)
+{
+	if (question)
+	{
+		loop_exec(pile, nb_iter, to_do);
+		return (1);
+	}
+	return (0);
+}
+
 int	ft_search(t_list *pile, int value)
 {
 	if (ft_check_issmaller(pile, value))
@@ -23,90 +33,166 @@ int	ft_search(t_list *pile, int value)
 	return (0);
 }
 
-int	ft_count_move(t_list *pile, int value)
+int	ft_position_of(t_list *pile, int value)
 {
 	int	i;
-	int	sub;
 
 	i = 0;
-	sub = 1;
-	if (value == 0)
-		sub = 0;
-	while (!ft_search(pile, value - sub))
-		sub++;
 	while (pile)
 	{
-		if (pile->content == (value - sub))
+		if (pile->content == value)
 			return (i);
-		pile = pile->next;
 		i++;
+		pile = pile->next;
 	}
-	return (0);
+	return (-1);
 }
 
-int	ft_b_action(t_pile *pile)
+int	ft_get_position(t_list *pile, int value, int behind)
 {
-	int	nb_move;
-
-	if (*pile->b == NULL)
+	if (behind)
 	{
-		exec(pile, "pb");
-		return (1);
-	}
-	nb_move = ft_count_move(*pile->b, *pile->ia->first);
-	if (*pile->ib->len > 1)
-	{
-		if (pile->ib->last)
-		{
-			if (nb_move >= (*pile->ib->len / 2))
-			{
-				nb_move = *pile->ib->len - nb_move;
-				loop_exec(pile, nb_move, "rrb");
-			}
-			else
-				loop_exec(pile, nb_move, "rb");
-			exec(pile, "pb");
-		}
+		if (value >= ft_get_max_value(pile))
+			value = ft_get_min_value(pile);
 		else
-			request(pile, *pile->ib->second < *pile->ia->first, "sb pb");
-		return (1);
+			value++;
 	}
 	else
+	{
+		if (value <= ft_get_min_value(pile))
+			value = ft_get_max_value(pile);
+		else
+			value--;
+	}
+	while (!ft_search(pile, value))
+	{
+		if (behind)
+			value++;
+		else
+			value--;
+	}
+	return (ft_position_of(pile, value));
+}
+
+int	ft_arrange(t_pile *pile)
+{
+	int		i;
+	int		first_nb;
+	int 	second_nb;
+	int 	question;
+	t_list	*tmp;
+
+	i = 0;
+	tmp = *pile->a;
+	first_nb = ft_check_increas(tmp);
+	while (i++ < first_nb)
+	{
+		if (ft_get_position(*pile->a, tmp->content, 1) != ft_position_of(*pile->a, tmp->next->content))
+			return (0);
+		tmp = tmp->next;
+	}
+	second_nb = ft_check_increas(tmp);
+	question = *pile->b == NULL && (first_nb + second_nb) == *pile->ia->len;
+	if (question)
+	{
+		request_loop(pile, first_nb <= second_nb, first_nb , "ra");
+		request_loop(pile, first_nb > second_nb, second_nb , "rra");
+		return (1);
+	}
+	return (0);
+}
+
+void	ft_add_to_b(t_pile *pile)
+{
+	int	front;
+	int	behind;
+	int	question;
+	int	value;
+
+	if (*pile->b == NULL || *pile->ib->len == 1)
 	{
 		exec(pile, "pb");
+		return ;
+	}
+	front = ft_get_position(*pile->b, *pile->ia->first, 0);
+	behind = ft_get_position(*pile->b, *pile->ia->first, 1);
+	question = *pile->ib->len == 2 && front == 1;
+	if (request(pile, question, "sb pb"))
+		return ;
+	value = ft_get_value(*pile->b, front);
+	while (*pile->ib->first != value)
+	{
+		if (front <= *pile->ib->len / 2)
+			exec(pile, "rb");
+		else
+			exec(pile, "rrb");
+	}
+	exec(pile, "pb");
+}
+
+void	ft_add_to_a(t_pile *pile)
+{
+	int	behind;
+	int	question;
+	int	value;
+
+	behind = ft_get_position(*pile->a, *pile->ib->first, 1);
+	value = ft_get_value(*pile->a, behind);
+	while (*pile->ia->first != value)
+	{
+		if (behind <= *pile->ia->len / 2)
+			exec(pile, "ra");
+		else
+			exec(pile, "rra");
+	}
+	exec(pile, "pa");
+}
+
+int	ft_first_node(t_pile *pile)
+{
+	int	front;
+	int	position;
+	int	behind;
+	int	question;
+	int	value;
+
+	value = *pile->ia->first;
+	front = ft_get_position(*pile->a, value, 0);
+	position = ft_position_of(*pile->a, value);
+	behind = ft_get_position(*pile->a, value, 1);
+	if (ft_arrange(pile))
+		return (1);
+	question = position == 0 && front == 1;
+	if (request(pile, question, "sa"))
+		return (1);
+	question = position == 0 \
+				&& (front == (*pile->ia->len - 1) || behind == (*pile->ia->len - 1));
+	if (request(pile, question, "rra"))
+		return (1);
+	if (position == 0 && behind != 1)
+	{
+		ft_add_to_b(pile);
 		return (1);
 	}
 	return (0);
 }
 
-int	ft_move_to_a(t_pile *pile)
+int	ft_second_node(t_pile *pile)
 {
-	if (ft_check_percent(pile, ft_check_increas, 0) >= 30)
+	t_list	*tmp;
+	int		position;
+	int		behind;
+
+	tmp = *pile->a;
+	position = ft_position_of(*pile->a, *pile->ia->second);
+	behind = ft_get_position(*pile->a, *pile->ia->second, 1);
+	if (position != behind - 1)
 	{
-		while (*(pile->ib->len) != 0 && *pile->ia->first == *pile->ib->first + 1)
-			exec(pile, "pa");
+		ft_add_to_b(pile);
+		ft_add_to_b(pile);
 		return (1);
 	}
-	return (0);
-}
-
-int	ft_move_to_b(t_pile *pile)
-{
-	int	move;
-	int	nb_move;
-	int	percent;
-
-	move = ft_count_move(*pile->a, (*pile->a)->content);
-	nb_move = ft_check_increas(*pile->a);
-	percent = ft_check_percent(pile, ft_check_increas, 0);
-	if (percent <= 40)
-	{
-		while (nb_move-- && *pile->ia->first != (*pile->ia->last - 1))
-			ft_b_action(pile);
-		exec(pile, "rra");
-		return (1);
-	}
-	else
+	if (!ft_check_isalign(*pile->a))
 	{
 		exec(pile, "rra");
 		return (1);
@@ -116,30 +202,17 @@ int	ft_move_to_b(t_pile *pile)
 
 int	ft_action(t_pile *pile, int id_pile, int id_info)
 {
-	t_list	*tmp;
-	t_info	*info;
-	int		question;
-
-	question = 0;
-	tmp = *(pile->a);
-	info = pile->ia;
-	if (id_pile)
-		tmp = *(pile->b);
-	if (id_info)
-		info = pile->ib;
-	question = *info->first == (*info->len - 1) && ft_check_isalign(tmp->next);
-	if (request(pile, question, "ra"))
+	if (ft_check_isalign(*pile->a))
+	{
+		// if (*pile->b)
+		// 	ft_add_to_a(pile);
 		return (1);
-	question = *info->first == (*info->second + 1);
-	if (request(pile, question, "sa"))
+	}
+	if (ft_first_node(pile))
 		return (1);
-	question = info->last && *info->first == (*info->last - 1);
-	if (request(pile, question, "rra sa"))
+	if (ft_second_node(pile))
 		return (1);
-	question = info->last && *info->first == (*info->last + 1);
-	if (request(pile, question, "rra"))
-		return (1);
-	if (ft_move_to_b(pile))
-		return (1);
+	// ft_printf("ADD TO PILE A\n");
+	// ft_printf("NO MOVE POSSIBLE ...\n");
 	return (0);
 }

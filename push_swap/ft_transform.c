@@ -46,7 +46,8 @@ void	ft_simple_arrange(int *tab, int len)
 			tab[i + 1] = tmp;
 			i = 0;
 		}
-		i++;
+		else
+			i++;
 	}
 }
 
@@ -84,5 +85,6 @@ void	ft_transform_value(t_pile *pile)
 	// ft_show_test(*pile->a, tmp);
 	ft_apply_change(*pile->a, tmp, *pile->ia->len);
 	// ft_show_test(*pile->a, tmp);
+	ft_update_info(pile);
 	free(tmp);
 }

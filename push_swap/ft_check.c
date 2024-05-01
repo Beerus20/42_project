@@ -12,7 +12,7 @@ int	ft_check_increas(t_list *pile)
 	if (tmp)
 	{
 		to_compare = tmp->content;
-		if (tmp->next && ++i)
+		if (++i && tmp->next)
 		{
 			tmp = tmp->next;
 			while (tmp)

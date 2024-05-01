@@ -2,7 +2,7 @@
 
 // void	ft_arrange(t_pile *pile);
 // void	ft_reverse_arrange(t_pile *pile);
-void	launch(t_pile *pile);
+void	launch(t_pile *pile, int len);
 
 int	main(int argc, const char **argv)
 {
@@ -12,22 +12,24 @@ int	main(int argc, const char **argv)
 	i = 0;
 	pile = ft_init_piles(argc, argv);
 	ft_transform_value(pile);
-	launch(pile);
-	// ft_printf("NB MOVE	: [%d]\n", ft_count_move(*pile->a, 3));
+	launch(pile, argc - 1);
+	// ft_printf("POSITION OF	: \n");
+	// ft_printf("-IN FRONT	: [%d]\n", ft_get_position(*pile->a, 1, 0));
+	// ft_printf("-POSITION	: [%d]\n", ft_position_of(*pile->a, 1));
+	// ft_printf("-BEHIND		: [%d]\n", ft_get_position(*pile->a, 1, 1));
 	// while (!ft_check_isalign(*pile->a))
 	// 	ft_arrange(pile);
 	ft_free_pile(pile);
 	return (0);
 }
 
-void	launch(t_pile *pile)
+void	launch(t_pile *pile, int len)
 {
 	int	i;
 
 	i = 0;
-	while (i < 15 && !ft_check_isalign(*pile->a))
+	while (!ft_check_isalign(*pile->a))
 	{
-		ft_move_to_a(pile);
 		ft_action(pile, 0, 0);
 		i++;
 	}

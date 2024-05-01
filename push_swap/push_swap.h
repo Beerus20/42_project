@@ -80,12 +80,9 @@ int		ft_get_min_value(t_list *pile);
 int		ft_get_max_value(t_list *pile);
 int		ft_get_value(t_list *pile, int index);
 int		ft_get_index(t_list *pile, int value);
-int		ft_get_position(t_list *pile, int value);
-int		ft_get_position_inv(t_list *pile, int value);
 
 /**	_________________ ACTION _________________ **/
-int		ft_move_to_a(t_pile *pile);
-int		ft_move_to_b(t_pile *pile);
-int		ft_count_move(t_list *pile, int value);
+int		ft_position_of(t_list *pile, int value);
+int		ft_get_position(t_list *pile, int value, int behind);
 int		ft_action(t_pile *pile, int id_pile, int id_info);
 #endif
