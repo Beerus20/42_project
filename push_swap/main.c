@@ -11,6 +11,7 @@ int	main(int argc, const char **argv)
 
 	i = 0;
 	pile = ft_init_piles(argc, argv);
+	ft_show(*pile);
 	ft_transform_value(pile);
 	launch(pile, argc - 1);
 	// ft_printf("POSITION OF	: \n");
@@ -25,55 +26,27 @@ int	main(int argc, const char **argv)
 
 void	launch(t_pile *pile, int len)
 {
-	int	i;
+	t_list	*tmp;
+	int		i;
+	int		is_increase;
+	int		first_nb;
+	int		second_nb;
 
+	is_increase = 0;
 	i = 0;
-	while (!ft_check_isalign(*pile->a))
+	while (i < 30)
 	{
+		tmp = *pile->a;
 		ft_action(pile, 0, 0);
 		i++;
+		// first_nb = ft_check_increas(tmp);
+		// while (i++ < first_nb)
+		// 	tmp = tmp->next;
+		// second_nb = ft_check_increas(tmp);
+		// is_increase = first_nb + second_nb;
+		// ft_printf("total [%d] [%d] [%d] [%d]\n", *pile->ia->len, is_increase, first_nb, second_nb);
 	}
+	// while (*pile->ib->len != 0)
+	// 	ft_add_to_a(pile);
+	// ft_arrange(pile);
 }
-
-// void	ft_arrange(t_pile *pile)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i <= 3)
-// 	{
-// 		ft_action(pile, 0, 0, i);
-// 		// ft_add_to_a(pile);
-// 		i++;
-// 	}
-// }
-
-// void	ft_reverse_arrange(t_pile *pile)
-// {
-// 	int	max_a;
-// 	int	max_b;
-// 	int	max;
-
-// 	max_a = ft_get_max_value(*pile->a);
-// 	max_b = ft_get_max_value(*pile->b);
-// 	if (max_a > max_b)
-// 		max = max_a;
-// 	else
-// 	{
-// 		max = max_b;
-
-// 	}
-// 	if (*pile->b && max == (*(pile->b))->content)
-// 		exec(pile, "rb");
-// 	while (*pile->b)
-// 	{
-// 		// ft_add_to_a(pile);
-// 		if ((*pile->ib->first) == max)
-// 			exec(pile, "pa ra");
-// 	}
-// }
-
-// void	ft_simulation(t_pile pile)
-// {
-
-// }

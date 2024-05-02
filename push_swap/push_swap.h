@@ -50,6 +50,8 @@ void	ft_update_info(t_pile *pile);
 int		ft_info(t_info info, int id);
 
 /**	_________________ UTILS _________________ **/
+int		request(t_pile *pile, int question, char *to_do);
+int		request_loop(t_pile *pile, int question, int nb_iter ,char *to_do);
 void	ft_show_info(t_pile pile);
 void	ft_show(t_pile pile);
 void	ft_show_test(t_list *pile, int *tab);
@@ -82,7 +84,13 @@ int		ft_get_value(t_list *pile, int index);
 int		ft_get_index(t_list *pile, int value);
 
 /**	_________________ ACTION _________________ **/
+int		ft_arrange(t_pile *pile);
 int		ft_position_of(t_list *pile, int value);
 int		ft_get_position(t_list *pile, int value, int behind);
 int		ft_action(t_pile *pile, int id_pile, int id_info);
+
+/**	_________________ ACTION _________________ **/
+void	ft_add_to_a(t_pile *pile);
+void	ft_add_to_b(t_pile *pile);
+void	ft_add_stack(t_pile *pile);
 #endif

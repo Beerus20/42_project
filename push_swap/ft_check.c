@@ -6,13 +6,13 @@ int	ft_check_increas(t_list *pile)
 	int		to_compare;
 	t_list	*tmp;
 
-	i = 0;
+	i = 1;
 	to_compare = 0;
 	tmp = pile;
 	if (tmp)
 	{
 		to_compare = tmp->content;
-		if (++i && tmp->next)
+		if (tmp->next)
 		{
 			tmp = tmp->next;
 			while (tmp)

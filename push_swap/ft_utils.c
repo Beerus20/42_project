@@ -61,3 +61,23 @@ void	ft_show_test(t_list *pile, int *tab)
 	ft_printf("  _	 _\n");
 	ft_printf("  A	 T\n\n");
 }
+
+int	request(t_pile *pile, int question, char *to_do)
+{
+	if (question)
+	{
+		exec(pile, to_do);
+		return (1);
+	}
+	return (0);
+}
+
+int	request_loop(t_pile *pile, int question, int nb_iter ,char *to_do)
+{
+	if (question)
+	{
+		loop_exec(pile, nb_iter, to_do);
+		return (1);
+	}
+	return (0);
+}
