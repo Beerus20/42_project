@@ -47,6 +47,17 @@ void	ft_show_info(t_pile pile)
 	ft_printf("		  \033[0;32m[A]  [B]\033[0;0m\n");
 }
 
+void	ft_show_pile(t_list *pile)
+{
+	while (pile)
+	{
+		ft_printf(" [%d]\n", pile->content);
+		pile = pile->next;
+	}
+	ft_printf("  _\n");
+	ft_printf("  A\n\n");
+}
+
 void	ft_show_test(t_list *pile, int *tab)
 {
 	int	i;

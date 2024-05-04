@@ -11,7 +11,7 @@ int	main(int argc, const char **argv)
 
 	i = 0;
 	pile = ft_init_piles(argc, argv);
-	ft_show(*pile);
+	// ft_show(*pile);
 	ft_transform_value(pile);
 	launch(pile, argc - 1);
 	// ft_printf("POSITION OF	: \n");
@@ -24,29 +24,66 @@ int	main(int argc, const char **argv)
 	return (0);
 }
 
-void	launch(t_pile *pile, int len)
+int	verify(t_list *pile, int min, int max)
 {
 	t_list	*tmp;
-	int		i;
-	int		is_increase;
-	int		first_nb;
-	int		second_nb;
 
-	is_increase = 0;
-	i = 0;
-	while (i < 30)
+	tmp = pile;
+	while (tmp)
 	{
-		tmp = *pile->a;
-		ft_action(pile, 0, 0);
-		i++;
-		// first_nb = ft_check_increas(tmp);
-		// while (i++ < first_nb)
-		// 	tmp = tmp->next;
-		// second_nb = ft_check_increas(tmp);
-		// is_increase = first_nb + second_nb;
-		// ft_printf("total [%d] [%d] [%d] [%d]\n", *pile->ia->len, is_increase, first_nb, second_nb);
+		if (tmp->content >= min && tmp->content < max)
+			return (1);
+		tmp = tmp->next;
 	}
+	return (0);
+}
+
+
+void	launch(t_pile *pile, int len)
+{
+	int	id_max;
+	int	max;
+
+	while (verify(*pile->a, 0, 40))
+		ft_action(pile, 0, 40);
+
+	while (verify(*pile->a, 40, 80))
+		ft_action(pile, 40, 80);
+
+	while (verify(*pile->a, 80, 95))
+		ft_action(pile, 80, 95);
+	// while (verify(*pile->a, 30, 0))
+	// 	ft_action(pile, 60, 90);
+	max = ft_get_max_value(*pile->a);
+	id_max = ft_get_index(*pile->a, max);
+	if (id_max > *pile->ia->len / 2)
+	{
+		while (*pile->ia->first != max)
+			exec(pile, "rra");
+	}
+	else
+	{
+		while (*pile->ia->first != max)
+			exec(pile, "ra");
+	}
+	// // ft_arrange(pile);
 	// while (*pile->ib->len != 0)
 	// 	ft_add_to_a(pile);
 	// ft_arrange(pile);
 }
+
+
+// while (verify(*pile->a, 0, 20))
+// 		ft_action(pile, 0, 20);
+
+// 	while (verify(*pile->a, 20, 40))
+// 		ft_action(pile, 20, 40);
+
+// 	while (verify(*pile->a, 40, 60))
+// 		ft_action(pile, 40, 60);
+
+// 	while (verify(*pile->a, 60, 80))
+// 		ft_action(pile, 60, 80);
+
+// 	while (verify(*pile->a, 80, 95))
+// 		ft_action(pile, 80, 95);

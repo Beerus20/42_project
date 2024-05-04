@@ -2,8 +2,8 @@
 
 int	ft_search(t_list *pile, int value)
 {
-	if (ft_check_issmaller(pile, value))
-		return (1);
+	// if (ft_check_issmaller(pile, value))
+	// 	return (1);
 	while (pile)
 	{
 		if (pile->content == value)
@@ -85,72 +85,88 @@ int	ft_arrange(t_pile *pile)
 	return (0);
 }
 
-
-int	ft_first_node(t_pile *pile)
+int	ft_get_min_up(t_pile *pile, int min, int max)
 {
-	int	front;
-	int	position;
-	int	behind;
-	int	question;
-	int	value;
+	int		i;
+	t_list	*tmp;
 
-	value = *pile->ia->first;
-	front = ft_get_position(*pile->a, value, 0);
-	position = ft_position_of(*pile->a, value);
-	behind = ft_get_position(*pile->a, value, 1);
-	if (ft_arrange(pile))
-		return (1);
-	question = position == 0 && front == 1;
-	if (request(pile, question, "sa"))
-		return (1);
-	question = position == 0 \
-				&& (front == (*pile->ia->len - 1) || behind == (*pile->ia->len - 1));
-	if (request(pile, question, "rra"))
-		return (1);
-	return (0);
+	i = 0;
+	tmp = *pile->a;
+	while (tmp)
+	{
+		if (tmp->content >= min && tmp->content < max)
+			return (tmp->content);
+		tmp = tmp->next;
+		i++;
+	}
+	return (-1);
 }
 
-int	ft_second_node(t_pile *pile)
+int	ft_get_min_down(t_pile *pile, int min, int max)
 {
-	int	question;
+	int		i;
+	int		value;
+	t_list	*tmp;
 
-	if (*pile->b == NULL || *pile->ib->len == 1)
+	i = 1;
+	tmp = *pile->a;
+	value = 0;
+	while (i < *pile->ia->len)
 	{
+		value = ft_get_value(*pile->a, *pile->ia->len - i);
+		if (value >= min && value < max)
+			return (value);
+		i++;
+	}
+	return (-1);
+}
+
+int	ft_action(t_pile *pile, int min, int max)
+{
+	int	value;
+	int	min_up;
+	int	min_down;
+	int	p_up;
+	int	p_down;
+
+	request(pile, *pile->ia->first == *pile->ia->second - 1, "sa");
+	min_up = ft_get_min_up(pile, min, max);
+	min_down = ft_get_min_down(pile, min, max);
+	p_up = ft_get_index(*pile->a, min_up);
+	p_down = ft_get_index(*pile->a, min_down);
+	if (p_up == -1 && p_down == -1)
+		return (0);
+	if (p_down != -1)
+		p_down = *pile->ia->len - p_down;
+	if (p_up != -1 && p_up <= p_down || p_down == -1)
+	{
+		while (*pile->ia->first != min_up)
+			exec(pile, "ra");
 		exec(pile, "pb");
 		return (1);
 	}
-	ft_add_stack(pile);
-	return (0);
-}
-
-int	action(t_pile *pile)
-{
-	int	question;
-
-	question = *pile->ia->first == *pile->ia->second + 1;
-	if (request(pile, question, "sa ra ra"))
-		return (1);
-	question = *pile->ia->first > *pile->ia->second;
-	if (question)
+	else if (p_down != -1 && p_up > p_down || p_up == -1)
 	{
-		ft_add_to_b(pile);
+		while (*pile->ia->first != min_down)
+			exec(pile, "rra");
+		exec(pile, "pb");
 		return (1);
 	}
 	else
-	{
-		exec(pile, "ra");
-	}
+		exec(pile, "rra");
 	return (0);
 }
 
-int	ft_action(t_pile *pile, int id_pile, int id_info)
-{
-	if (ft_check_isalign(*pile->a))
-		return (1);
-	action(pile);
+
+// int	ft_action(t_pile *pile, int id_pile, int id_info)
+// {
+// 	if (ft_check_isalign(*pile->a))
+// 		return (1);
+	// if (*pile->ia->len == 3)
+	// 	return (1);
 	// if (ft_first_node(pile))
 	// 	return (1);
 	// if (ft_second_node(pile))
 	// 	return (1);
-	return (0);
-}
+// 	return (0);
+// }

@@ -54,6 +54,7 @@ int		request(t_pile *pile, int question, char *to_do);
 int		request_loop(t_pile *pile, int question, int nb_iter ,char *to_do);
 void	ft_show_info(t_pile pile);
 void	ft_show(t_pile pile);
+void	ft_show_pile(t_list *pile);
 void	ft_show_test(t_list *pile, int *tab);
 
 /**	_________________ FREE _________________ **/
@@ -87,7 +88,7 @@ int		ft_get_index(t_list *pile, int value);
 int		ft_arrange(t_pile *pile);
 int		ft_position_of(t_list *pile, int value);
 int		ft_get_position(t_list *pile, int value, int behind);
-int		ft_action(t_pile *pile, int id_pile, int id_info);
+int		ft_action(t_pile *pile, int min, int max);
 
 /**	_________________ ACTION _________________ **/
 void	ft_add_to_a(t_pile *pile);
