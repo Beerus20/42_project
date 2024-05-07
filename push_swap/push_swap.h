@@ -93,5 +93,4 @@ int		ft_action(t_pile *pile, int min, int max);
 /**	_________________ ACTION _________________ **/
 void	ft_add_to_a(t_pile *pile);
 void	ft_add_to_b(t_pile *pile);
-void	ft_add_stack(t_pile *pile);
 #endif

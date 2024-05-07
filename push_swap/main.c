@@ -44,29 +44,34 @@ void	launch(t_pile *pile, int len)
 	int	id_max;
 	int	max;
 
-	while (verify(*pile->a, 0, 40))
-		ft_action(pile, 0, 40);
+	while (verify(*pile->a, 0, 20))
+		ft_action(pile, 0, 20);
 
-	while (verify(*pile->a, 40, 80))
-		ft_action(pile, 40, 80);
+	while (verify(*pile->a, 20, 40))
+		ft_action(pile, 20, 40);
+
+	while (verify(*pile->a, 40, 60))
+		ft_action(pile, 40, 60);
+
+	while (verify(*pile->a, 60, 80))
+		ft_action(pile, 60, 80);
 
 	while (verify(*pile->a, 80, 95))
 		ft_action(pile, 80, 95);
-	// while (verify(*pile->a, 30, 0))
-	// 	ft_action(pile, 60, 90);
-	max = ft_get_max_value(*pile->a);
-	id_max = ft_get_index(*pile->a, max);
-	if (id_max > *pile->ia->len / 2)
-	{
-		while (*pile->ia->first != max)
-			exec(pile, "rra");
-	}
-	else
-	{
-		while (*pile->ia->first != max)
-			exec(pile, "ra");
-	}
-	// // ft_arrange(pile);
+
+	// max = ft_get_max_value(*pile->a);
+	// id_max = ft_get_index(*pile->a, max);
+	// if (id_max > *pile->ia->len / 2)
+	// {
+	// 	while (*pile->ia->first != max)
+	// 		exec(pile, "rra");
+	// }
+	// else
+	// {
+	// 	while (*pile->ia->first != max)
+	// 		exec(pile, "ra");
+	// }
+	// // // ft_arrange(pile);
 	// while (*pile->ib->len != 0)
 	// 	ft_add_to_a(pile);
 	// ft_arrange(pile);
