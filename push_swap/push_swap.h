@@ -83,6 +83,7 @@ int		ft_get_min_value(t_list *pile);
 int		ft_get_max_value(t_list *pile);
 int		ft_get_value(t_list *pile, int index);
 int		ft_get_index(t_list *pile, int value);
+int		ft_get_pile_len(t_list *pile);
 
 /**	_________________ ACTION _________________ **/
 int		ft_arrange(t_pile *pile);

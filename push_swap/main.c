@@ -1,5 +1,55 @@
 #include "push_swap.h"
 
+t_list	*ft_upper_nb(t_list *pile, int value)
+{
+	t_list	*tmp;
+	t_list	*tmp_value;
+	t_list	*r_value;
+	int		count;
+
+	count = 0;
+	tmp = pile;
+	r_value = (t_list *)malloc(sizeof(t_list));
+	if (!tmp_value)
+		exit(1);
+	r_value->content = -1;
+	tmp_value = r_value;
+	while (tmp)
+	{
+		if (tmp->content > value)
+		{
+			if (tmp_value->content != -1)
+			{
+				tmp_value->next = (t_list *)malloc(sizeof(t_list));
+				if (!tmp_value->next)
+					exit(1);
+				tmp_value = tmp_value->next;
+			}
+			tmp_value->content = tmp->content;
+			tmp_value->next = NULL;
+		}
+		tmp = tmp->next;
+	}
+	return (r_value);
+}
+
+void	ft_check_max_increase(t_list *pile)
+{
+	t_list	*tmp;
+	int		to_check;
+
+	tmp = NULL;
+	if (pile)
+	{
+		to_check = tmp->content;
+		if (pile->next)
+		{
+			tmp = ft_upper_nb(pile, pile->content);
+			pile = pile->next;
+		}
+	}
+}
+
 void	ft_analysies(t_pile *pile)
 {
 	int		value;
@@ -7,12 +57,15 @@ void	ft_analysies(t_pile *pile)
 
 	tmp = *pile->a;
 	value = tmp->content;
-	while (tmp)
-	{
-		if (tmp->content > value)
-			ft_printf(" %d\n", tmp->content);
-		tmp = tmp->next;
-	}
+	tmp = ft_upper_nb(*pile->a, value);
+	ft_printf("LEN	: [%d]\n", ft_get_pile_len(tmp));
+	ft_show_pile(tmp);
+	// while (tmp)
+	// {
+	// 	if (tmp->content > value)
+	// 		ft_printf(" %d\n", tmp->content);
+	// 	tmp = tmp->next;
+	// }
 }
 
 int	main(int argc, const char **argv)
@@ -24,6 +77,7 @@ int	main(int argc, const char **argv)
 	pile = ft_init_piles(argc, argv);
 	ft_transform_value(pile);
 	// ft_show(*pile);
+	// ft_show_pile(*pile->a);
 	ft_analysies(pile);
 	ft_free_pile(pile);
 	return (0);
