@@ -11,6 +11,7 @@ FILES	= \
 	ft_action.c			\
 	ft_getters.c		\
 	ft_add_stack.c		\
+	ft_list_utils.c		\
 	ft_utils.c
 
 # FUNCS		= $(FILES:%.c=./movement/%.c)
@@ -35,7 +36,7 @@ $(NAME)					:	lib $(OBJS)
 							$(CC) main.c $(FILES) -L. -lftprintf -o $(NAME)
 
 lib						:
-							@cd ./printf && make all
+							@make -C ./printf
 
 clean					:
 							cd ./printf && make clean

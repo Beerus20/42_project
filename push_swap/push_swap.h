@@ -41,6 +41,7 @@ void	ft_rotate(t_list **pile);
 void	ft_rev_rotate(t_list **pile);
 
 /**	_________________ INFO _________________ **/
+t_list	*ft_get_last(t_list *pile);
 int		ft_get_list_len(t_list *pile);
 void	ft_get_fpile(t_list **pile, t_info *info);
 void	ft_get_salpile(t_list **pile, t_info *info);
@@ -56,6 +57,10 @@ void	ft_show_info(t_pile pile);
 void	ft_show(t_pile pile);
 void	ft_show_pile(t_list *pile);
 void	ft_show_test(t_list *pile, int *tab);
+
+/**	_________________ LIST UTILS _________________ **/
+void	ft_pop(t_list *pile);
+void	ft_add_back(t_list *pile, t_list *new);
 
 /**	_________________ FREE _________________ **/
 void	ft_free_info(t_info *info);

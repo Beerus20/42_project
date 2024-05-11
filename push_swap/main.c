@@ -54,18 +54,31 @@ void	ft_analysies(t_pile *pile)
 {
 	int		value;
 	t_list	*tmp;
+	t_list	*tmp_value;
+	t_list	*result;
 
+	tmp_value = NULL;
+	result = NULL;
 	tmp = *pile->a;
-	value = tmp->content;
-	tmp = ft_upper_nb(*pile->a, value);
-	ft_printf("LEN	: [%d]\n", ft_get_pile_len(tmp));
-	ft_show_pile(tmp);
-	// while (tmp)
-	// {
-	// 	if (tmp->content > value)
-	// 		ft_printf(" %d\n", tmp->content);
-	// 	tmp = tmp->next;
-	// }
+	while (tmp->content != *pile->ia->last)
+	{
+		while (tmp_value && ft_get_last(tmp_value)->content > tmp->content)
+			ft_pop(tmp_value);
+		ft_add_back(tmp_value, tmp);
+		ft_show_pile(tmp_value);
+		if (ft_get_pile_len(tmp_value) > ft_get_pile_len(result))
+		{
+			ft_printf("TEST\n");
+			result = tmp_value;
+		}
+		tmp = tmp->next;
+	}
+	if (ft_get_pile_len(tmp_value) > ft_get_pile_len(result))
+	{
+		ft_printf("TEST\n");
+		result = tmp_value;
+	}
+	ft_show_pile(result);
 }
 
 int	main(int argc, const char **argv)
@@ -77,8 +90,9 @@ int	main(int argc, const char **argv)
 	pile = ft_init_piles(argc, argv);
 	ft_transform_value(pile);
 	// ft_show(*pile);
-	// ft_show_pile(*pile->a);
+	ft_show_pile(*pile->a);
 	ft_analysies(pile);
+	ft_show_pile(*pile->a);
 	ft_free_pile(pile);
 	return (0);
 }
