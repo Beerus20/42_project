@@ -36,17 +36,13 @@ t_list	*ft_upper_nb(t_list *pile, int value)
 void	ft_check_max_increase(t_list *pile)
 {
 	t_list	*tmp;
-	int		to_check;
+	t_list	*result;
 
-	tmp = NULL;
-	if (pile)
+	result = NULL;
+	tmp = ft_upper_nb(pile, pile->content);
+	if (pile->next)
 	{
-		to_check = tmp->content;
-		if (pile->next)
-		{
-			tmp = ft_upper_nb(pile, pile->content);
-			pile = pile->next;
-		}
+		pile = pile->next;
 	}
 }
 
