@@ -115,8 +115,8 @@ int	ft_check_percent(t_pile *pile, int (*function)(t_list *), int index)
 	p_a = function(*(pile->a));
 	p_b = function(*(pile->b));
 	if (!index)
-		return ((int )((p_a * 100) / (*(pile->ia)->len)));
+		return ((int )((p_a * 100) / (pile->ia->len)));
 	else
-		return ((int )((p_b * 100) / (*(pile->ib)->len)));
+		return ((int )((p_b * 100) / (pile->ib->len)));
 	return (0);
 }

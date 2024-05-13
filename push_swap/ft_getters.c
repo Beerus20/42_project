@@ -61,18 +61,3 @@ int	ft_get_value(t_list *pile, int index)
 	}
 	return (-1);
 }
-
-int	ft_get_pile_len(t_list *pile)
-{
-	t_list	*tmp;
-	int		r_len;
-
-	r_len = 0;
-	tmp = pile;
-	while (tmp)
-	{
-		r_len++;
-		tmp = tmp->next;
-	}
-	return (r_len);
-}

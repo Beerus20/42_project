@@ -76,14 +76,14 @@ void	ft_transform_value(t_pile *pile)
 {
 	int	*tmp;
 
-	tmp = (int *)malloc(sizeof(int) * (*pile->ia->len));
+	tmp = (int *)malloc(sizeof(int) * (pile->ia->len));
 	if (!tmp)
 		exit(1);
 	ft_add_to_tab(*pile->a, tmp);
 	// ft_show_test(*pile->a, tmp);
-	ft_simple_arrange(tmp, *pile->ia->len);
+	ft_simple_arrange(tmp, pile->ia->len);
 	// ft_show_test(*pile->a, tmp);
-	ft_apply_change(*pile->a, tmp, *pile->ia->len);
+	ft_apply_change(*pile->a, tmp, pile->ia->len);
 	// ft_show_test(*pile->a, tmp);
 	ft_update_info(pile);
 	free(tmp);

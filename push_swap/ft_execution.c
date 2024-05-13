@@ -131,8 +131,6 @@ int	exec(t_pile *pile, char *action)
 		}
 		else
 			ft_exec_rev_rotate(pile, action[index + 2]);
-		ft_free_info(pile->ia);
-		ft_free_info(pile->ib);
 		ft_update_info(pile);
 		if (DEBUG)
 		{

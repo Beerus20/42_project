@@ -1,13 +1,26 @@
 #include "push_swap.h"
 
-t_list	*ft_init_list()
+int	ft_get_list_len(t_list *pile)
+{
+	int	i;
+
+	i = 0;
+	while (pile)
+	{
+		pile = pile->next;
+		i++;
+	}
+	return (i);
+}
+
+t_list	*ft_init_list(int value)
 {
 	t_list	*r_list;
 
 	r_list = (t_list *)malloc(sizeof(t_list));
 	if (!r_list)
 		exit(1);
-	r_list->content = -1;
+	r_list->content = value;
 	r_list->next = NULL;
 	return (r_list);
 }
@@ -17,7 +30,7 @@ void	ft_add_back(t_list **pile, t_list *new)
 	t_list	*tmp_list;
 	t_list	*tmp;
 
-	tmp = ft_init_list();
+	tmp = ft_init_list(-1);
 	tmp_list = *pile;
 	if (tmp_list)
 	{
@@ -43,7 +56,7 @@ void	ft_pop(t_list **pile)
 	{
 		to_free = NULL;
 		tmp = *pile;
-		len = ft_get_pile_len(*pile);
+		len = ft_get_list_len(*pile);
 		if (len == 1)
 		{
 			free(*pile);

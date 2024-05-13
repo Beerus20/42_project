@@ -29,30 +29,33 @@ void	ft_show_info(t_pile pile)
 {
 	ft_printf("\033[0;33mPILE INFO : \033[0;0m\n");
 	if ((pile.ia)->first)
-		ft_printf("\033[0;0m- FIRST		: \033[0;31m[%d] ", *((pile.ia)->first));
+		ft_printf("\033[0;0m- FIRST		: \033[0;31m[%d] ", pile.ia->first);
 	if ((pile.ib)->first)
-		ft_printf(" [%d]\033[0;0m", *((pile.ib)->first));
+		ft_printf(" [%d]\033[0;0m", pile.ib->first);
 	ft_printf("\n");
 	if ((pile.ia)->second)
-		ft_printf("\033[0;0m- SECOND	: \033[0;31m[%d] ", *((pile.ia)->second));
+		ft_printf("\033[0;0m- SECOND	: \033[0;31m[%d] ", pile.ia->second);
 	if ((pile.ib)->second)
-		ft_printf(" [%d]\033[0;0m", *((pile.ib)->second));
+		ft_printf(" [%d]\033[0;0m", pile.ib->second);
 	ft_printf("\n");
 	if ((pile.ia)->last)
-		ft_printf("\033[0;0m- LAST		: \033[0;31m[%d] ", *((pile.ia)->last));
+		ft_printf("\033[0;0m- LAST		: \033[0;31m[%d] ", pile.ia->last);
 	if ((pile.ib)->last)
-		ft_printf(" [%d]\033[0;0m", *((pile.ib)->last));
+		ft_printf(" [%d]\033[0;0m", pile.ib->last);
 	ft_printf("\033[0;0m\n");
-	ft_printf("- LEN		: \033[0;31m[%d]  [%d]\033[0;0m\n", *((pile.ia)->len), *((pile.ib)->len));
+	ft_printf("- LEN		: \033[0;31m[%d]  [%d]\033[0;0m\n", pile.ia->len, pile.ib->len);
 	ft_printf("		  \033[0;32m[A]  [B]\033[0;0m\n");
 }
 
 void	ft_show_pile(t_list *pile)
 {
-	while (pile)
+	t_list	*tmp;
+
+	tmp = pile;
+	while (tmp)
 	{
-		ft_printf(" [%d]\n", pile->content);
-		pile = pile->next;
+		ft_printf(" [%d]\n", tmp->content);
+		tmp = tmp->next;
 	}
 	ft_printf("  _\n");
 	ft_printf("  A\n\n");

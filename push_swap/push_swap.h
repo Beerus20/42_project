@@ -17,10 +17,10 @@ typedef struct s_list
 
 typedef struct s_info
 {
-	int	*first;
-	int	*second;
-	int	*last;
-	int	*len;
+	int	first;
+	int	second;
+	int	last;
+	int	len;
 }	t_info;
 
 typedef struct s_pile
@@ -42,10 +42,6 @@ void	ft_rev_rotate(t_list **pile);
 
 /**	_________________ INFO _________________ **/
 t_list	*ft_get_last(t_list *pile);
-int		ft_get_list_len(t_list *pile);
-void	ft_get_fpile(t_list **pile, t_info *info);
-void	ft_get_salpile(t_list **pile, t_info *info);
-void	ft_init_info(t_info *pile);
 void	ft_get_info(t_list **pile, t_info *info);
 void	ft_update_info(t_pile *pile);
 int		ft_info(t_info info, int id);
@@ -60,12 +56,13 @@ void	ft_show_test(t_list *pile, int *tab);
 void	ft_show_diff(t_list *pile, t_list *tmp_pile);
 
 /**	_________________ LIST UTILS _________________ **/
-t_list	*ft_init_list();
+t_list	*ft_init_list(int value);
+int		ft_get_list_len(t_list *pile);
 void	ft_pop(t_list **pile);
 void	ft_add_back(t_list **pile, t_list *new);
 
 /**	_________________ FREE _________________ **/
-void	ft_free_info(t_info *info);
+void	ft_free_list(t_list *pile);
 void	ft_free(t_list **pile);
 void	ft_free_pile(t_pile *pile);
 
@@ -90,7 +87,6 @@ int		ft_get_min_value(t_list *pile);
 int		ft_get_max_value(t_list *pile);
 int		ft_get_value(t_list *pile, int index);
 int		ft_get_index(t_list *pile, int value);
-int		ft_get_pile_len(t_list *pile);
 
 /**	_________________ ACTION _________________ **/
 int		ft_arrange(t_pile *pile);
@@ -101,4 +97,15 @@ int		ft_action(t_pile *pile, int min, int max);
 /**	_________________ ACTION _________________ **/
 void	ft_add_to_a(t_pile *pile);
 void	ft_add_to_b(t_pile *pile);
+
+/**	_________________ INCREASE_UTILS _________________ **/
+t_list	*ft_upper_nb(t_list *pile, int value);
+int		ft_get_maxv_tab(int *tab, int len);
+int		*ft_init_ids(int nb);
+int		*ft_init_tab(t_list *pile);
+int		*ft_get_tab_ids(t_list *pile);
+
+/**	_________________ INCREASE _________________ **/
+int		ft_check_begin_max_increase(t_list *pile);
+t_list	*ft_get_increase_list(t_list *pile);
 #endif

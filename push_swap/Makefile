@@ -12,6 +12,8 @@ FILES	= \
 	ft_getters.c		\
 	ft_add_stack.c		\
 	ft_list_utils.c		\
+	ft_increase.c		\
+	ft_increase_utils.c	\
 	ft_utils.c
 
 # FUNCS		= $(FILES:%.c=./movement/%.c)

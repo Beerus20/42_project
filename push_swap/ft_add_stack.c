@@ -5,11 +5,11 @@ void	ft_add_to_a(t_pile *pile)
 	int	behind;
 	int	value;
 
-	behind = ft_get_position(*pile->a, *pile->ib->first, 1);
+	behind = ft_get_position(*pile->a, pile->ib->first, 1);
 	value = ft_get_value(*pile->a, behind);
-	while (*pile->ia->first != value)
+	while (pile->ia->first != value)
 	{
-		if (behind >= *pile->ib->len / 2)
+		if (behind >= pile->ib->len / 2)
 			exec(pile, "rra");
 		else
 			exec(pile, "ra");
@@ -27,11 +27,11 @@ void	ft_add_to_b(t_pile *pile)
 		exec(pile, "pb");
 		return ;
 	}
-	front = ft_get_position(*pile->b, *pile->ia->first, 0);
+	front = ft_get_position(*pile->b, pile->ia->first, 0);
 	value = ft_get_value(*pile->b, front);
-	while (*pile->ib->first != value)
+	while (pile->ib->first != value)
 	{
-		if (front >= *pile->ib->len / 2)
+		if (front >= pile->ib->len / 2)
 			exec(pile, "rrb");
 		else
 			exec(pile, "rb");
@@ -44,12 +44,12 @@ void	ft_add_to_b(t_pile *pile)
 // 	int	front_b;
 // 	int	behind_a;
 
-// 	front_b = ft_get_position(*pile->b, *pile->ia->first, 0);
-// 	behind_a = ft_get_position(*pile->a, *pile->ib->first, 1);
-// 	if (front_b > *pile->ib->len / 2)
-// 		front_b = *pile->ib->len - front_b;
-// 	if (behind_a > *pile->ia->len / 2)
-// 		behind_a = *pile->ia->len - behind_a;
+// 	front_b = ft_get_position(*pile->b, pile->ia->first, 0);
+// 	behind_a = ft_get_position(*pile->a, pile->ib->first, 1);
+// 	if (front_b > pile->ib->len / 2)
+// 		front_b = pile->ib->len - front_b;
+// 	if (behind_a > pile->ia->len / 2)
+// 		behind_a = pile->ia->len - behind_a;
 // 	// ft_printf("VALUE	: \nFRONT	: [%d]\nBEHIND	: [%d]\n\n", front_b, behind_a);
 // 	if (front_b < behind_a)
 // 		ft_add_to_b(pile);
