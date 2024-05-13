@@ -58,6 +58,23 @@ void	ft_show_pile(t_list *pile)
 	ft_printf("  A\n\n");
 }
 
+void	ft_show_diff(t_list *pile, t_list *tmp_pile)
+{
+	while (pile)
+	{
+		if (tmp_pile && pile->content == tmp_pile->content)
+		{
+			ft_printf(" \033[0;31m[%d]\033[0;0m\n", pile->content);
+			tmp_pile = tmp_pile->next;
+		}
+		else
+			ft_printf(" [%d]\n", pile->content);
+		pile = pile->next;
+	}
+	ft_printf("  _\n");
+	ft_printf("  A\n\n");
+}
+
 void	ft_show_test(t_list *pile, int *tab)
 {
 	int	i;
