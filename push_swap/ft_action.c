@@ -99,6 +99,18 @@ int	ft_isclean(t_list *pile, t_list *ref)
 	return (1);
 }
 
+int	ft_check_classement(t_list *ref, int value)
+{
+
+	return (0);
+}
+
+int	ft_check_highter_classement(t_list *pile, t_list *ref)
+{
+
+	return (0);
+}
+
 int	ft_action(t_pile *pile, t_list *ref)
 {
 	while (!ft_isclean(*pile->a, ref))
