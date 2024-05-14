@@ -25,6 +25,21 @@ t_list	*ft_init_list(int value)
 	return (r_list);
 }
 
+void	ft_add_front(t_list **pile, t_list *new)
+{
+	new->next = *pile;
+	*pile = new;
+}
+
+void	ft_del_front(t_list **pile)
+{
+	t_list	*tmp;
+
+	tmp = *pile;
+	*pile = tmp->next;
+	free(tmp);
+}
+
 void	ft_add_back(t_list **pile, t_list *new)
 {
 	t_list	*tmp_list;

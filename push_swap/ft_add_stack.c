@@ -1,5 +1,34 @@
 #include "push_swap.h"
 
+void	ft_move_a(t_pile *pile, t_list *list)
+{
+	int	min;
+	int	max;
+	int	p_min;
+	int	p_max;
+
+	min = ft_get_min_value(list);
+	min = ft_get_max_value(list);
+	p_min = ft_get_index(*pile->b, min);
+	p_max = ft_get_index(*pile->b, max);
+	if (p_min > pile->ib->len / 2)
+		p_min = pile->ib->len - p_min;
+	if (p_max > pile->ib->len / 2)
+		p_max = pile->ib->len - p_max;
+	if (p_min != -1 && p_min > p_max)
+	{
+		while (pile->ib->first != p_min)
+			exec(pile, "rb");
+		exec(pile, "pa");
+	}
+	if (p_max != -1 && p_min < p_max)
+	{
+		while (pile->ib->first != p_max)
+			exec(pile, "rb");
+		exec(pile, "pa");
+	}
+}
+
 void	ft_add_to_a(t_pile *pile)
 {
 	int	behind;
@@ -9,7 +38,7 @@ void	ft_add_to_a(t_pile *pile)
 	value = ft_get_value(*pile->a, behind);
 	while (pile->ia->first != value)
 	{
-		if (behind >= pile->ib->len / 2)
+		if (behind <= pile->ib->len / 2)
 			exec(pile, "rra");
 		else
 			exec(pile, "ra");

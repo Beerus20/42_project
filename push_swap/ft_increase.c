@@ -116,18 +116,13 @@ t_list	*ft_get_cleaned_list(t_list *pile)
 	return (r_value);
 }
 
-t_list	*ft_get_increase_list(t_list *pile)
+t_list	*ft_get_increase(t_list *pile)
 {
-	int	begin;
 	int	end;
 	int	len;
 	int	index;
 	int	*tab;
 
-	begin = ft_check_begin_max_increase(pile);
-	while (pile->content != begin)
-		pile = pile->next;
-	pile = ft_upper_nb(pile, begin);
 	len = ft_get_list_len(pile);
 	tab = ft_get_tab_ids(pile);
 	end = ft_get_maxv_tab(tab, len);
@@ -137,7 +132,17 @@ t_list	*ft_get_increase_list(t_list *pile)
 		ft_clean_tab(pile, tab, index, ft_get_value(pile, index));
 		end--;
 	}
-	// ft_show_pile(pile);
 	free(tab);
 	return (ft_get_cleaned_list(pile));
+}
+
+t_list	*ft_get_max_increase(t_list *pile)
+{
+	int	begin;
+
+	begin = ft_check_begin_max_increase(pile);
+	while (pile->content != begin)
+		pile = pile->next;
+	pile = ft_upper_nb(pile, begin);
+	return (ft_get_increase(pile));
 }
