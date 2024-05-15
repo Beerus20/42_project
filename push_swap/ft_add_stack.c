@@ -2,26 +2,23 @@
 
 void	ft_apply_up(t_pile *pile, t_list *s_ref, int stop)
 {
-	while (ft_isclean(*pile->a, s_ref) && pile->ia->first != stop)
+	while (!ft_isclean(*pile->a, s_ref) && pile->ia->first != stop)
 	{
-		if (s_ref->content != pile->ia->first)
+		if (!ft_search(s_ref, pile->ia->first))
 			exec(pile, "ra");
 		else
-		{
 			exec(pile, "pb");
-			s_ref = s_ref->next;
-		}
 	}
 }
 
 void	ft_apply_down(t_pile *pile, t_list *s_ref, int stop)
 {
-	while (ft_isclean(*pile->a, s_ref) && pile->ia->last != stop)
+	while (!ft_isclean(*pile->a, s_ref) && pile->ia->last != stop)
 	{
-		if (ft_search(s_ref, pile->ia->last))
-			exec(pile, "rra pb");
-		else
+		if (!ft_search(s_ref, pile->ia->last))
 			exec(pile, "rra");
+		else
+			exec(pile, "rra pb");
 	}
 }
 
@@ -51,7 +48,7 @@ void	ft_move_to_b(t_pile *pile, t_list *ref)
 			ft_apply_down(pile, tmp, ref_stop);
 		i++;
 	}
-	// exec(pile, "pb");
+	exec(pile, "pb");
 	// while (class_id < len_class)
 	// {
 

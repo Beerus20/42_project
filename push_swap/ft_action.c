@@ -87,14 +87,11 @@ int	ft_arrange(t_pile *pile)
 
 int	ft_isclean(t_list *pile, t_list *ref)
 {
-	t_list	*tmp;
-
-	tmp = pile;
-	while (tmp)
+	while (pile)
 	{
-		if (!ft_search(ref, tmp->content))
+		if (ft_search(ref, pile->content))
 			return (0);
-		tmp = tmp->next;
+		pile = pile->next;
 	}
 	return (1);
 }
@@ -156,8 +153,8 @@ int	ft_action(t_pile *pile, t_list *ref)
 	{
 		if (!ft_search(ref, (*pile->a)->content))
 		{
-			ft_move_to_b(pile, ref);
-			// exec(pile, "pb");
+			// ft_move_to_b(pile, ref);
+			exec(pile, "pb");
 		}
 		else
 		{

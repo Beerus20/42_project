@@ -149,10 +149,21 @@ int	main(int argc, const char **argv)
 	pile = ft_init_piles(argc, argv);
 	ft_transform_value(pile);
 	ft_show(*pile);
-	result = ft_get_max_increase(*pile->a);
-	ft_show_diff(*pile->a, result);
+	result = ft_init_list(2);
+	ft_add_back(&result, ft_init_list(4));
+	ft_add_back(&result, ft_init_list(3));
+	ft_show_pile(result);
+	ft_apply_up(pile, result, 0);
+	ft_show(*pile);
+	result = ft_init_list(5);
+	ft_add_back(&result, ft_init_list(1));
+	ft_apply_up(pile, result, 0);
+	ft_apply_down(pile, result, 0);
+	ft_show(*pile);
+	// result = ft_get_max_increase(*pile->a);
+	// ft_show_diff(*pile->a, result);
 	// *pile->a = ft_get_sub_list_sup(*pile->a, 15, 7, -1);
-	ft_analysies(pile, result);
+	// ft_analysies(pile, result);
 	// result = ft_get_sub_list_sup(*pile->a, )
 	ft_free_list(result);
 	ft_free_pile(pile);
