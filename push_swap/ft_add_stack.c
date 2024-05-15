@@ -1,5 +1,65 @@
 #include "push_swap.h"
 
+void	ft_apply_up(t_pile *pile, t_list *s_ref, int stop)
+{
+	while (ft_isclean(*pile->a, s_ref) && pile->ia->first != stop)
+	{
+		if (s_ref->content != pile->ia->first)
+			exec(pile, "ra");
+		else
+		{
+			exec(pile, "pb");
+			s_ref = s_ref->next;
+		}
+	}
+}
+
+void	ft_apply_down(t_pile *pile, t_list *s_ref, int stop)
+{
+	while (ft_isclean(*pile->a, s_ref) && pile->ia->last != stop)
+	{
+		if (ft_search(s_ref, pile->ia->last))
+			exec(pile, "rra pb");
+		else
+			exec(pile, "rra");
+	}
+}
+
+void	ft_move_to_b(t_pile *pile, t_list *ref)
+{
+	t_list	*tmp;
+	int		class_value;
+	int		class_id;
+	int		i;
+	int		stop;
+	int		ref_stop;
+
+	i = 0;
+	ref_stop = ft_get_last(ref)->content;
+	class_id = ft_check_ref(*pile->a, ref);
+	stop = ft_get_value(ref, class_id);
+	ft_printf("STOP ================= [%d]\n", stop);
+	while (i < class_id)
+	{
+		class_value = ft_get_value(ref, i);
+		tmp = ft_get_sub_list_inf(*pile->a, pile->ia->first, stop, class_value);
+		if (tmp->content != -1)
+			ft_apply_up(pile, tmp, stop);
+		free(tmp);
+		tmp = ft_get_sub_list_inf(*pile->a, ref_stop, pile->ia->last, class_value);
+		if (tmp->content != -1)
+			ft_apply_down(pile, tmp, ref_stop);
+		i++;
+	}
+	// exec(pile, "pb");
+	// while (class_id < len_class)
+	// {
+
+	// 	class_id++;
+	// }
+}
+
+
 void	ft_move_a(t_pile *pile, t_list *list)
 {
 	int	min;

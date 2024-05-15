@@ -49,8 +49,6 @@ t_list	*ft_get_sub_list_inf(t_list *pile, int begin, int end, int value)
 	}
 	if (pile && pile->content == end)
 		tmp->content = end;
-	else
-		free(tmp);
 	return (r_value);
 }
 
@@ -76,8 +74,6 @@ t_list	*ft_get_sub_list_sup(t_list *pile, int begin, int end, int value)
 	}
 	if (pile && pile->content == end)
 		tmp->content = end;
-	else
-		free(tmp);
 	return (r_value);
 }
 
@@ -135,7 +131,7 @@ void	ft_analysies(t_pile *pile, t_list *ref)
 	// 	}
 	// }
 	ft_action(pile, ref);
-	ft_show(*pile);
+	// ft_show(*pile);
 }
 
 // void	launch(t_pile *pile, t_list *ref)
@@ -155,6 +151,7 @@ int	main(int argc, const char **argv)
 	ft_show(*pile);
 	result = ft_get_max_increase(*pile->a);
 	ft_show_diff(*pile->a, result);
+	// *pile->a = ft_get_sub_list_sup(*pile->a, 15, 7, -1);
 	ft_analysies(pile, result);
 	// result = ft_get_sub_list_sup(*pile->a, )
 	ft_free_list(result);

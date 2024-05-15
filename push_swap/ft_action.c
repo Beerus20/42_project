@@ -101,32 +101,68 @@ int	ft_isclean(t_list *pile, t_list *ref)
 
 int	ft_check_classement(t_list *ref, int value)
 {
+	int i;
 
-	return (0);
+	i = 0;
+	while (ref)
+	{
+		if (value < ref->content)
+			return (i);
+		i++;
+		ref = ref->next;
+	}
+	return (i);
 }
 
-int	ft_check_highter_classement(t_list *pile, t_list *ref)
+int	*ft_get_classements(t_list *s_pile, t_list *ref)
 {
+	int	*tab;
+	int	len;
+	int	i;
 
-	return (0);
+	i = 0;
+	len = ft_get_list_len(ref);
+	tab = (int *)malloc(sizeof(int) * (len + 1));
+	if (!tab)
+		exit(1);
+	while (i < len + 1)
+		tab[i++] = 0;
+	while (s_pile)
+	{
+		if (!ft_search(ref, s_pile->content))
+			tab[ft_check_classement(ref, s_pile->content)]++;
+		s_pile = s_pile->next;
+	}
+	// ft_show_tab(tab, len + 1);
+	return (tab);
 }
+
+int	ft_check_ref(t_list *pile, t_list *ref)
+{
+	while (pile)
+	{
+		if (ft_search(ref, pile->content))
+			return (ft_get_index(ref, pile->content));
+		pile = pile->next;
+	}
+	return (ft_get_list_len(ref) - 1);
+}t_list	*ft_get_sub_list_sup(t_list *pile, int begin, int end, int value);
 
 int	ft_action(t_pile *pile, t_list *ref)
 {
+	t_list	*tmp;
+
 	while (!ft_isclean(*pile->a, ref))
 	{
 		if (!ft_search(ref, (*pile->a)->content))
 		{
-			// while (pile->ia->first > ft_get_last(ref)->content)
-			// {
-			// 	ft_add_back(&ref, ft_init_list(pile->ia->first));
-			// 	exec(pile, "ra");
-			// 	ft_show_pile(ref);
-			// }
-			exec(pile, "pb");
+			ft_move_to_b(pile, ref);
+			// exec(pile, "pb");
 		}
 		else
+		{
 			exec(pile, "ra");
+		}
 	}
 	return (0);
 }

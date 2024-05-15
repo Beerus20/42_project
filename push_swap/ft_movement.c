@@ -59,7 +59,7 @@ void	ft_rev_rotate(t_list **pile)
 	t_list	*start;
 
 	tmp = *pile;
-	if (tmp->next)
+	if (tmp && tmp->next)
 	{
 		while (tmp->next)
 		{

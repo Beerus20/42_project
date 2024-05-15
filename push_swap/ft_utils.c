@@ -1,5 +1,17 @@
 #include "push_swap.h"
 
+void	ft_show_tab(int *tab, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		ft_printf("tab[%d]	: [%d]\n", i, tab[i]);
+		i++;
+	}
+}
+
 void	ft_show(t_pile pile)
 {
 	t_list	*tmp_a;
