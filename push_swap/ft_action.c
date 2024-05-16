@@ -85,11 +85,13 @@ int	ft_arrange(t_pile *pile)
 	return (0);
 }
 
-int	ft_isclean(t_list *pile, t_list *ref)
+int	ft_isclean(t_list *pile, t_list *ref, int inv)
 {
 	while (pile)
 	{
-		if (ft_search(ref, pile->content))
+		if (!inv && !ft_search(ref, pile->content))
+			return (0);
+		if (inv && ft_search(ref, pile->content))
 			return (0);
 		pile = pile->next;
 	}
@@ -111,26 +113,45 @@ int	ft_check_classement(t_list *ref, int value)
 	return (i);
 }
 
-int	*ft_get_classements(t_list *s_pile, t_list *ref)
+t_list	*ft_get_section(t_list *pile, t_list *ref, int class_id)
 {
-	int	*tab;
-	int	len;
-	int	i;
+	t_list	*r_value;
+
+	r_value = NULL;
+	while (pile)
+	{
+		if (ft_check_classement(ref, pile->content) == class_id)
+			if (!ft_search(ref, pile->content))
+				ft_add_back(&r_value, pile);
+		pile = pile->next;
+	}
+	return (r_value);
+}
+
+t_list	**ft_get_classements(t_list *s_pile, t_list *ref)
+{
+	t_list	**tab;
+	int		len;
+	int		i;
 
 	i = 0;
 	len = ft_get_list_len(ref);
-	tab = (int *)malloc(sizeof(int) * (len + 1));
+	tab = (t_list **)malloc(sizeof(t_list *) * (len + 1));
 	if (!tab)
 		exit(1);
 	while (i < len + 1)
-		tab[i++] = 0;
+		tab[i++] = NULL;
 	while (s_pile)
 	{
 		if (!ft_search(ref, s_pile->content))
-			tab[ft_check_classement(ref, s_pile->content)]++;
+			ft_add_back(&tab[ft_check_classement(ref, s_pile->content)], s_pile);
 		s_pile = s_pile->next;
 	}
-	// ft_show_tab(tab, len + 1);
+	for (size_t j = 0; j < len + 1; j++)
+	{
+		ft_printf("case [%d] :\n", j);
+		ft_show_pile(tab[j]);
+	}
 	return (tab);
 }
 
@@ -143,23 +164,20 @@ int	ft_check_ref(t_list *pile, t_list *ref)
 		pile = pile->next;
 	}
 	return (ft_get_list_len(ref) - 1);
-}t_list	*ft_get_sub_list_sup(t_list *pile, int begin, int end, int value);
+}
 
 int	ft_action(t_pile *pile, t_list *ref)
 {
 	t_list	*tmp;
+	int		stop;
 
-	while (!ft_isclean(*pile->a, ref))
+	stop = ft_get_last(ref)->content;
+	while (!ft_isclean(*pile->a, ref, 0) && pile->ia->first != stop)
 	{
 		if (!ft_search(ref, (*pile->a)->content))
-		{
-			// ft_move_to_b(pile, ref);
-			exec(pile, "pb");
-		}
+			ft_move_to_b(pile, ref);
 		else
-		{
-			exec(pile, "ra");
-		}
+			ft_move_to_a(pile, ref);
 	}
 	return (0);
 }

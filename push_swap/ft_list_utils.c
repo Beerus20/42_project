@@ -1,5 +1,27 @@
 #include "push_swap.h"
 
+void	ft_del_list_value(t_list **list, int value)
+{
+	t_list	*tmp;
+	t_list	*prev;
+	t_list	*to_free;
+
+	prev = NULL;
+	to_free = NULL;
+	tmp = *list;
+	while (tmp->content != value)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	to_free = tmp;
+	if (prev == NULL)
+		*list = tmp->next;
+	else
+		prev->next = tmp->next;
+	free(to_free);
+}
+
 int	ft_get_list_len(t_list *pile)
 {
 	int	i;

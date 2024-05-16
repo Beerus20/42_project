@@ -114,24 +114,10 @@ void	ft_ajust(t_pile *pile, t_list *ref)
 
 void	ft_analysies(t_pile *pile, t_list *ref)
 {
-	t_list	*first;
-
-	first = NULL;
-	ft_ajust(pile, ref);
-	// if (*pile->b)
-	// {
-	// 	first = ft_get_sub_list_inf(*pile->b, pile->ib->first, pile->ib->last, ref->content);
-	// 	if (first->content != -1)
-	// 	{
-	// 		while (first->content != -1)
-	// 		{
-	// 			ft_move_a(pile, first);
-	// 			first = ft_get_sub_list_inf(*pile->b, pile->ib->first, pile->ib->last, ref->content);
-	// 		}
-	// 	}
-	// }
+	// ft_ajust(pile, ref);
+	ft_move_to_b(pile, ref);
+	ft_move_to_a(pile, ref);
 	ft_action(pile, ref);
-	// ft_show(*pile);
 }
 
 // void	launch(t_pile *pile, t_list *ref)
@@ -139,33 +125,41 @@ void	ft_analysies(t_pile *pile, t_list *ref)
 
 // }
 
-int	main(int argc, const char **argv)
+void	test(int argc, const char **argv)
 {
-	int		i;
 	t_pile	*pile;
 	t_list	*result;
 
-	i = 0;
 	pile = ft_init_piles(argc, argv);
 	ft_transform_value(pile);
 	ft_show(*pile);
-	result = ft_init_list(2);
-	ft_add_back(&result, ft_init_list(4));
-	ft_add_back(&result, ft_init_list(3));
-	ft_show_pile(result);
-	ft_apply_up(pile, result, 0);
+	result = ft_init_list(3);
+	ft_add_back(&result, ft_init_list(7));
+	ft_add_back(&result, ft_init_list(10));
+	ft_show_diff(*pile->a, result);
+	ft_move_to_b(pile, result);
+	ft_move_to_a(pile, result);
 	ft_show(*pile);
-	result = ft_init_list(5);
-	ft_add_back(&result, ft_init_list(1));
-	ft_apply_up(pile, result, 0);
-	ft_apply_down(pile, result, 0);
-	ft_show(*pile);
+	// ft_printf("SUB	:\n");
+	// ft_show_pile(ft_get_section(*pile->a, result, ft_get_index(result, 3)));
+	// ft_show_pile(ft_get_section(*pile->a, result, ft_get_index(result, 7)));
+	// ft_get_classements(*pile->a, result);
+}
+
+int	main(int argc, const char **argv)
+{
+	t_pile	*pile;
+	t_list	*result;
+
+	pile = ft_init_piles(argc, argv);
+	ft_transform_value(pile);
+	// ft_show(*pile);
 	// result = ft_get_max_increase(*pile->a);
 	// ft_show_diff(*pile->a, result);
-	// *pile->a = ft_get_sub_list_sup(*pile->a, 15, 7, -1);
+	test(argc, argv);
 	// ft_analysies(pile, result);
 	// result = ft_get_sub_list_sup(*pile->a, )
-	ft_free_list(result);
+	// ft_free_list(result);
 	ft_free_pile(pile);
 	return (0);
 }
