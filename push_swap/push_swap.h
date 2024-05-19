@@ -94,6 +94,7 @@ int		ft_get_index(t_list *pile, int value);
 /**	_________________ ACTION _________________ **/
 int		ft_isclean(t_list *pile, t_list *ref, int inv);
 int		ft_check_ref(t_list *pile, t_list *ref);
+int		ft_check_classement(t_list *ref, int value);
 t_list	*ft_get_section(t_list *pile, t_list *ref, int class_id);
 t_list	**ft_get_classements(t_list *s_pile, t_list *ref);
 int		ft_search(t_list *pile, int value);

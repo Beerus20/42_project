@@ -147,11 +147,11 @@ t_list	**ft_get_classements(t_list *s_pile, t_list *ref)
 			ft_add_back(&tab[ft_check_classement(ref, s_pile->content)], s_pile);
 		s_pile = s_pile->next;
 	}
-	for (size_t j = 0; j < len + 1; j++)
-	{
-		ft_printf("case [%d] :\n", j);
-		ft_show_pile(tab[j]);
-	}
+	// for (size_t j = 0; j < len + 1; j++)
+	// {
+	// 	ft_printf("case [%d] :\n", j);
+	// 	ft_show_pile(tab[j]);
+	// }
 	return (tab);
 }
 
@@ -172,12 +172,18 @@ int	ft_action(t_pile *pile, t_list *ref)
 	int		stop;
 
 	stop = ft_get_last(ref)->content;
-	while (!ft_isclean(*pile->a, ref, 0) && pile->ia->first != stop)
+	while (!ft_isclean(*pile->a, ref, 0) /* && pile->ia->first != stop */)
 	{
 		if (!ft_search(ref, (*pile->a)->content))
-			ft_move_to_b(pile, ref);
+		{
+			// ft_move_to_b(pile, ref);
+			exec(pile, "pb");
+		}
 		else
-			ft_move_to_a(pile, ref);
+		{
+			// ft_move_to_a(pile, ref);
+			exec(pile, "ra");
+		}
 	}
 	return (0);
 }

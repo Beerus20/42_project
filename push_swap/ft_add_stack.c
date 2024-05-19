@@ -2,10 +2,28 @@
 
 void	ft_b_action(t_pile *pile, t_list *ref)
 {
+	t_list	*tmp_b;
+	int		value_class;
+	int		i;
+	int		position;
 
+	position = -1;
+	tmp_b = *pile->b;
+	value_class = ft_check_classement(ref, pile->ia->first);
+	while (tmp_b)
+	{
+		if (ft_check_classement(ref, tmp_b->content) == value_class)
+		{
+			while (pile->ib->first != tmp_b->content)
+				exec(pile, "ra");
+			break ;
+		}
+		tmp_b = tmp_b->next;
+	}
+	exec(pile, "pb");
 }
 
-void	ft_apply_(t_pile *pile, t_list *s_ref)
+void	ft_apply_(t_pile *pile, t_list *ref, t_list *s_ref)
 {
 	int	position;
 	int	len;
@@ -16,36 +34,67 @@ void	ft_apply_(t_pile *pile, t_list *s_ref)
 	{
 		len = ft_get_list_len(*pile->a);
 		position = ft_get_index(*pile->a, s_ref->content);
-		while (pile->ia->first != s_ref->content)
-		{
-			request(pile, position <= len / 2, "ra");
-			request(pile, position > len / 2, "rra");
-		}
+		// while (pile->ia->first != s_ref->content)
+		// {
+		// 	request(pile, position <= len / 2, "ra");
+		// 	request(pile, position > len / 2, "rra");
+		// }
 		s_ref = s_ref->next;
+		ft_b_action(pile, ref);
 		exec(pile, "pb");
 	}
+}
+
+int	ft_get_ref_val_last(t_list *pile, t_list *ref)
+{
+	int	r_value;
+
+	r_value = -1;
+	while (pile)
+	{
+		if (ft_search(ref, pile->content))
+			r_value = pile->content;
+		pile = pile->next;
+	}
+	return (r_value);
+}
+
+t_list	*ft_get_sub_ref(t_pile *pile, t_list *ref)
+{
+	t_list	*r_value;
+	t_list	*up;
+	t_list	*down;
+	int		stop;
+	int		class_id;
+
+	class_id = ft_check_ref(*pile->a, ref);
+	stop = ft_get_value(ref, class_id);
+	up = ft_get_sub_list_sup(*pile->a, pile->ia->first, stop, -1);
+	down = ft_get_sub_list_sup(*pile->a, ft_get_ref_val_last(*pile->a, ref), pile->ia->last, -1);
+	r_value = up;
+	while (up->next)
+		up = up->next;
+	up->next = down;
+	return (r_value);
 }
 
 void	ft_move_to_b(t_pile *pile, t_list *ref)
 {
 	t_list	*tmp;
 	t_list	**classments;
-	int		class_id;
 	int		i;
-	int		stop;
 	int		len_ref;
+	int		class_id;
 
 	len_ref = ft_get_list_len(ref) + 1;
 	class_id = ft_check_ref(*pile->a, ref);
 	i = class_id;
-	stop = ft_get_value(ref, class_id);
-
-	tmp = ft_get_sub_list_sup(*pile->a, pile->ia->first, stop, -1);
+	tmp = ft_get_sub_ref(pile, ref);
 	classments = ft_get_classements(tmp, ref);
 	while (i--)
-		ft_apply_(pile, classments[i]);
+		ft_apply_(pile, ref, classments[i]);
 	while (len_ref-- > class_id)
-		ft_apply_(pile, classments[len_ref]);
+		ft_apply_(pile, ref, classments[len_ref]);
 }
 
 

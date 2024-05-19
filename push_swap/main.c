@@ -115,8 +115,8 @@ void	ft_ajust(t_pile *pile, t_list *ref)
 void	ft_analysies(t_pile *pile, t_list *ref)
 {
 	// ft_ajust(pile, ref);
-	ft_move_to_b(pile, ref);
-	ft_move_to_a(pile, ref);
+	// ft_move_to_b(pile, ref);
+	// ft_move_to_a(pile, ref);
 	ft_action(pile, ref);
 }
 
@@ -139,7 +139,7 @@ void	test(int argc, const char **argv)
 	ft_show_diff(*pile->a, result);
 	ft_move_to_b(pile, result);
 	ft_move_to_a(pile, result);
-	ft_show(*pile);
+	// ft_show(*pile);
 	// ft_printf("SUB	:\n");
 	// ft_show_pile(ft_get_section(*pile->a, result, ft_get_index(result, 3)));
 	// ft_show_pile(ft_get_section(*pile->a, result, ft_get_index(result, 7)));
@@ -154,10 +154,10 @@ int	main(int argc, const char **argv)
 	pile = ft_init_piles(argc, argv);
 	ft_transform_value(pile);
 	// ft_show(*pile);
-	// result = ft_get_max_increase(*pile->a);
+	result = ft_get_max_increase(*pile->a);
 	// ft_show_diff(*pile->a, result);
-	test(argc, argv);
-	// ft_analysies(pile, result);
+	// test(argc, argv);
+	ft_analysies(pile, result);
 	// result = ft_get_sub_list_sup(*pile->a, )
 	// ft_free_list(result);
 	ft_free_pile(pile);
