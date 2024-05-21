@@ -1,5 +1,62 @@
 #include "push_swap.h"
 
+t_list	*ft_get_portion(t_list *pile, t_list *ref)
+{
+	t_list	*r_value;
+
+	r_value = NULL;
+	while (pile && ft_search(ref, pile->content) == -1)
+	{
+		ft_add_back_content(&r_value, pile->content);
+		pile = pile->next;
+	}
+	return (r_value);
+}
+
+t_list	*ft_sub_list(t_list *list, int begin, int end)
+{
+	t_list	*r_value;
+	int		subst;
+
+	r_value = NULL;
+	if (ft_get_index(list, end) < ft_get_index(list, begin))
+	{
+		subst = end;
+		end = begin;
+		begin = subst;
+	}
+	list = ft_move_to(list, begin);
+	while (list && list->content != end)
+	{
+		ft_add_back_content(&r_value, list->content);
+		list = list->next;
+	}
+	if (list && list->content == end)
+		ft_add_back_content(&r_value, list->content);
+	return (r_value);
+}
+
+t_list	*ft_sub_list_between(t_list *list, int a, int b)
+{
+	t_list	*r_value;
+	int		tmp;
+
+	r_value = NULL;
+	if (a > b)
+	{
+		tmp = a;
+		a = b;
+		b = tmp;
+	}
+	while (list)
+	{
+		if (list->content >= a && list->content <= b)
+			ft_add_back_content(&r_value, list->content);
+		list = list->next;
+	}
+	return (r_value);
+}
+
 void	ft_show_tab(int *tab, int len)
 {
 	int	i;
@@ -77,11 +134,8 @@ void	ft_show_diff(t_list *pile, t_list *tmp_pile)
 {
 	while (pile)
 	{
-		if (tmp_pile && pile->content == tmp_pile->content)
-		{
+		if (tmp_pile && ft_search(tmp_pile, pile->content) != -1)
 			ft_printf(" \033[0;31m[%d]\033[0;0m\n", pile->content);
-			tmp_pile = tmp_pile->next;
-		}
 		else
 			ft_printf(" [%d]\n", pile->content);
 		pile = pile->next;

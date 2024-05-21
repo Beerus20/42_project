@@ -140,9 +140,13 @@ t_list	*ft_get_max_increase(t_list *pile)
 {
 	int	begin;
 
-	begin = ft_check_begin_max_increase(pile);
-	while (pile->content != begin)
-		pile = pile->next;
-	pile = ft_upper_nb(pile, begin);
-	return (ft_get_increase(pile));
+	if (pile)
+	{
+		begin = ft_check_begin_max_increase(pile);
+		while (pile->content != begin)
+			pile = pile->next;
+		pile = ft_upper_nb(pile, begin);
+		return (ft_get_increase(pile));
+	}
+	return (NULL);
 }

@@ -47,6 +47,8 @@ void	ft_update_info(t_pile *pile);
 int		ft_info(t_info info, int id);
 
 /**	_________________ UTILS _________________ **/
+t_list	*ft_sub_list(t_list *list, int begin, int end);
+t_list	*ft_sub_list_between(t_list *list, int a, int b);
 int		request(t_pile *pile, int question, char *to_do);
 int		request_loop(t_pile *pile, int question, int nb_iter ,char *to_do);
 void	ft_show_info(t_pile pile);
@@ -55,14 +57,21 @@ void	ft_show_pile(t_list *pile);
 void	ft_show_test(t_list *pile, int *tab);
 void	ft_show_diff(t_list *pile, t_list *tmp_pile);
 void	ft_show_tab(int *tab, int len);
+
 /**	_________________ LIST UTILS _________________ **/
+t_list	*ft_get_portion(t_list *pile, t_list *ref);
+t_list	*ft_move_to(t_list *pile, int value);
 t_list	*ft_init_list(int value);
 int		ft_get_list_len(t_list *pile);
 void	ft_pop(t_list **pile);
 void	ft_add_front(t_list **pile, t_list *new);
 void	ft_del_front(t_list **pile);
+void	ft_add_back_content(t_list **pile, int value);
 void	ft_add_back(t_list **pile, t_list *new);
 void	ft_del_list_value(t_list **list, int value);
+void	ft_concat_list(t_list **a, t_list **b, t_list *s_a, t_list *s_b);
+
+
 
 /**	_________________ FREE _________________ **/
 void	ft_free_list(t_list *pile);
@@ -78,12 +87,7 @@ void	ft_init_pile(int argc, const char **argv, t_list **pile);
 t_pile	*ft_init_piles(int argc, const char **argv);
 
 /**	_________________ CHECK _________________ **/
-int		ft_check_isbigger(t_list *pile, int nb);
-int		ft_check_issmaller(t_list *pile, int nb);
 int		ft_check_increas(t_list *pile);
-int		ft_check_decreas(t_list *pile);
-int		ft_check_isalign(t_list *pile);
-int		ft_check_percent(t_pile *pile, int (*function)(t_list *), int index);
 
 /**	_________________ GETTERS _________________ **/
 int		ft_get_min_value(t_list *pile);
@@ -92,20 +96,22 @@ int		ft_get_value(t_list *pile, int index);
 int		ft_get_index(t_list *pile, int value);
 
 /**	_________________ ACTION _________________ **/
+<<<<<<< HEAD
 int		ft_isclean(t_list *pile, t_list *ref, int inv);
 int		ft_check_ref(t_list *pile, t_list *ref);
 int		ft_check_classement(t_list *ref, int value);
 t_list	*ft_get_section(t_list *pile, t_list *ref, int class_id);
 t_list	**ft_get_classements(t_list *s_pile, t_list *ref);
+=======
+>>>>>>> debug
 int		ft_search(t_list *pile, int value);
-int		ft_arrange(t_pile *pile);
-int		ft_position_of(t_list *pile, int value);
-int		ft_get_position(t_list *pile, int value, int behind);
 int		ft_action(t_pile *pile, t_list *ref);
 
 /**	_________________ ADD STACK _________________ **/
-void	ft_move_to_a(t_pile *pile, t_list *ref);
-void	ft_move_to_b(t_pile *pile, t_list *ref);
+int		ft_rectification_ref(t_list	*pile, t_list *ref);
+int		ft_check_additional_ref(t_list *pile, t_list *ref);
+void	ft_get_extra(t_list *pile, t_list *ref, t_list **up, t_list **down);
+void	ft_action_to_b(t_pile *pile, t_list *ref);
 
 /**	_________________ INCREASE_UTILS _________________ **/
 t_list	*ft_upper_nb(t_list *pile, int value);
@@ -119,7 +125,12 @@ int		ft_get_nbmax_composition(t_list *pile);
 int		ft_check_begin_max_increase(t_list *pile);
 t_list	*ft_get_max_increase(t_list *pile);
 
+/**	_________________ SECTION _________________ **/
+int		ft_check_classement(t_list *ref, int value);
+int		ft_compare_section(t_list *ref, int a, int b);
+t_list	*ft_get_section(t_list *pile, t_list *ref, int class_id);
+t_list	**ft_get_classements(t_list *s_pile, t_list *ref);
 
-t_list	*ft_get_sub_list_inf(t_list *pile, int begin, int end, int value);
-t_list	*ft_get_sub_list_sup(t_list *pile, int begin, int end, int value);
+/**	_________________ FUNCTIONS UTILS _________________ **/
+
 #endif

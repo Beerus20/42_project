@@ -2,19 +2,6 @@
 
 int	ft_search(t_list *pile, int value)
 {
-	// if (ft_check_issmaller(pile, value))
-	// 	return (1);
-	while (pile)
-	{
-		if (pile->content == value)
-			return (1);
-		pile = pile->next;
-	}
-	return (0);
-}
-
-int	ft_position_of(t_list *pile, int value)
-{
 	int	i;
 
 	i = 0;
@@ -28,6 +15,7 @@ int	ft_position_of(t_list *pile, int value)
 	return (-1);
 }
 
+<<<<<<< HEAD
 int	ft_get_position(t_list *pile, int value, int behind)
 {
 	if (pile == NULL)
@@ -166,12 +154,17 @@ int	ft_check_ref(t_list *pile, t_list *ref)
 	return (ft_get_list_len(ref) - 1);
 }
 
+=======
+>>>>>>> debug
 int	ft_action(t_pile *pile, t_list *ref)
 {
 	t_list	*tmp;
 	int		stop;
+	int		i;
 
+	i = 0;
 	stop = ft_get_last(ref)->content;
+<<<<<<< HEAD
 	while (!ft_isclean(*pile->a, ref, 0) /* && pile->ia->first != stop */)
 	{
 		if (!ft_search(ref, (*pile->a)->content))
@@ -184,6 +177,16 @@ int	ft_action(t_pile *pile, t_list *ref)
 			// ft_move_to_a(pile, ref);
 			exec(pile, "ra");
 		}
+=======
+	while (*pile->a && i++ < 100)
+	{
+			// ft_move_to_b(pile, ref);
+			// ft_move_to_a(pile, ref);
+		if (ft_search(ref, (*pile->a)->content) == -1)
+			ft_action_to_b(pile, ref);
+		else
+			exec(pile, "ra");
+>>>>>>> debug
 	}
 	return (0);
 }
