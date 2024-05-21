@@ -14,6 +14,7 @@ FILES	= \
 	ft_list_utils.c		\
 	ft_increase.c		\
 	ft_increase_utils.c	\
+	ft_section.c	\
 	ft_utils.c
 
 # FUNCS		= $(FILES:%.c=./movement/%.c)

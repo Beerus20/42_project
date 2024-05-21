@@ -1,5 +1,21 @@
 #include "push_swap.h"
 
+int	ft_isbetween(int value, int a, int b)
+{
+	return (value >= a && value <= b);
+}
+
+t_list	*ft_move_to(t_list *pile, int value)
+{
+	if (pile && ft_search(pile, value) != -1)
+	{
+		while (pile->content != value)
+			pile = pile->next;
+		return (pile);
+	}
+	return (NULL);
+}
+
 void	ft_del_list_value(t_list **list, int value)
 {
 	t_list	*tmp;
@@ -62,7 +78,7 @@ void	ft_del_front(t_list **pile)
 	free(tmp);
 }
 
-void	ft_add_back(t_list **pile, t_list *new)
+void	ft_add_back_content(t_list **pile, int value)
 {
 	t_list	*tmp_list;
 	t_list	*tmp;
@@ -73,14 +89,29 @@ void	ft_add_back(t_list **pile, t_list *new)
 	{
 		while (tmp_list->next)
 			tmp_list = tmp_list->next;
-		tmp->content = new->content;
+		tmp->content = value;
 		tmp_list->next = tmp;
 	}
 	else
 	{
-		tmp->content = new->content;
+		tmp->content = value;
 		*pile = tmp;
 	}
+}
+
+void	ft_add_back(t_list **pile, t_list *new)
+{
+	t_list	*tmp_list;
+
+	tmp_list = *pile;
+	if (tmp_list)
+	{
+		while (tmp_list->next)
+			tmp_list = tmp_list->next;
+		tmp_list->next = new;
+	}
+	else
+		*pile = new;
 }
 
 void	ft_pop(t_list **pile)
@@ -108,4 +139,33 @@ void	ft_pop(t_list **pile)
 			free(to_free);
 		}
 	}
+}
+
+void	ft_concat_list(t_list **a, t_list **b, t_list *s_a, t_list *s_b)
+{
+	t_list	*prev;
+	t_list	*tmp;
+
+	prev = NULL;
+	tmp = *a;
+	while (tmp && tmp != s_a)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	ft_free_list(tmp);
+	if (prev)
+		prev->next = *b;
+	else
+		*a = *b;
+	prev = NULL;
+	tmp = *b;
+	while (tmp && tmp != s_b)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	if (!prev->next)
+		prev->next = NULL;
+	ft_free_list(tmp);
 }
