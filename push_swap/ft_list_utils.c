@@ -78,6 +78,32 @@ void	ft_del_front(t_list **pile)
 	free(tmp);
 }
 
+void	ft_add_list_value(t_list **list, int index, int value)
+{
+	int		i;
+	t_list	*prev;
+	t_list	*tmp;
+	t_list	*iter;
+
+	prev = NULL;
+	tmp = NULL;
+	iter = *list;
+	while (i < index)
+	{
+		prev = iter;
+		iter = iter->next;
+		i++;
+	}
+	if (prev)
+	{
+		tmp = prev->next;
+		prev->next = ft_init_list(value);
+		prev->next->next = tmp;
+	}
+	else
+		ft_add_front(list, ft_init_list(value));
+}
+
 void	ft_add_back_content(t_list **pile, int value)
 {
 	t_list	*tmp_list;

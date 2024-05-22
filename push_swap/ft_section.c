@@ -1,6 +1,5 @@
 #include "push_swap.h"
 
-
 int	ft_check_classement(t_list *ref, int value)
 {
 	int i;
@@ -16,6 +15,17 @@ int	ft_check_classement(t_list *ref, int value)
 	return (i);
 }
 
+int	ft_has_section(t_list *pile, t_list *ref, int section)
+{
+	while (pile)
+	{
+		if (ft_check_classement(ref, pile->content) == section)
+			return (1);
+		pile = pile->next;
+	}
+	return (0);
+}
+
 int	ft_compare_section(t_list *ref, int a, int b)
 {
 	return (ft_check_classement(ref, a) == ft_check_classement(ref, b));
@@ -29,8 +39,8 @@ t_list	*ft_get_section(t_list *pile, t_list *ref, int class_id)
 	while (pile)
 	{
 		if (ft_check_classement(ref, pile->content) == class_id)
-			if (!ft_search(ref, pile->content))
-				ft_add_back(&r_value, pile);
+			if (ft_search(ref, pile->content) == -1)
+				ft_add_back_content(&r_value, pile->content);
 		pile = pile->next;
 	}
 	return (r_value);
@@ -51,8 +61,8 @@ t_list	**ft_get_classements(t_list *s_pile, t_list *ref)
 		tab[i++] = NULL;
 	while (s_pile)
 	{
-		if (!ft_search(ref, s_pile->content))
-			ft_add_back(&tab[ft_check_classement(ref, s_pile->content)], s_pile);
+		if (ft_search(ref, s_pile->content) == -1)
+			ft_add_back_content(&tab[ft_check_classement(ref, s_pile->content)], s_pile->content);
 		s_pile = s_pile->next;
 	}
 	return (tab);
