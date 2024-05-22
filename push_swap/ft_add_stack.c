@@ -148,7 +148,6 @@ void	ft_r_action(t_pile *pile, t_list *ref, int value)
 	int		down;
 	int		position;
 	int		move;
-	int		tmp;
 
 	up = ft_nb_move(*pile->b, ref, value, 0);
 	down = ft_nb_move(*pile->b, ref, value, 1);
@@ -158,7 +157,6 @@ void	ft_r_action(t_pile *pile, t_list *ref, int value)
 		move = position;
 		if (up < position)
 			move = up;
-		tmp = move;
 		while (move-- && up--)
 			exec(pile, "rr");
 		while (up--)
@@ -166,19 +164,18 @@ void	ft_r_action(t_pile *pile, t_list *ref, int value)
 	}
 	else
 	{
-		tmp = down;
-		while (down++ < 0)
+		while (down)
+		{
+			ft_printf("VALUE	: [%d]\n", down);
 			exec(pile, "rrb");
+			if (down < 0)
+				down++;
+			else
+				down--;
+		}
 	}
 	while (pile->ia->first != value)
 		exec(pile, "ra");
-	if (tmp < 0)
-	{
-		tmp--;
-		while (tmp++)
-			exec(pile, "rb");
-	}
-	exec(pile, "pb");
 }
 
 void	ft_rr_action(t_pile *pile, t_list *ref, int value)
@@ -196,10 +193,22 @@ void	ft_rr_action(t_pile *pile, t_list *ref, int value)
 		move = position;
 		if (down > position)
 			move = down;
-		while (move++ && down++ < 0)
+		while (move++ && down)
+		{
 			exec(pile, "rrr");
-		while (down++ < 0)
+			if (down < 0)
+				down++;
+			else
+				down--;
+		}
+		while (down)
+		{
 			exec(pile, "rrb");
+			if (down < 0)
+				down++;
+			else
+				down--;
+		}
 	}
 	else
 	{
@@ -208,7 +217,6 @@ void	ft_rr_action(t_pile *pile, t_list *ref, int value)
 	}
 	while (pile->ia->first != value)
 		exec(pile, "rra");
-	exec(pile, "pb");
 }
 
 int	ft_do_move(t_pile *pile, t_list *ref, t_list *up, t_list *down)
@@ -233,7 +241,7 @@ int	ft_do_move(t_pile *pile, t_list *ref, t_list *up, t_list *down)
 				ft_r_action(pile, ref, classes[index]->content);
 			else
 				ft_rr_action(pile, ref, classes[index]->content);
-
+			exec(pile, "pb");
 			ft_del_front(&classes[index]);
 		}
 	}
@@ -250,6 +258,7 @@ void	ft_action_to_b(t_pile *pile, t_list *ref)
 	down = NULL;
 	ft_get_extra(*pile->a, ref, &up, &down);
 	ft_do_move(pile, ref, up, down);
+	// exec(pile, "pb");
 }
 
 void	ft_action_to_a(t_pile *pile, t_list *ref)
