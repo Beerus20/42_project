@@ -67,7 +67,7 @@ void	ft_init_pile(int argc, const char **argv, t_list **pile)
 	}
 }
 
-t_pile	*ft_init_piles(int argc, const char **argv)
+t_pile	*ft_init()
 {
 	t_pile	*pile;
 
@@ -80,8 +80,5 @@ t_pile	*ft_init_piles(int argc, const char **argv)
 		exit(1);
 	*(pile->a) = NULL;
 	*(pile->b) = NULL;
-	ft_init_pile(argc, argv, pile->a);
-	ft_get_info(pile->a, pile->ia);
-	ft_get_info(pile->b, pile->ib);
 	return (pile);
 }

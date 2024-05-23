@@ -144,9 +144,20 @@ int	exec(t_pile *pile, char *action)
 
 void	loop_exec(t_pile *pile, int nb_iter, char *to_do)
 {
-	while (nb_iter > 0)
+	if (nb_iter >= 0)
 	{
-		exec(pile, to_do);
-		nb_iter--;
+		while (nb_iter > 0)
+		{
+			exec(pile, to_do);
+			nb_iter--;
+		}
+	}
+	else
+	{
+		while (nb_iter < -1)
+		{
+			exec(pile, to_do);
+			nb_iter++;
+		}
 	}
 }

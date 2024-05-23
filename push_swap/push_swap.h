@@ -84,7 +84,7 @@ void	loop_exec(t_pile *pile, int nb_iter, char *to_do);
 
 /**	_________________ INIT _________________ **/
 void	ft_init_pile(int argc, const char **argv, t_list **pile);
-t_pile	*ft_init_piles(int argc, const char **argv);
+t_pile	*ft_init();
 
 /**	_________________ CHECK _________________ **/
 int		ft_check_increas(t_list *pile);
@@ -97,15 +97,13 @@ int		ft_get_index(t_list *pile, int value);
 
 /**	_________________ ACTION _________________ **/
 int		ft_search(t_list *pile, int value);
-int		ft_action(t_pile *pile, t_list *ref);
+int		ft_count_move(t_list *pile, t_list *ref, int value);
+int		ft_action(t_pile *pile, t_pile *ref);
 
 /**	_________________ ADD STACK _________________ **/
-int		ft_upper_section(t_list **classes, t_list *ref);
 int		ft_rectification_ref(t_list	*pile, t_list *ref);
 int		ft_check_additional_ref(t_list *pile, t_list *ref);
-void	ft_get_extra(t_list *pile, t_list *ref, t_list **up, t_list **down);
-void	ft_action_to_b(t_pile *pile, t_list *ref);
-void	ft_action_to_a(t_pile *pile, t_list *ref);
+t_list	*ft_get_extra(t_list *pile, t_list *ref);
 
 /**	_________________ INCREASE_UTILS _________________ **/
 t_list	*ft_upper_nb(t_list *pile, int value);
