@@ -1,23 +1,5 @@
 #include "push_swap.h"
 
-void	ft_add_ref_value(t_pile *ref, int value)
-{
-	t_list	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = *ref->a;
-	while (tmp && tmp->content < value)
-	{
-		tmp = tmp->next;
-		i++;
-	}
-	if (tmp)
-		ft_add_list_value(ref->a, i, value);
-	else
-		ft_add_back_content(ref->a, value);
-}
-
 int	ft_search(t_list *pile, int value)
 {
 	int	i;
@@ -68,58 +50,116 @@ int	ft_get_ref_id(t_list *pile, t_list *ref)
 	return (ft_get_index(ref, pile->content));
 }
 
+int	ft_get_last_ref_id(t_list *pile, t_list *ref)
+{
+	t_list	*tmp;
+
+	tmp = NULL;
+	while (pile)
+	{
+		if (ft_search(ref, pile->content) != -1)
+			tmp = pile;
+		pile = pile->next;
+	}
+	return (ft_get_index(ref, tmp->content));
+}
+
+void	ft_calcul_move(int *position, int *move, int *sup)
+{
+	if (*position >= 0 && move >= 0)
+	{
+		*sup = *move;
+		if (*position <= *move)
+			*sup = *position;
+		*position -= *sup;
+		*move -= *sup;
+	}
+	if (*position < 0 && *move < 0)
+	{
+		*sup = *move;
+		if (*position >= *move)
+			*sup = *position;
+		*position -= *sup + 1;
+		*move -= *sup + 1;
+	}
+}
+
+void	ft_moves(t_pile *pile, int position, int move, int sup)
+{
+	if (position >= 0 && move >= 0)
+	{
+		ft_calcul_move(&position, &move, &sup);
+		loop_exec(pile, sup, "rr");
+		loop_exec(pile, move, "rb");
+		loop_exec(pile, position, "ra");
+	}
+	else if (position >= 0 && move < 0)
+	{
+		loop_exec(pile, move, "rrb");
+		loop_exec(pile, position, "ra");
+	}
+	else if (position < 0 && move < 0)
+	{
+		ft_calcul_move(&position, &move, &sup);
+		loop_exec(pile, sup, "rrr");
+		loop_exec(pile, move, "rrb");
+		loop_exec(pile, -position, "rra");
+	}
+	else
+	{
+		loop_exec(pile, move, "rb");
+		loop_exec(pile, -position, "rra");
+	}
+}
+
 void	ft_pb_action(t_pile *pile, t_pile *ref, int value)
 {
 	int	position;
 	int	move;
 	int	tmp_move;
 
+	tmp_move = 0;
 	position = ft_get_index(*pile->a, value);
 	move = ft_count_move(*pile->b, *ref->a, value);
 	if (position > (pile->ia->len / 2))
 		position = position - pile->ia->len;
-	if (position >= 0)
+	ft_moves(pile, position, move, tmp_move);
+	exec(pile, "pb");
+}
+
+void	ft_move_a_section_values(t_pile *pile, t_pile *ref, t_list **list)
+{
+	while (*list)
 	{
-		if (move >= 0)
-		{
-			tmp_move = move;
-			if (position <= move)
-				tmp_move = position;
-			position -= tmp_move;
-			move -= tmp_move;
-			loop_exec(pile, tmp_move, "rr");
-			loop_exec(pile, move, "rb");
-			loop_exec(pile, position, "ra");
-			exec(pile, "pb");
-		}
-		else
-		{
-			loop_exec(pile, move, "rrb");
-			loop_exec(pile, position, "ra");
-			exec(pile, "pb rrb");
-		}
+		ft_pb_action(pile, ref, (*list)->content);
+		ft_del_front(list);
 	}
-	else
+}
+
+int	ft_move_b_section_values(t_pile *pile, t_pile *ref, t_list **list, int ref_id)
+{
+	int		moves;
+	int		max;
+	int 	position;
+
+	moves = 0;
+	while (*list)
 	{
-		if (move < 0)
+		max = ft_get_max_value(*list);
+		position = ft_get_index(*pile->b, max);
+		while (pile->ib->first != max)
 		{
-			tmp_move = move;
-			if (position >= move)
-				tmp_move = position;
-			position -= tmp_move + 1;
-			move -= tmp_move + 1;
-			loop_exec(pile, tmp_move, "rrr");
-			loop_exec(pile, move, "rrb");
-			loop_exec(pile, -position, "rra");
-			exec(pile, "pb rrb");
+			if (position <= (pile->ib->len / 2))
+				exec(pile, "rb");
+			else
+				exec(pile, "rrb");
 		}
-		else
-		{
-			loop_exec(pile, move, "rb");
-			loop_exec(pile, -position, "rra");
-			exec(pile, "pb");
-		}
+		exec(pile, "pa");
+		moves++;
+		ft_add_list_value(ref->a, ref_id, max);
+		ft_del_list_value(list, max);
 	}
+	return (moves);
 }
 
 void	ft_move_to_b(t_pile *pile, t_pile *ref)
@@ -134,21 +174,11 @@ void	ft_move_to_b(t_pile *pile, t_pile *ref)
 	classes = ft_get_classements(s_pile, *ref->a);
 	i = ref_id;
 	while (i--)
-	{
-		while (classes[i])
-		{
-			ft_pb_action(pile, ref, classes[i]->content);
-			ft_del_front(&classes[i]);
-		}
-	}
+		ft_move_a_section_values(pile, ref, &classes[i]);
 	i = ft_get_list_len(*ref->a);
 	while (i >= ref_id)
 	{
-		while (classes[i])
-		{
-			ft_pb_action(pile, ref, classes[i]->content);
-			ft_del_front(&classes[i]);
-		}
+		ft_move_a_section_values(pile, ref, &classes[i]);
 		i--;
 	}
 }
@@ -156,33 +186,15 @@ void	ft_move_to_b(t_pile *pile, t_pile *ref)
 void	ft_move_to_a(t_pile *pile, t_pile *ref)
 {
 	t_list	*section;
-	t_list	*tmp;
 	int		ref_id;
 	int		max;
 	int		position;
 	int		count;
 
 	count = 0;
-	tmp = *pile->a;
 	ref_id = ft_get_ref_id(*pile->a, *ref->a);
 	section = ft_get_section(*pile->b, *ref->a, ref_id);
-	while (section)
-	{
-		max = ft_get_max_value(section);
-		position = ft_get_index(*pile->b, max);
-		while (pile->ib->first != max)
-		{
-			if (position <= (pile->ib->len / 2))
-				exec(pile, "rb");
-			else
-				exec(pile, "rrb");
-		}
-		exec(pile, "pa");
-		count++;
-		// ft_add_list_value(ref->a, ref_id, max);
-		ft_add_ref_value(ref, max);
-		ft_del_list_value(&section, max);
-	}
+	count = ft_move_b_section_values(pile, ref, &section, ref_id);
 	count++;
 	while (count)
 	{
@@ -190,23 +202,7 @@ void	ft_move_to_a(t_pile *pile, t_pile *ref)
 		count--;
 	}
 	section = ft_get_section(*pile->b, *ref->a, ref_id + 1);
-	while (section)
-	{
-		max = ft_get_max_value(section);
-		position = ft_get_index(*pile->b, max);
-		while (pile->ib->first != max)
-		{
-			if (position <= (pile->ib->len / 2))
-				exec(pile, "rb");
-			else
-				exec(pile, "rrb");
-		}
-		exec(pile, "pa");
-		count++;
-		// ft_add_list_value(ref->a, ref_id, max);
-		ft_add_ref_value(ref, max);
-		ft_del_list_value(&section, max);
-	}
+	count = ft_move_b_section_values(pile, ref, &section, ref_id + 1);
 	while (count)
 	{
 		exec(pile, "ra");
@@ -224,16 +220,10 @@ int	ft_action(t_pile *pile, t_pile *ref)
 	stop = pile->ia->len;
 	while (stop != ft_get_list_len(*ref->a))
 	{
-			// ft_move_to_b(pile, ref);
-			// ft_move_to_a(pile, ref);
-			// ft_action_to_b(pile, ref);
-			// exec(pile, "pb");
 		if (ft_search(*ref->a, pile->ia->first) == -1)
 			ft_move_to_b(pile, ref);
 		else
 			ft_move_to_a(pile, ref);
-			// exec(pile, "ra");
-			// ft_action_to_a(pile, ref);
 	}
 	while (pile->ia->last != stop - 1)
 	{
