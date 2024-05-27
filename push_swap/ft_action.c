@@ -66,7 +66,7 @@ int	ft_get_last_ref_id(t_list *pile, t_list *ref)
 
 void	ft_calcul_move(int *position, int *move, int *sup)
 {
-	if (*position >= 0 && move >= 0)
+	if (*position >= 0 && *move >= 0)
 	{
 		*sup = *move;
 		if (*position <= *move)
@@ -86,30 +86,31 @@ void	ft_calcul_move(int *position, int *move, int *sup)
 
 void	ft_moves(t_pile *pile, int position, int move, int sup)
 {
-	if (position >= 0 && move >= 0)
-	{
-		ft_calcul_move(&position, &move, &sup);
-		loop_exec(pile, sup, "rr");
+	if (move >= 0)
 		loop_exec(pile, move, "rb");
-		loop_exec(pile, position, "ra");
-	}
-	else if (position >= 0 && move < 0)
-	{
+	else
 		loop_exec(pile, move, "rrb");
-		loop_exec(pile, position, "ra");
-	}
-	else if (position < 0 && move < 0)
+	if (position >= 0)
 	{
-		ft_calcul_move(&position, &move, &sup);
-		loop_exec(pile, sup, "rrr");
-		loop_exec(pile, move, "rrb");
-		loop_exec(pile, -position, "rra");
+		if (position > 0)
+		{
+			loop_exec(pile, position - 1, "ra");
+			exec(pile, "sa");
+		}
+		else
+			loop_exec(pile, position, "ra");
 	}
 	else
-	{
-		loop_exec(pile, move, "rb");
 		loop_exec(pile, -position, "rra");
-	}
+
+}
+
+void	ft_extra_moves(t_pile *pile, int sup)
+{
+	if (sup >= 0)
+		loop_exec(pile, sup, "rr");
+	else
+		loop_exec(pile, sup, "rrr");
 }
 
 void	ft_pb_action(t_pile *pile, t_pile *ref, int value)
@@ -123,6 +124,8 @@ void	ft_pb_action(t_pile *pile, t_pile *ref, int value)
 	move = ft_count_move(*pile->b, *ref->a, value);
 	if (position > (pile->ia->len / 2))
 		position = position - pile->ia->len;
+	ft_calcul_move(&position, &move, &tmp_move);
+	ft_extra_moves(pile, tmp_move);
 	ft_moves(pile, position, move, tmp_move);
 	exec(pile, "pb");
 }
@@ -162,12 +165,42 @@ int	ft_move_b_section_values(t_pile *pile, t_pile *ref, t_list **list, int ref_i
 	return (moves);
 }
 
+void	ft_move_to_a(t_pile *pile, t_pile *ref)
+{
+	t_list	*section;
+	int		ref_id;
+	int		max;
+	int		position;
+	int		count;
+
+	count = 0;
+	ref_id = ft_get_ref_id(*pile->a, *ref->a);
+
+	section = ft_get_section(*pile->b, *ref->a, ref_id);
+	count = ft_move_b_section_values(pile, ref, &section, ref_id);
+	count++;
+	while (count)
+	{
+		exec(pile, "ra");
+		count--;
+	}
+
+	section = ft_get_section(*pile->b, *ref->a, ref_id + 1);
+	count = ft_move_b_section_values(pile, ref, &section, ref_id + 1);
+	while (count)
+	{
+		exec(pile, "ra");
+		count--;
+	}
+}
+
 void	ft_move_to_b(t_pile *pile, t_pile *ref)
 {
 	t_list	**classes;
 	t_list	*s_pile;
 	int		ref_id;
 	int		i;
+	int		index;
 
 	ref_id = ft_get_ref_id(*pile->a, *ref->a);
 	s_pile = ft_get_extra(*pile->a, *ref->a);
@@ -180,33 +213,6 @@ void	ft_move_to_b(t_pile *pile, t_pile *ref)
 	{
 		ft_move_a_section_values(pile, ref, &classes[i]);
 		i--;
-	}
-}
-
-void	ft_move_to_a(t_pile *pile, t_pile *ref)
-{
-	t_list	*section;
-	int		ref_id;
-	int		max;
-	int		position;
-	int		count;
-
-	count = 0;
-	ref_id = ft_get_ref_id(*pile->a, *ref->a);
-	section = ft_get_section(*pile->b, *ref->a, ref_id);
-	count = ft_move_b_section_values(pile, ref, &section, ref_id);
-	count++;
-	while (count)
-	{
-		exec(pile, "ra");
-		count--;
-	}
-	section = ft_get_section(*pile->b, *ref->a, ref_id + 1);
-	count = ft_move_b_section_values(pile, ref, &section, ref_id + 1);
-	while (count)
-	{
-		exec(pile, "ra");
-		count--;
 	}
 }
 
@@ -224,6 +230,10 @@ int	ft_action(t_pile *pile, t_pile *ref)
 			ft_move_to_b(pile, ref);
 		else
 			ft_move_to_a(pile, ref);
+		// while (*pile->b)
+		// {
+		// 	ft_move_to_a(pile, ref);
+		// }
 	}
 	while (pile->ia->last != stop - 1)
 	{
