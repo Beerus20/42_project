@@ -30,7 +30,7 @@ void	ft_analysies(t_pile *pile, t_pile *ref)
 	// ft_add_back_content(ref->a, 80);
 	// ft_add_back_content(ref->a, 90);
 	ft_get_info(ref->a, ref->ia);
-	ft_show_diff(*pile->a, *ref->a);
+	// ft_show_diff(*pile->a, *ref->a);
 
 	ft_check_additional_ref(*pile->a, *ref->a);
 	ft_rectification_ref(*pile->a, *ref->a);
@@ -45,7 +45,7 @@ void	test(t_pile *pile)
 	ft_add_back_content(&ref, 2);
 	ft_add_back_content(&ref, 6);
 	ft_add_back_content(&ref, 8);
-	ft_printf("POSITION	: [%d]\n", ft_check_position(*pile->a, 2));
+	// ft_printf("POSITION	: [%d]\n", ft_check_position(*pile->a, 2));
 }
 
 int	main(int argc, const char **argv)

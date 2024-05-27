@@ -1,5 +1,12 @@
 #include "push_swap.h"
 
+int	ft_abs(int value)
+{
+	if (value < 0)
+		return (-value);
+	return (value);
+}
+
 int	ft_search(t_list *pile, int value)
 {
 	int	i;
@@ -15,32 +22,68 @@ int	ft_search(t_list *pile, int value)
 	return (-1);
 }
 
+int	ft_check_moveless(t_list *pile, int value)
+{
+	int	position;
+	int	len;
+
+	len = ft_get_list_len(pile);
+	position = ft_get_index(pile, value);
+	if (position < len / 2)
+		return (position);
+	return (position - len);
+}
+
+int	ft_check_position(t_list *pile, t_list *ref, t_list *section, int value)
+{
+	t_list	*tmp;
+	int		max;
+	int		min;
+
+	max = ft_get_max_value(section);
+	min = ft_get_min_value(section);
+	if (value > max)
+		return (ft_check_moveless(pile, max));
+	if (value < min)
+		return (ft_check_moveless(ref, min));
+	tmp = ft_move_to(section, max);
+	while (tmp && tmp->content > value)
+		tmp = tmp->next;
+	if (!tmp)
+	{
+		tmp = section;
+		while (tmp->content != max && tmp->content > value)
+			tmp = tmp->next;
+	}
+	return (ft_check_moveless(pile, tmp->content));
+}
+
+
 int	ft_count_move(t_list *pile, t_list *ref, int value)
 {
 	t_list	*section;
 	int		i;
 	int		len;
 	int		class_id;
-	int		position[2];
 
 	if (!pile)
 		return (0);
 	len = ft_get_list_len(pile);
 	class_id = ft_check_classement(ref, value);
 	section = ft_get_section(pile, ref, class_id);
+	if (section)
+		return (ft_check_position(pile, ref, section, value));
 	i = class_id;
-	while (!section && i--)
+	while (i--)
 		section = ft_get_section(pile, ref, i);
+	if (section)
+		return (ft_check_moveless(pile, ft_get_max_value(section)));
 	i = len;
-	while (!section && i > class_id)
+	while (i > class_id)
 		section = ft_get_section(pile, ref, i--);
 	if (!section)
 		return (0);
-	position[0] = ft_get_index(pile, section->content);
-	position[1] = ft_get_index(pile, ft_get_last(section)->content);
-	if (position[0] < (len - position[1]))
-		return (position[0]);
-	return (position[1] - len);
+	return (ft_check_moveless(pile, ft_get_min_value(section)));
 }
 
 int	ft_get_ref_id(t_list *pile, t_list *ref)
@@ -66,7 +109,7 @@ int	ft_get_last_ref_id(t_list *pile, t_list *ref)
 
 void	ft_calcul_move(int *position, int *move, int *sup)
 {
-	if (*position >= 0 && move >= 0)
+	if (*position >= 0 && *move >= 0)
 	{
 		*sup = *move;
 		if (*position <= *move)
@@ -84,32 +127,24 @@ void	ft_calcul_move(int *position, int *move, int *sup)
 	}
 }
 
+void	ft_extra_moves(t_pile *pile, int sup)
+{
+	if (sup >= 0)
+		loop_exec(pile, sup, "rr");
+	else
+		loop_exec(pile, sup, "rrr");
+}
+
 void	ft_moves(t_pile *pile, int position, int move, int sup)
 {
-	if (position >= 0 && move >= 0)
-	{
-		ft_calcul_move(&position, &move, &sup);
-		loop_exec(pile, sup, "rr");
+	if (move >= 0)
 		loop_exec(pile, move, "rb");
-		loop_exec(pile, position, "ra");
-	}
-	else if (position >= 0 && move < 0)
-	{
-		loop_exec(pile, move, "rrb");
-		loop_exec(pile, position, "ra");
-	}
-	else if (position < 0 && move < 0)
-	{
-		ft_calcul_move(&position, &move, &sup);
-		loop_exec(pile, sup, "rrr");
-		loop_exec(pile, move, "rrb");
-		loop_exec(pile, -position, "rra");
-	}
 	else
-	{
-		loop_exec(pile, move, "rb");
+		loop_exec(pile, move, "rrb");
+	if (position >= 0)
+		loop_exec(pile, position, "ra");
+	else
 		loop_exec(pile, -position, "rra");
-	}
 }
 
 void	ft_pb_action(t_pile *pile, t_pile *ref, int value)
@@ -123,6 +158,8 @@ void	ft_pb_action(t_pile *pile, t_pile *ref, int value)
 	move = ft_count_move(*pile->b, *ref->a, value);
 	if (position > (pile->ia->len / 2))
 		position = position - pile->ia->len;
+	ft_calcul_move(&position, &move, &tmp_move);
+	ft_extra_moves(pile, tmp_move);
 	ft_moves(pile, position, move, tmp_move);
 	exec(pile, "pb");
 }
@@ -209,13 +246,6 @@ void	ft_move_to_b(t_pile *pile, t_pile *ref)
 		ft_move_a_section_values(pile, ref, &classes[i]);
 		i--;
 	}
-	classes = ft_get_classements(*pile->b, *ref->a);
-	while (ft_search(*ref->a, pile->ia->last))
-	{
-			exec(pile, "rra");
-			index = ft_get_index(*ref->a, pile->ia->first);
-			ft_move_b_section_values(pile, ref, &classes[index], index);
-		}
 }
 
 int	ft_action(t_pile *pile, t_pile *ref)
@@ -225,24 +255,48 @@ int	ft_action(t_pile *pile, t_pile *ref)
 	int		i;
 
 	i = 0;
-	stop = pile->ia->len;
-	while (stop != ft_get_list_len(*ref->a))
+	stop = pile->ia->len ;
+	while (i++ < 100/* stop != ft_get_list_len(*ref->a) */)
 	{
+			// exec(pile, "pb");
 		if (ft_search(*ref->a, pile->ia->first) == -1)
 			ft_move_to_b(pile, ref);
 		else
-			ft_move_to_a(pile, ref);
+			exec(pile, "ra");
+			// ft_move_to_a(pile, ref);
 		// while (*pile->b)
 		// {
 		// 	ft_move_to_a(pile, ref);
 		// }
-	}
+	}/*
 	while (pile->ia->last != stop - 1)
 	{
 		if (pile->ia->last <= pile->ia->len / 2)
 			exec(pile, "rra");
 		else
 			exec(pile, "ra");
-	}
+	}*/
 	return (0);
 }
+
+// void	ft_move_to_b(t_pile *pile, t_pile *ref)
+// {
+// 	t_list	**classes;
+// 	t_list	*s_pile;
+// 	int		ref_id;
+// 	int		i;
+// 	int		index;
+
+// 	ref_id = ft_get_ref_id(*pile->a, *ref->a);
+// 	s_pile = ft_get_extra(*pile->a, *ref->a);
+// 	classes = ft_get_classements(s_pile, *ref->a);
+// 	i = ref_id;
+// 	while (i--)
+// 		ft_move_a_section_values(pile, ref, &classes[i]);
+// 	i = ft_get_list_len(*ref->a);
+// 	while (i >= ref_id)
+// 	{
+// 		ft_move_a_section_values(pile, ref, &classes[i]);
+// 		i--;
+// 	}
+// }
