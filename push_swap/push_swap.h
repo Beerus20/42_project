@@ -97,7 +97,7 @@ int		ft_get_index(t_list *pile, int value);
 
 /**	_________________ ACTION _________________ **/
 int		ft_search(t_list *pile, int value);
-int		ft_count_move(t_list *pile, t_list *ref, int value);
+int		ft_check_position(t_list *pile, int value);
 int		ft_action(t_pile *pile, t_pile *ref);
 
 /**	_________________ ADD STACK _________________ **/

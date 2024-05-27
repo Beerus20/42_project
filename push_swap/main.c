@@ -45,8 +45,7 @@ void	test(t_pile *pile)
 	ft_add_back_content(&ref, 2);
 	ft_add_back_content(&ref, 6);
 	ft_add_back_content(&ref, 8);
-	ft_show_pile(ft_get_extra(*pile->a, ref));
-	ft_printf("COUNT RESULT	: [%d]\n", ft_count_move(*pile->a, ref, 10));
+	ft_printf("POSITION	: [%d]\n", ft_check_position(*pile->a, 2));
 }
 
 int	main(int argc, const char **argv)
