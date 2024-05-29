@@ -80,7 +80,7 @@ int	ft_get_position_inv(t_list *pile, int value)
 	return (ft_get_index(pile, ft_get_min_value(list)));
 }
 
-int	ft_select_moveless_value(t_pile *pile, t_list *sub_pile, int (*fa)(t_list*, int), int (*fb)(t_list*, int))
+int	ft_select_moveless_value(t_pile *pile, t_list *sub_pile, t_action action)
 {
 	int	r_value;
 	int	position_a;
@@ -88,14 +88,14 @@ int	ft_select_moveless_value(t_pile *pile, t_list *sub_pile, int (*fa)(t_list*, 
 	int	total;
 	int	tmp;
 
-	position_a = fa(*pile->a, sub_pile->content);
-	position_b = fb(*pile->b, sub_pile->content);
+	position_a = action.fa(*pile->a, sub_pile->content);
+	position_b = action.fb(*pile->b, sub_pile->content);
 	tmp = ft_nb_move(*pile->a, position_a) + ft_nb_move(*pile->b, position_b);
 	r_value = sub_pile->content;
 	while (sub_pile)
 	{
-		position_a = fa(*pile->a, sub_pile->content);
-		position_b = fb(*pile->b, sub_pile->content);
+		position_a = action.fa(*pile->a, sub_pile->content);
+		position_b = action.fb(*pile->b, sub_pile->content);
 		total = ft_nb_move(*pile->a, position_a) + ft_nb_move(*pile->b, position_b);
 		if (total < tmp)
 		{
@@ -118,134 +118,99 @@ int	ft_extra_moves(t_pile *pile, int *p_a, int *p_b)
 		if (*p_a > *p_b)
 			r_value = *p_b;
 	}
-	if (*p_a < 0 && *p_b < 0)
+	else if (*p_a < 0 && *p_b < 0)
 	{
-		r_value = *p_b;
+		r_value = *p_b + 1;
 		if (*p_a > *p_b)
-			r_value = *p_a;
+			r_value = *p_a + 1;
 	}
 	*p_b -= r_value;
 	*p_a -= r_value;
 	return (r_value);
 }
 
-void	ft_move_to_b(t_pile *pile, t_pile *ref)
+void	ft_move(t_pile *pile, int p_a, int p_b)
 {
-	t_list	*sub_pile;
-	int		position_a;
-	int		position_b;
-	int		extra_move;
-	int		value;
-	int		i;
+	int	extra_move;
 
-	i = 0;
-	sub_pile = ft_get_extra(*pile->a, *ref->a);
-	while (sub_pile)
+	extra_move = ft_extra_moves(pile, &p_a, &p_b);
+	if (p_a >= 0)
+	{
+		loop_exec(pile, extra_move, "rr");
+		loop_exec(pile, p_a, "ra");
+	}
+	else
+	{
+		loop_exec(pile, -extra_move, "rrr");
+		loop_exec(pile, -p_a, "rra");
+	}
+	if (p_b >= 0)
+		loop_exec(pile, p_b, "rb");
+	else
 	{
 		if (*pile->b)
-		{
-			value = ft_select_moveless_value(pile, sub_pile, ft_get_index, ft_get_position);
-			position_a = ft_position(*pile->a, ft_get_index(*pile->a, value));
-			position_b = ft_position(*pile->b, ft_get_position(*pile->b, value));
-			extra_move = ft_extra_moves(pile, &position_a, &position_b);
-			if (position_a >= 0)
-			{
-				loop_exec(pile, extra_move, "rr");
-				loop_exec(pile, position_a, "ra");
-			}
-			else
-			{
-				loop_exec(pile, extra_move, "rrr");
-				loop_exec(pile, -position_a, "rra");
-			}
-			if (position_b >= 0)
-				loop_exec(pile, position_b, "rb");
-			else
-				loop_exec(pile, -position_b, "rrb");
-			ft_del_list_value(&sub_pile, value);
-		}
-		else
-			ft_del_list_value(&sub_pile, sub_pile->content);
-		exec(pile, "pb");
+			loop_exec(pile, -p_b, "rrb");
 	}
 }
 
-void	ft_move_to_a(t_pile *pile)
+void	ft_move_element(t_pile *pile, t_list *sub_pile, t_action action)
 {
-	t_list	*sub_pile;
 	int		position_a;
 	int		position_b;
-	int		extra_move;
 	int		value;
 
-	sub_pile = *pile->b;
 	while (sub_pile)
 	{
-		value = ft_select_moveless_value(pile, sub_pile, ft_get_position_inv, ft_get_index);
-		position_a = ft_get_position_inv(*pile->a, value);
-		position_b = ft_get_index(*pile->b, value);
-		if (position_a <= pile->ia->len / 2)
-		{
-			if (position_b <= pile->ib->len / 2)
-			{
-				while (position_a && position_b)
-				{
-					exec(pile, "rr");
-					position_a--;
-					position_b--;
-				}
-			}
-			loop_exec(pile, position_a, "ra");
-		}
-		else
-		{
-			if (position_b > pile->ib->len / 2)
-			{
-				while ((pile->ia->len - position_a) && (pile->ib->len - position_b))
-				{
-					exec(pile, "rrr");
-					position_a++;
-					position_b++;
-				}
-			}
-			loop_exec(pile, pile->ia->len - position_a, "rra");
-		}
-		if (position_b <= pile->ib->len / 2)
-			loop_exec(pile, position_b, "rb");
-		else
-			loop_exec(pile, pile->ib->len - position_b, "rrb");
-		exec(pile, "pa");
-		sub_pile = *pile->b;
+		value = ft_select_moveless_value(pile, sub_pile, action);
+		position_a = ft_position(*pile->a, action.fa(*pile->a, value));
+		position_b = ft_position(*pile->b, action.fb(*pile->b, value));
+		ft_move(pile, position_a, position_b);
+		ft_del_list_value(&sub_pile, value);
+		exec(pile, action.end_action);
 	}
 }
 
 int	ft_action(t_pile *pile, t_pile *ref)
 {
-	t_list	*tmp;
-	int		stop;
-	int		i;
+	t_list		*tmp;
+	t_action	action_1;
+	t_action	action_2;
+	int			stop;
+	int			i;
 
 	i = 0;
-	stop = ft_get_list_len(*ref->a) ;
-	while (i++ < 100)
+
+	action_1.end_action = "pb";
+	action_1.fa = ft_get_index;
+	action_1.fb = ft_get_position;
+
+	stop = pile->ia->len - (pile->ia->len / 3) ;
+	while (pile->ia->len >= stop)
 	{
+		tmp = ft_get_extra(*pile->a, *ref->a);
 		if (ft_search(*ref->a, pile->ia->first) == -1)
-			ft_move_to_b(pile, ref);
+			ft_move_element(pile, tmp, action_1);
 		else
 			exec(pile, "ra");
 	}
-	// ft_move_to_a(pile);
-	// while (pile->ia->first != 0)
-	// 	exec(pile, "rra");
-	/*
-	while (pile->ia->last != stop - 1)
+	tmp = NULL;
+	while (pile->ia->first != (*ref->a)->content)
 	{
-		if (pile->ia->last <= pile->ia->len / 2)
-			exec(pile, "rra");
+		if (ft_search(*ref->a, pile->ia->first) == -1)
+		{
+			ft_add_back_content(&tmp, pile->ia->first);
+			exec(pile, "pb");
+		}
 		else
 			exec(pile, "ra");
-	}*/
+	}
+	action_2.end_action = "pa";
+	action_2.fa = ft_get_position_inv;
+	action_2.fb = ft_get_index;
+	ft_move_element(pile, tmp, action_2);
+	ft_move_element(pile, ft_copy_list(*pile->b), action_2);
+	stop = ft_position(*pile->a, ft_get_index(*pile->a, ft_get_max_value(*pile->a)));
+	request_loop(pile, stop >= 0, stop + 1, "ra");
+	request_loop(pile, stop < 0, stop, "rra");
 	return (0);
 }
-
-// rrr : position not yet correct

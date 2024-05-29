@@ -9,11 +9,19 @@
 # include <stdarg.h>
 # include "./printf/includes/ft_printf.h"
 
+
 typedef struct s_list
 {
 	int				content;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_action
+{
+	char	*end_action;
+	int		(*fa)(t_list *, int);
+	int		(*fb)(t_list *, int);
+}	t_action;
 
 typedef struct s_info
 {
@@ -71,6 +79,7 @@ void	ft_add_back_content(t_list **pile, int value);
 void	ft_add_back(t_list **pile, t_list *new);
 void	ft_del_list_value(t_list **list, int value);
 void	ft_concat_list(t_list **a, t_list **b, t_list *s_a, t_list *s_b);
+t_list	*ft_copy_list(t_list *list);
 
 
 /**	_________________ FREE _________________ **/

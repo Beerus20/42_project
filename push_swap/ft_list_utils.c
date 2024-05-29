@@ -195,3 +195,16 @@ void	ft_concat_list(t_list **a, t_list **b, t_list *s_a, t_list *s_b)
 		prev->next = NULL;
 	ft_free_list(tmp);
 }
+
+t_list	*ft_copy_list(t_list *list)
+{
+	t_list	*r_value;
+
+	r_value = NULL;
+	while (list)
+	{
+		ft_add_back_content(&r_value, list->content);
+		list = list->next;
+	}
+	return (r_value);
+}
