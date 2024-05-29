@@ -155,8 +155,8 @@ void	ft_move_to_b(t_pile *pile, t_pile *ref)
 			}
 			else
 			{
-				loop_exec(pile, -extra_move + 1, "rrr");
-				loop_exec(pile, -position_a + 1, "rra");
+				loop_exec(pile, extra_move, "rrr");
+				loop_exec(pile, -position_a, "rra");
 			}
 			if (position_b >= 0)
 				loop_exec(pile, position_b, "rb");
