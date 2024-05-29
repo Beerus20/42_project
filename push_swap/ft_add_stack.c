@@ -66,7 +66,7 @@ t_list	*ft_get_extra(t_list *pile, t_list *ref)
 			tmp = pile;
 		pile = pile->next;
 	}
-	if (tmp->next)
+	if (tmp && tmp->next)
 		ft_add_back(&r_value, ft_get_portion(tmp->next, ref));
 	return (r_value);
 }

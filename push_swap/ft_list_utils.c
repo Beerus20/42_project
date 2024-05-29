@@ -25,7 +25,7 @@ void	ft_del_list_value(t_list **list, int value)
 	prev = NULL;
 	to_free = NULL;
 	tmp = *list;
-	while (tmp->content != value)
+	while (tmp && tmp->content != value)
 	{
 		prev = tmp;
 		tmp = tmp->next;
