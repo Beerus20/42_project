@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/30 09:38:03 by ballain           #+#    #+#             */
+/*   Updated: 2024/05/30 10:43:23 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_list	*ft_get_portion(t_list *pile, t_list *ref)
@@ -57,108 +69,6 @@ t_list	*ft_sub_list_between(t_list *list, int a, int b)
 	return (r_value);
 }
 
-void	ft_show_tab(int *tab, int len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		ft_printf("tab[%d]	: [%d]\n", i, tab[i]);
-		i++;
-	}
-}
-
-void	ft_show(t_pile pile)
-{
-	t_list	*tmp_a;
-	t_list	*tmp_b;
-
-	tmp_a = *(pile.a);
-	tmp_b = *(pile.b);
-	while (tmp_a || tmp_b)
-	{
-		if (tmp_a)
-		{
-			ft_printf(" %d", tmp_a->content);
-			tmp_a = tmp_a->next;
-		}
-		if (tmp_b)
-		{
-			ft_printf(" 	%d", tmp_b->content);
-			tmp_b = tmp_b->next;
-		}
-		ft_printf("\n");
-	}
-	ft_printf(" _	_\n");
-	ft_printf(" A	B\n\n");
-}
-
-void	ft_show_info(t_pile pile)
-{
-	ft_printf("\033[0;33mPILE INFO : \033[0;0m\n");
-	if ((pile.ia)->first)
-		ft_printf("\033[0;0m- FIRST		: \033[0;31m[%d] ", pile.ia->first);
-	if ((pile.ib)->first)
-		ft_printf(" [%d]\033[0;0m", pile.ib->first);
-	ft_printf("\n");
-	if ((pile.ia)->second)
-		ft_printf("\033[0;0m- SECOND	: \033[0;31m[%d] ", pile.ia->second);
-	if ((pile.ib)->second)
-		ft_printf(" [%d]\033[0;0m", pile.ib->second);
-	ft_printf("\n");
-	if ((pile.ia)->last)
-		ft_printf("\033[0;0m- LAST		: \033[0;31m[%d] ", pile.ia->last);
-	if ((pile.ib)->last)
-		ft_printf(" [%d]\033[0;0m", pile.ib->last);
-	ft_printf("\033[0;0m\n");
-	ft_printf("- LEN		: \033[0;31m[%d]  [%d]\033[0;0m\n", pile.ia->len, pile.ib->len);
-	ft_printf("		  \033[0;32m[A]  [B]\033[0;0m\n");
-}
-
-void	ft_show_pile(t_list *pile)
-{
-	t_list	*tmp;
-
-	tmp = pile;
-	while (tmp)
-	{
-		ft_printf(" [%d]\n", tmp->content);
-		tmp = tmp->next;
-	}
-	ft_printf("  _\n");
-	ft_printf("  A\n\n");
-}
-
-void	ft_show_diff(t_list *pile, t_list *tmp_pile)
-{
-	while (pile)
-	{
-		if (tmp_pile && ft_search(tmp_pile, pile->content) != -1)
-			ft_printf(" \033[0;31m[%d]\033[0;0m\n", pile->content);
-		else
-			ft_printf(" [%d]\n", pile->content);
-		pile = pile->next;
-	}
-	ft_printf("  _\n");
-	ft_printf("  A\n\n");
-}
-
-void	ft_show_test(t_list *pile, int *tab)
-{
-	int	i;
-
-	i = 0;
-	while (pile)
-	{
-		ft_printf(" [%d]	[%d]\n", pile->content, tab[i]);
-		pile = pile->next;
-		i++;
-	}
-	ft_printf("  _	 _\n");
-	ft_printf("  A	 T\n\n");
-}
-
 int	request(t_pile *pile, int question, char *to_do)
 {
 	if (question)
@@ -169,7 +79,7 @@ int	request(t_pile *pile, int question, char *to_do)
 	return (0);
 }
 
-int	request_loop(t_pile *pile, int question, int nb_iter ,char *to_do)
+int	request_loop(t_pile *pile, int question, int nb_iter, char *to_do)
 {
 	if (question)
 	{

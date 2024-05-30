@@ -1,44 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_increase.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/30 09:37:32 by ballain           #+#    #+#             */
+/*   Updated: 2024/05/30 16:07:45 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
-
-int	ft_get_nbmax_composition(t_list *pile)
-{
-	t_list	*tmp;
-	int		*tab;
-	int		len;
-	int		max;
-
-	tmp = ft_upper_nb(pile, pile->content);
-	len = ft_get_list_len(tmp);
-	tab = ft_get_tab_ids(tmp);
-	max = ft_get_maxv_tab(tab, len);
-	free(tab);
-	ft_free_list(tmp);
-	return (max);
-}
-
-int	ft_check_begin_max_increase(t_list *pile)
-{
-	int	value;
-	int	max;
-	int	result;
-	int	r_value;
-
-	max = 0;
-	result = 0;
-	r_value = 0;
-	while (pile)
-	{
-		value = pile->content;
-		max = ft_get_nbmax_composition(pile);
-		if ( max > result)
-		{
-			result = max;
-			r_value = value;
-		}
-		pile = pile->next;
-	}
-	return (r_value);
-}
 
 int	ft_get_tab_index(int *tab, int len, int value)
 {
@@ -58,11 +30,9 @@ int	ft_get_tab_index(int *tab, int len, int value)
 
 void	ft_clean_tab(t_list *pile, int *tab, int len, int value)
 {
-	t_list	*tmp;
-	int	i;
+	int		i;
 
 	i = 0;
-	tmp = pile;
 	while (i < len)
 	{
 		if (pile->content > value)
@@ -88,7 +58,6 @@ void	ft_clean_tab(t_list *pile, int *tab, int len, int value)
 t_list	*ft_get_cleaned_list(t_list *pile)
 {
 	t_list	*r_value;
-	t_list	*to_free;
 	t_list	*tmp;
 
 	r_value = pile;
@@ -96,11 +65,7 @@ t_list	*ft_get_cleaned_list(t_list *pile)
 	while (pile)
 	{
 		while (pile && pile->content == -1)
-		{
-			to_free = pile;
-			pile = pile->next;
-			free(to_free);
-		}
+			pile = ft_clean_list(pile);
 		if (tmp == NULL)
 			tmp = pile;
 		else

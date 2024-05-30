@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_add_stack.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/30 09:37:12 by ballain           #+#    #+#             */
+/*   Updated: 2024/05/30 14:39:27 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	ft_check_additional_ref(t_list *pile, t_list *ref)
@@ -69,4 +81,45 @@ t_list	*ft_get_extra(t_list *pile, t_list *ref)
 	if (tmp && tmp->next)
 		ft_add_back(&r_value, ft_get_portion(tmp->next, ref));
 	return (r_value);
+}
+
+void	ft_move(t_pile *pile, int p_a, int p_b)
+{
+	int	extra_move;
+
+	extra_move = ft_extra_moves(&p_a, &p_b);
+	if (p_a >= 0)
+	{
+		loop_exec(pile, extra_move, "rr");
+		loop_exec(pile, p_a, "ra");
+	}
+	else
+	{
+		loop_exec(pile, -extra_move, "rrr");
+		loop_exec(pile, -p_a, "rra");
+	}
+	if (p_b >= 0)
+		loop_exec(pile, p_b, "rb");
+	else
+	{
+		if (*pile->b)
+			loop_exec(pile, -p_b, "rrb");
+	}
+}
+
+void	ft_move_element(t_pile *pile, t_list *sub_pile, t_action action)
+{
+	int		position_a;
+	int		position_b;
+	int		value;
+
+	while (sub_pile)
+	{
+		value = ft_select_mvl_v(pile, sub_pile, action);
+		position_a = ft_position(*pile->a, action.fa(*pile->a, value));
+		position_b = ft_position(*pile->b, action.fb(*pile->b, value));
+		ft_move(pile, position_a, position_b);
+		ft_del_list_value(&sub_pile, value);
+		exec(pile, action.end_action);
+	}
 }

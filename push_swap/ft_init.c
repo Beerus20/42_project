@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_init.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/30 09:37:43 by ballain           #+#    #+#             */
+/*   Updated: 2024/05/30 09:44:06 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	ft_getlen(const char *str)
@@ -67,7 +79,7 @@ void	ft_init_pile(int argc, const char **argv, t_list **pile)
 	}
 }
 
-t_pile	*ft_init()
+t_pile	*ft_init(void)
 {
 	t_pile	*pile;
 

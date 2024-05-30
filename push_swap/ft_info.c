@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_info.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/30 09:37:39 by ballain           #+#    #+#             */
+/*   Updated: 2024/05/30 12:02:23 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_list	*ft_get_last(t_list *pile)
@@ -15,28 +27,18 @@ void	ft_get_info(t_list **pile, t_info *info)
 	t_list	*tmp;
 
 	tmp = *pile;
+	info->first = -1;
+	info->second = -1;
+	info->last = -1;
 	if (tmp)
 	{
 		info->first = tmp->content;
 		if (tmp->next)
 			info->second = tmp->next->content;
-		else
-		{
-			info->second = -1;
-			info->last = -1;
-		}
 		while (tmp->next)
 			tmp = tmp->next;
-		if (tmp->content == info->second)
-			info->last = -1;
-		else
+		if (tmp->content != info->second)
 			info->last = tmp->content;
-	}
-	else
-	{
-		info->first = -1;
-		info->second = -1;
-		info->last = -1;
 	}
 	info->len = ft_get_list_len(*pile);
 }

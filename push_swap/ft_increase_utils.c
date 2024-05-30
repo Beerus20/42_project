@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_increase_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/30 09:37:29 by ballain           #+#    #+#             */
+/*   Updated: 2024/05/30 09:41:49 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_list	*ft_upper_nb(t_list *pile, int value)
@@ -25,6 +37,7 @@ t_list	*ft_upper_nb(t_list *pile, int value)
 	}
 	return (r_value);
 }
+
 int	ft_get_maxv_tab(int *tab, int len)
 {
 	int	i;

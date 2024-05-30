@@ -1,9 +1,9 @@
-.SILENT					:
 NAME		= libftprintf.a
 FUNCS		= \
 	ft_get_len.c		\
 	ft_add_utils.c 		\
-	ft_add.c
+	ft_add.c			\
+	ft_printf.c
 
 HEADERS		= \
 	ft_add.h		\
@@ -11,32 +11,28 @@ HEADERS		= \
 	ft_printf.h
 
 INCLUDES		= $(HEADERS:%.h=./includes/%.h)
-SRC_OBJ			= ./output/ft_printf.o
 OBJS			= $(FUNCS:%.c=./output/%.o)
-FLAGS			= -Wall -Wextra -Werror
-CC				= clang -g
+FLAGS			= -Wall -Wextra -Werror -fPIC
+CC				= cc
 
-all						:	output $(NAME)
+all						:	$(NAME)
 
 output					:
 							@if [ ! -d output ]; then\
 								mkdir output; \
 							fi
 
-./output/%.o			:	./functions/%.c
+./output/%.o			:	./functions/%.c | output
 							$(CC) $(FLAGS) -c $< -o $@
 
-$(SRC_OBJ)				:
-							$(CC) $(FLAGS) -c ft_printf.c -o $@
-
-$(NAME)					:	$(OBJS) $(SRC_OBJ)
-							ar rcs $@ $(OBJS) $(SRC_OBJ) $(INCLUDES) && mv $(NAME) ..
+$(NAME)					:	$(OBJS)
+							ar -rcs $@ $^
 
 clean					:
-							@rm -rf $(OBJS) $(SRC_OBJ) $(NAME)
+							rm -rf $(OBJS) $(NAME)
 
 fclean					: 	clean
-							@rm -rf $(NAME)
+							rm -rf $(NAME)
 
 re						: fclean all
-.PHONY					: all clean fclean re $(NAME)
+.PHONY					: all clean fclean re

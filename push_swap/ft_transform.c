@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_transform.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/30 09:37:59 by ballain           #+#    #+#             */
+/*   Updated: 2024/05/30 14:36:05 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	ft_add_to_tab(t_list *pile, int *tab)
@@ -15,7 +27,6 @@ void	ft_add_to_tab(t_list *pile, int *tab)
 
 int	ft_is_tab_align(int *tab, int len)
 {
-	int	*tmp;
 	int	i;
 	int	to_compare;
 
@@ -64,7 +75,7 @@ void	ft_apply_change(t_list *pile, int *tab, int len)
 			{
 				pile->content = i;
 				i = 0;
-				break;
+				break ;
 			}
 			i++;
 		}
@@ -80,11 +91,8 @@ void	ft_transform_value(t_pile *pile)
 	if (!tmp)
 		exit(1);
 	ft_add_to_tab(*pile->a, tmp);
-	// ft_show_test(*pile->a, tmp);
 	ft_simple_arrange(tmp, pile->ia->len);
-	// ft_show_test(*pile->a, tmp);
 	ft_apply_change(*pile->a, tmp, pile->ia->len);
-	// ft_show_test(*pile->a, tmp);
 	ft_update_info(pile);
 	free(tmp);
 }

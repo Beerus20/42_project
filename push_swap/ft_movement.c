@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_movement.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/30 09:37:52 by ballain           #+#    #+#             */
+/*   Updated: 2024/05/30 14:37:11 by ballain          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	ft_swap(t_list **pile)
@@ -59,6 +71,7 @@ void	ft_rev_rotate(t_list **pile)
 	t_list	*start;
 
 	tmp = *pile;
+	start = NULL;
 	if (tmp && tmp->next)
 	{
 		while (tmp->next)
