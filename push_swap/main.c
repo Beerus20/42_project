@@ -12,6 +12,98 @@
 
 #include "push_swap.h"
 
+int	ft_strlen_split(const char *str, char c)
+{
+	int	r_count;
+
+	r_count = 0;
+	while (*str)
+	{
+		while (*str == c && *str)
+			str++;
+		while (*str != c && *str)
+		{
+			r_count++;
+			str++;
+		}
+		if (*str)
+		{
+
+			str++;
+		}
+	}
+	return (r_count);
+}
+
+int	ft_count_wd(const char *str, const char sep)
+{
+	int	i;
+	int	len;
+	int	r_count;
+
+	i = 0;
+	len = ft_strlen(str);
+	r_count = 0;
+	while (i < len)
+	{
+		while (str[i] == sep && str[i])
+			i++;
+		if (str[i])
+			r_count++;
+		while (str[i] != sep && str[i])
+			i++;
+	}
+	return (r_count);
+}
+
+char	*ft_strdup(const char *str)
+{
+	int		len;
+	char	*r_value;
+	char	*tmp;
+
+	len = ft_strlen(str) + 1;
+	if (len == 1)
+		return (NULL);
+	r_value = (char *)malloc(sizeof(char) * (len + 1));
+	if (!r_value)
+		return (NULL);
+	tmp = r_value;
+	while (*str)
+		*(tmp++) = *(str++);
+	*tmp = '\0';
+	return (r_value);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	int		i;
+	char	**r_value;
+	char	*tmp;
+
+	i = 0;
+	while (*s == c && *s)
+		s++;
+	tmp = ft_strdup(s);
+	if (!tmp)
+		return (NULL);
+	r_value = (char **)malloc(sizeof(char *) * (ft_count_wd(s, c) + 1));
+	if (!r_value)
+		return (NULL);
+	while (*tmp)
+	{
+		while (*tmp == c && *tmp)
+			*(tmp++) = '\0';
+		if (*tmp)
+			r_value[i++] = tmp;
+		while (*tmp != c && *tmp)
+			tmp++;
+	}
+	r_value[i] = NULL;
+	return (r_value);
+}
+
+
 void	ft_launch(t_pile *pile, t_pile *ref)
 {
 	ft_transform_value(pile);
