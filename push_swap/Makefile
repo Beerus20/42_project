@@ -2,6 +2,7 @@ NAME		= push_swap
 FILES	= \
 	ft_init.c				\
 	ft_info.c				\
+	ft_params.c				\
 	ft_transform.c 			\
 	ft_movement.c 			\
 	ft_execution.c			\
@@ -22,13 +23,18 @@ FILES	= \
 	main.c
 
 
-OBJS		= $(FILES:%.c=%.o)
-CFLAGS		= -Wall -Wextra -Werror
-CC			= cc
+OBJS		= $(FILES:%.c=output/%.o)
+CFLAGS		= ""
+CC			= clang -g
 
 all						:	$(NAME)
 
-%.o						:	%.c
+output					:
+							@if [ ! -d output ]; then\
+								mkdir output; \
+							fi
+
+output/%.o				:	%.c | output
 							$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME)					:	$(OBJS)

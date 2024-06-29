@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:37:48 by ballain           #+#    #+#             */
-/*   Updated: 2024/05/30 14:39:59 by ballain          ###   ########.fr       */
+/*   Updated: 2024/06/29 14:31:14 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_add_list_value(t_list **list, int index, int value)
 		ft_add_front(list, ft_init_list(value));
 }
 
-void	ft_add_back_content(t_list **pile, int value)
+void	ft_add_back_content(t_list **pile, long value)
 {
 	t_list	*tmp_list;
 	t_list	*tmp;

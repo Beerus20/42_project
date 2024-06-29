@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:40:07 by ballain           #+#    #+#             */
-/*   Updated: 2024/05/30 14:31:55 by ballain          ###   ########.fr       */
+/*   Updated: 2024/06/29 16:10:23 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	ft_first_action(t_pile *pile, t_pile *ref, t_action action, int stop)
 
 	if (stop)
 	{
+		if ((pile->ia->len - ref->ia->len) < (pile->ia->len / 2))
+			return ;
 		stop = pile->ia->len - (pile->ia->len / 4);
 		while (pile->ia->len >= stop)
 		{
@@ -37,7 +39,7 @@ t_list	*ft_second_action(t_pile *pile, t_pile *ref, int stop)
 	tmp = NULL;
 	if (stop)
 	{
-		while (pile->ia->first != (*ref->a)->content)
+		while (!ft_verify(pile, ref))
 		{
 			if (ft_search(*ref->a, pile->ia->first) == -1)
 			{

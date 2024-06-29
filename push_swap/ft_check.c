@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:37:15 by ballain           #+#    #+#             */
-/*   Updated: 2024/05/30 14:37:36 by ballain          ###   ########.fr       */
+/*   Updated: 2024/06/29 16:06:22 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	ft_get_position_inv(t_list *pile, int value)
 {
 	t_list	*tmp;
 	t_list	*list;
+	int		min;
 
 	tmp = pile;
 	list = NULL;
@@ -107,5 +108,7 @@ int	ft_get_position_inv(t_list *pile, int value)
 	}
 	if (!list)
 		return (ft_get_index(pile, ft_get_max_value(pile)) + 1);
-	return (ft_get_index(pile, ft_get_min_value(list)));
+	min = ft_get_min_value(list);
+	ft_free_list(list);
+	return (ft_get_index(pile, min));
 }
