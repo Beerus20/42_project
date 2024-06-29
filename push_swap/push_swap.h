@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:38:11 by ballain           #+#    #+#             */
-/*   Updated: 2024/06/29 15:11:53 by ballain          ###   ########.fr       */
+/*   Updated: 2024/06/29 16:11:06 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,12 @@ typedef struct s_pile
 	t_info	*ib;
 }	t_pile;
 
+int			ft_verify(t_pile *pile, t_pile *ref);
+
 /**	_________________ PARAMS _________________ **/
-char	**ft_split(char const *s, char c);
-int		ft_params_is_valid(int argc, const char **argv);
-int		ft_check_error(t_list *pile);
+char		**ft_split(char const *s, char c);
+int			ft_params_is_valid(int argc, const char **argv);
+int			ft_check_error(t_list *pile);
 
 /**	_________________ TRANSFORM _________________ **/
 void		ft_transform_value(t_pile *pile);
