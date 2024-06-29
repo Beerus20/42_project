@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:38:11 by ballain           #+#    #+#             */
-/*   Updated: 2024/05/30 14:39:03 by ballain          ###   ########.fr       */
+/*   Updated: 2024/06/29 15:11:53 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@
 #  define DEBUG 0
 # endif
 
+# include <stdio.h>
 # include <stdlib.h>
 # include <stdarg.h>
 # include "./printf/includes/ft_printf.h"
 
 typedef struct s_list
 {
-	int				content;
+	long			content;
 	struct s_list	*next;
 }	t_list;
 
@@ -49,6 +50,11 @@ typedef struct s_pile
 	t_info	*ia;
 	t_info	*ib;
 }	t_pile;
+
+/**	_________________ PARAMS _________________ **/
+char	**ft_split(char const *s, char c);
+int		ft_params_is_valid(int argc, const char **argv);
+int		ft_check_error(t_list *pile);
 
 /**	_________________ TRANSFORM _________________ **/
 void		ft_transform_value(t_pile *pile);
@@ -82,7 +88,7 @@ t_list		*ft_copy_list(t_list *list);
 /**	_________________ LIST UTILS _________________ **/
 t_list		*ft_move_to(t_list *pile, int value);
 void		ft_add_list_value(t_list **list, int index, int value);
-void		ft_add_back_content(t_list **pile, int value);
+void		ft_add_back_content(t_list **pile, long value);
 void		ft_del_list_value(t_list **list, int value);
 void		ft_concat_list(t_list **a, t_list **b, t_list *s_a, t_list *s_b);
 
@@ -97,7 +103,7 @@ int			exec(t_pile *pile, char *action);
 void		loop_exec(t_pile *pile, int nb_iter, char *to_do);
 
 /**	_________________ INIT _________________ **/
-void		ft_init_pile(int argc, const char **argv, t_list **pile);
+int			ft_init_pile(int argc, const char **argv, t_list **pile);
 t_pile		*ft_init(void);
 
 /**	_________________ CHECK _________________ **/

@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:40:07 by ballain           #+#    #+#             */
-/*   Updated: 2024/06/29 09:37:15 by ballain          ###   ########.fr       */
+/*   Updated: 2024/06/29 11:46:34 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ void	ft_first_action(t_pile *pile, t_pile *ref, t_action action, int stop)
 
 	if (stop)
 	{
+		if ((pile->ia->len - ref->ia->len) < (pile->ia->len / 2))
+			return ;
 		stop = pile->ia->len - (pile->ia->len / 4);
-		while (!ft_verify(pile, ref))
+		while (pile->ia->len >= stop)
 		{
 			tmp = ft_get_extra(*pile->a, *ref->a);
 			if (ft_search(*ref->a, pile->ia->first) == -1)
@@ -51,7 +53,7 @@ t_list	*ft_second_action(t_pile *pile, t_pile *ref, int stop)
 	tmp = NULL;
 	if (stop)
 	{
-		while (pile->ia->first != (*ref->a)->content)
+		while (!ft_verify(pile, ref))
 		{
 			if (ft_search(*ref->a, pile->ia->first) == -1)
 			{
@@ -106,11 +108,11 @@ void	ft_five_action(t_pile *pile, t_action action)
 
 int	ft_action(t_pile *pile, t_pile *ref)
 {
-	// t_list		*tmp;
+	t_list		*tmp;
 	t_action	action_1;
 	t_action	action_2;
 	int			stop;
-	// int			i_max;
+	int			i_max;
 
 	action_1 = ft_init_action(0);
 	action_2 = ft_init_action(1);
@@ -122,13 +124,13 @@ int	ft_action(t_pile *pile, t_pile *ref)
 	{
 		stop = pile->ia->len != ref->ia->len;
 		ft_first_action(pile, ref, action_1, stop);
-		// tmp = ft_second_action(pile, ref, stop);
-		// ft_move_element(pile, tmp, action_2);
-		// ft_move_element(pile, ft_copy_list(*pile->b), action_2);
-		// i_max = ft_get_index(*pile->a, ft_get_max_value(*pile->a));
-		// stop = ft_position(*pile->a, i_max);
-		// request_loop(pile, stop >= 0, stop + 1, "ra");
-		// request_loop(pile, stop < 0, stop, "rra");
+		tmp = ft_second_action(pile, ref, stop);
+		ft_move_element(pile, tmp, action_2);
+		ft_move_element(pile, ft_copy_list(*pile->b), action_2);
+		i_max = ft_get_index(*pile->a, ft_get_max_value(*pile->a));
+		stop = ft_position(*pile->a, i_max);
+		request_loop(pile, stop >= 0, stop + 1, "ra");
+		request_loop(pile, stop < 0, stop, "rra");
 	}
 	return (0);
 }
