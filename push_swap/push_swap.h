@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:38:11 by ballain           #+#    #+#             */
-/*   Updated: 2024/06/29 16:11:06 by ballain          ###   ########.fr       */
+/*   Updated: 2024/06/30 20:40:42 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,19 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include "./printf/includes/ft_printf.h"
+# include "./bonus/gnl/get_next_line.h"
 
 typedef struct s_list
 {
 	long			content;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_cmd
+{
+	char			*content;
+	struct s_cmd	*next;
+}	t_cmd;
 
 typedef struct s_action
 {
