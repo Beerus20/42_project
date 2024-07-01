@@ -19,12 +19,17 @@ FILES	= \
 	ft_list_functions.c		\
 	ft_show.c				\
 	ft_utils.c				\
-	ft_free.c				\
-	main.c
+	ft_free.c
 
+BONUS		= \
+				get_next_line_utils.c	\
+				get_next_line.c
+				
 
 OBJS		= $(FILES:%.c=output/%.o)
-CFLAGS		= ""
+BONUS_FILES	= $(BONUS:%.c=bonus/%.c)
+BONUS_OBJS	= $(BONUS_FILES:bonus/%.c=output/%.o)
+CFLAGS		= -Wall -Wextra -Werror
 CC			= clang -g
 
 all						:	$(NAME)
@@ -37,9 +42,23 @@ output					:
 output/%.o				:	%.c | output
 							$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME)					:	$(OBJS)
+output/%.o				:	./bonus/%.c | output
+							$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME)					:	$(OBJS) output/main.o
 							make -C ./printf
-							$(CC) $(CFLAGS) $(OBJS) -L./printf -lftprintf -o $(NAME)
+							$(CC) $(CFLAGS) $(OBJS) output/main.o -L./printf -lftprintf -o $(NAME)
+
+output/main.o			:	main.c
+							$(CC) $(CFLAGS) -c $< -o $@
+
+output/main_bonus.o		:	./bonus/main_bonus.c
+							$(CC) $(CFLAGS) -c $< -o $@
+
+bonus					:	checker
+
+checker					:	$(OBJS) $(BONUS_OBJS) output/main_bonus.o
+							$(CC) $(CFLAGS) $(OBJS) $(BONUS_OBJS) output/main_bonus.o -L./printf -lftprintf -o checker
 
 test\:%					: 	$(NAME)
 							valgrind --leak-check=full --track-origins=yes ./push_swap $(subst test:,,$@)
@@ -55,12 +74,13 @@ debug\:%				:	lib
 							./push_swap $(subst debug:,,$@)
 
 clean					:
-							cd ./printf && make clean
+							make clean -C ./printf
 							rm -rf libftprintf.a
-							rm -rf $(OBJS)
+							rm -rf $(OBJS) $(BONUS_OBJS) output/main.o output/main_bonus.o
 
 fclean					: clean
-							rm -rf $(NAME)
+							make fclean -C ./printf
+							rm -rf $(NAME) $(BONUS_OBJS) checker
 
 push\:%					:	fclean
 							git status
@@ -70,4 +90,4 @@ push\:%					:	fclean
 							git push
 
 re						: fclean all
-.PHONY					: all clean fclean re
+.PHONY					: all clean fclean re bonus

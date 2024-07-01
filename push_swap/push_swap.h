@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:38:11 by ballain           #+#    #+#             */
-/*   Updated: 2024/06/30 20:40:42 by ballain          ###   ########.fr       */
+/*   Updated: 2024/07/01 13:38:21 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,12 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include "./printf/includes/ft_printf.h"
-# include "./bonus/gnl/get_next_line.h"
 
 typedef struct s_list
 {
 	long			content;
 	struct s_list	*next;
 }	t_list;
-
-typedef struct s_cmd
-{
-	char			*content;
-	struct s_cmd	*next;
-}	t_cmd;
 
 typedef struct s_action
 {
@@ -57,8 +50,6 @@ typedef struct s_pile
 	t_info	*ia;
 	t_info	*ib;
 }	t_pile;
-
-int			ft_verify(t_pile *pile, t_pile *ref);
 
 /**	_________________ PARAMS _________________ **/
 char		**ft_split(char const *s, char c);
@@ -112,6 +103,7 @@ int			exec(t_pile *pile, char *action);
 void		loop_exec(t_pile *pile, int nb_iter, char *to_do);
 
 /**	_________________ INIT _________________ **/
+int			ft_verify(t_pile *pile, t_pile *ref);
 int			ft_init_pile(int argc, const char **argv, t_list **pile);
 t_pile		*ft_init(void);
 

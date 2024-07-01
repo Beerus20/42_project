@@ -6,12 +6,11 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:03:36 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/03 10:53:59 by ballain          ###   ########.fr       */
+/*   Updated: 2024/07/01 12:23:40 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <stdio.h>
+#include "bonus.h"
 
 char	*ft_strchr(char *str, int c)
 {
@@ -26,7 +25,7 @@ char	*ft_strchr(char *str, int c)
 	return (NULL);
 }
 
-int	ft_strlen( char *str)
+int	ft_gnl_strlen( char *str)
 {
 	int	count;
 	int	i;
@@ -43,7 +42,7 @@ int	ft_strlen( char *str)
 	return (count);
 }
 
-int	ft_get_len(t_list *value)
+int	ft_gnl_get_len(t_cmd *value)
 {
 	int	len;
 	int	i;
@@ -52,7 +51,7 @@ int	ft_get_len(t_list *value)
 	len = 0;
 	while (!ft_strchr(value->content, '\n') && value->next)
 	{
-		len += ft_strlen(value->content);
+		len += ft_gnl_strlen(value->content);
 		value = value->next;
 	}
 	if (ft_strchr(value->content, '\n'))
@@ -62,7 +61,7 @@ int	ft_get_len(t_list *value)
 		len += i;
 	}
 	else
-		len += ft_strlen(value->content);
+		len += ft_gnl_strlen(value->content);
 	return (len);
 }
 
@@ -73,7 +72,7 @@ char	*ft_alloc(char *s, int len)
 
 	i = 0;
 	if (s)
-		len = ft_strlen(s);
+		len = ft_gnl_strlen(s);
 	r_value = (char *)malloc(sizeof(char) * (len + 1));
 	if (!r_value)
 		return (0);
@@ -94,9 +93,9 @@ char	*ft_alloc(char *s, int len)
 	return (r_value);
 }
 
-void	ft_free(t_list *value)
+void	ft_gnl_free(t_cmd *value)
 {
-	t_list	*to_free;
+	t_cmd	*to_free;
 
 	to_free = NULL;
 	while (value)

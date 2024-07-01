@@ -6,13 +6,13 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:02:37 by ballain           #+#    #+#             */
-/*   Updated: 2024/04/03 10:54:02 by ballain          ###   ########.fr       */
+/*   Updated: 2024/07/01 13:33:53 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "bonus.h"
 
-int	ft_add_value(char *receiver, char *to_add, char stop)
+int	ft_gnl_add_value(char *receiver, char *to_add, char stop)
 {
 	int	i;
 
@@ -30,9 +30,9 @@ int	ft_add_value(char *receiver, char *to_add, char stop)
 	return (i);
 }
 
-int	ft_get_file_content(int fd, t_list **list)
+int	ft_get_file_content(int fd, t_cmd **list)
 {
-	t_list	*value;
+	t_cmd	*value;
 	char	*buffer;
 	int		size;
 
@@ -48,7 +48,7 @@ int	ft_get_file_content(int fd, t_list **list)
 			break ;
 		buffer[size] = '\0';
 		value->content = ft_alloc(buffer, 0);
-		value->next = malloc(sizeof(t_list));
+		value->next = malloc(sizeof(t_cmd));
 		if (!value->next)
 			return (0);
 		value->next->content = NULL;
@@ -59,50 +59,50 @@ int	ft_get_file_content(int fd, t_list **list)
 	return (size);
 }
 
-char	*ft_get_line(t_list *value, char **rest)
+char	*ft_get_line(t_cmd *value, char **rest)
 {
 	char	*r_value;
 	int		i;
 
 	i = 0;
-	r_value = ft_alloc(NULL, ft_get_len(value));
+	r_value = ft_alloc(NULL, ft_gnl_get_len(value));
 	if (!r_value)
 		return (NULL);
 	i = 0;
 	while (!ft_strchr(value->content, '\n') && value->next)
 	{
-		i += ft_add_value(&r_value[i], value->content, '\0');
+		i += ft_gnl_add_value(&r_value[i], value->content, '\0');
 		value = value->next;
 	}
 	if (ft_strchr(value->content, '\n'))
 	{
-		i = ft_add_value(&r_value[i], value->content, '\n');
-		if ((ft_strlen(value->content) - i) != 0)
+		i = ft_gnl_add_value(&r_value[i], value->content, '\n');
+		if ((ft_gnl_strlen(value->content) - i) != 0)
 		{
-			*rest = ft_alloc(NULL, ft_strlen(value->content) - i);
+			*rest = ft_alloc(NULL, ft_gnl_strlen(value->content) - i);
 			if (!(*rest))
 				return (NULL);
-			ft_add_value((*rest), &value->content[i], '\0');
+			ft_gnl_add_value((*rest), &value->content[i], '\0');
 		}
 	}
 	return (r_value);
 }
 
-int	ft_init(t_list **value, char **rest)
+int	ft_gnl_init(t_cmd **value, char **rest)
 {
-	(*value) = (t_list *)malloc(sizeof(t_list));
+	(*value) = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!(*value))
 		return (0);
 	(*value)->content = NULL;
 	(*value)->next = NULL;
-	if (*rest && ft_strlen(*rest))
+	if (*rest && ft_gnl_strlen(*rest))
 	{
 		(*value)->content = ft_alloc(*rest, 0);
 		free(*rest);
 		*rest = NULL;
 		if (ft_strchr((*value)->content, '\n'))
 			return (0);
-		(*value)->next = (t_list *)malloc(sizeof(t_list));
+		(*value)->next = (t_cmd *)malloc(sizeof(t_cmd));
 		if (!(*value)->next)
 			return (0);
 		(*value)->next->content = NULL;
@@ -114,7 +114,7 @@ int	ft_init(t_list **value, char **rest)
 char	*get_next_line(int fd)
 {
 	static char	*rest;
-	t_list		*value;
+	t_cmd		*value;
 	char		*line;
 	int			size;
 
@@ -123,7 +123,7 @@ char	*get_next_line(int fd)
 	size = 0;
 	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (ft_init(&value, &rest))
+	if (ft_gnl_init(&value, &rest))
 	{
 		if (!value->content)
 			size = ft_get_file_content(fd, &value);
@@ -131,12 +131,12 @@ char	*get_next_line(int fd)
 			size = ft_get_file_content(fd, &value->next);
 		if (size == -1 || (size == 0 && value->content == NULL))
 		{
-			ft_free(value);
+			ft_gnl_free(value);
 			return (NULL);
 		}
 	}
 	line = ft_get_line(value, &rest);
-	ft_free(value);
+	ft_gnl_free(value);
 	return (line);
 }
 /*

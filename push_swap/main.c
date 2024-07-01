@@ -6,25 +6,11 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:36:55 by ballain           #+#    #+#             */
-/*   Updated: 2024/06/29 16:14:18 by ballain          ###   ########.fr       */
+/*   Updated: 2024/07/01 13:38:04 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	ft_verify(t_pile *pile, t_pile *ref)
-{
-	t_list	*tmp;
-
-	tmp = *pile->a;
-	while (tmp)
-	{
-		if (ft_search(*ref->a, tmp->content) == -1)
-			return (0);
-		tmp = tmp->next;
-	}
-	return (1);
-}
 
 void	ft_launch(t_pile *pile, t_pile *ref)
 {
