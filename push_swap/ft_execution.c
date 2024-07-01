@@ -6,53 +6,49 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:37:18 by ballain           #+#    #+#             */
-/*   Updated: 2024/05/30 10:40:03 by ballain          ###   ########.fr       */
+/*   Updated: 2024/07/01 19:49:31 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_chr_action_type(char *str, int *index)
+int	ft_isalpha(char c)
+{
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+}
+
+int	ft_count_char(char *str)
 {
 	int	i;
 
 	i = 0;
-	*index = 0;
-	while (*str != 's' && *str != 'p' && *str != 'r' && *str)
-	{
-		str++;
-		(*index)++;
-	}
-	while (*str != ' ' && *(str++))
+	while (ft_isalpha(*(str++)))
 		i++;
 	return (i);
 }
 
 int	exec(t_pile *pile, char *action)
 {
-	int		index;
 	int		nb;
 
-	index = 0;
-	nb = 0;
 	while (*action)
 	{
-		nb = ft_chr_action_type(action, &index);
+		nb = ft_count_char(action);
 		if (nb == 2)
 		{
-			if (action[index] == 's')
-				ft_exec_swap(pile, action[index + 1]);
-			if (action[index] == 'p')
-				ft_exec_push(pile, action[index + 1]);
-			if (action[index] == 'r')
-				ft_exec_rotate(pile, action[index + 1]);
+			if (*action == 's')
+				ft_exec_swap(pile, *(action + 1));
+			if (*action == 'p')
+				ft_exec_push(pile, *(action + 1));
+			if (*action == 'r')
+				ft_exec_rotate(pile, *(action + 1));
 		}
 		else
-			ft_exec_rev_rotate(pile, action[index + 2]);
+			ft_exec_rev_rotate(pile, *(action + 2));
 		ft_update_info(pile);
-		if (DEBUG)
-			ft_debug(*pile);
-		action += index + nb;
+		action += nb;
+		while (!ft_isalpha(*action) && *action)
+			action++;
 	}
 	return (0);
 }

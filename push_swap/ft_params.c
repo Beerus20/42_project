@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:07:58 by ballain           #+#    #+#             */
-/*   Updated: 2024/06/29 16:07:59 by ballain          ###   ########.fr       */
+/*   Updated: 2024/07/01 18:50:37 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,6 @@ int	ft_params_is_valid(int argc, const char **argv)
 
 int	ft_check_error(t_list *pile)
 {
-	t_list	*to_f;
-
-	to_f = pile;
 	while (pile)
 	{
 		if (pile->content > 2147483647 || pile->content < -2147483648)

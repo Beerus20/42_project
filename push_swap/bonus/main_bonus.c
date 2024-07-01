@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:44:01 by ballain           #+#    #+#             */
-/*   Updated: 2024/07/01 15:12:09 by ballain          ###   ########.fr       */
+/*   Updated: 2024/07/01 20:06:31 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,18 @@ void	ft_add_cmd(t_cmd **cmds, char *value)
 		*cmds = tmp;
 }
 
-void	ft_show_cmds(t_cmd *cmds)
+int	ft_strcmp(char *a, char *b)
 {
-	while (cmds)
+	if (ft_strlen(a) != ft_strlen(b))
+		return (0);
+	while (*a && *b)
 	{
-		ft_printf("test	: [%s]\n", cmds->content);
-		cmds = cmds->next;
+		if (*a != *b)
+			return (0);
+		a++;
+		b++;
 	}
+	return (1);
 }
 
 t_cmd	*ft_get_cmd(void)
@@ -59,15 +64,13 @@ t_cmd	*ft_get_cmd(void)
 	while (1)
 	{
 		cmd = get_next_line(1);
-		ft_printf("CMD	: %s", cmd);
-		if (ft_strlen(cmd) == 1)
+		if (ft_strcmp(cmd, "\n"))
 		{
 			free(cmd);
 			break ;
 		}
 		ft_add_cmd(&cmds, cmd);
 	}
-	ft_show_cmds(cmds);
 	return (cmds);
 }
 
@@ -75,20 +78,27 @@ int	main(int argc, char const *argv[])
 {
 	t_pile	*pile;
 	t_cmd	*cmds;
+	int		nb_inc;
 
 	cmds = NULL;
 	pile = ft_init();
+	nb_inc = 0;
 	if (ft_init_pile(argc, argv, pile->a))
 	{
 		ft_get_info(pile->a, pile->ia);
 		ft_get_info(pile->b, pile->ib);
+		nb_inc = pile->ia->len;
 		cmds = ft_get_cmd();
-		// while (cmds)
-		// {
-		// 	ft_printf("CMD	: [%s]\n", cmds->content);
-		// 	cmds = cmds->next;
-		// }
+		while (cmds)
+		{
+			exec(pile, cmds->content);
+			cmds = cmds->next;
+		}
 	}
+	if (ft_check_increas(*pile->a) == nb_inc)
+		ft_printf("\033[0;32mOK\033[0;0m\n");
+	else
+		ft_printf("\033[0;31mKO\033[0;0m\n");
 	ft_free_pile(pile);
 	return (0);
 }

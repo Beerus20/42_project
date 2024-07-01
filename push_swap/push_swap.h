@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:38:11 by ballain           #+#    #+#             */
-/*   Updated: 2024/07/01 13:38:21 by ballain          ###   ########.fr       */
+/*   Updated: 2024/07/01 20:06:36 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # ifndef DEBUG
 #  define DEBUG 0
+# endif
+
+# ifndef BONUS
+#  define BONUS 0
 # endif
 
 # include <stdio.h>
