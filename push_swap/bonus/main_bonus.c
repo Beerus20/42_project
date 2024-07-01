@@ -6,7 +6,7 @@
 /*   By: ballain <ballain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:44:01 by ballain           #+#    #+#             */
-/*   Updated: 2024/07/01 20:06:31 by ballain          ###   ########.fr       */
+/*   Updated: 2024/07/01 21:17:59 by ballain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	main(int argc, char const *argv[])
 {
 	t_pile	*pile;
 	t_cmd	*cmds;
+	t_cmd	*to_f;
 	int		nb_inc;
 
 	cmds = NULL;
@@ -89,11 +90,14 @@ int	main(int argc, char const *argv[])
 		ft_get_info(pile->b, pile->ib);
 		nb_inc = pile->ia->len;
 		cmds = ft_get_cmd();
+		to_f = cmds;
 		while (cmds)
 		{
 			exec(pile, cmds->content);
 			cmds = cmds->next;
 		}
+		free(to_f->content);
+		free(to_f);
 	}
 	if (ft_check_increas(*pile->a) == nb_inc)
 		ft_printf("\033[0;32mOK\033[0;0m\n");
